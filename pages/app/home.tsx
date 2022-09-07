@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-
   useEffect(() => {
     async function ok() {
       const response = await fetch("/api/me");
@@ -15,6 +14,7 @@ const Home: NextPage = () => {
     if (session) {
       ok();
     }
+    console.log(session);
   }, [session]);
 
   return (
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       </Head>
       {session ? (
         <>
-          <h1>Signed in as {session?.token?.email}</h1>
+          <h1>Signed in as {session.user.username}</h1>
           <button onClick={() => signOut({ callbackUrl: "/" })}>
             Sign out
           </button>
