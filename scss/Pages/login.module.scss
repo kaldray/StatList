@@ -1,0 +1,20 @@
+@import "../Global/variables.scss";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  background-color: $black;
+  height: 100vh;
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+  button {
+    margin-top: 2rem;
+    padding: 0.5rem;
+    background-color: $white;
+    border-radius: 0.5rem;
+  }
+}
