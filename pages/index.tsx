@@ -1,22 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect } from "react";
+import { signIn } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    async function ok() {
-      const response = await fetch("/api/me");
-      const data = await response.json();
-      console.log(data);
-    }
-    if (session) {
-      ok();
-    }
-  }, [session]);
-
   return (
     <>
       <Head>
@@ -25,21 +11,10 @@ const Home: NextPage = () => {
           name="description"
           content="Application web qui permet de consulter vos stats spotify."
         />
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
       </Head>
-      {session ? (
-        <>
-          <h1>Signed in as {session?.token?.email}</h1>
-          <button onClick={() => signOut({ callbackUrl: "/" })}>
-            Sign out
-          </button>
-        </>
-      ) : (
-        <>
-          <h1>Not signed</h1>
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+      <h1>Bienvenue sur Spoti'stats</h1>
+      <button onClick={() => signIn()}>Se connecter</button>
     </>
   );
 };

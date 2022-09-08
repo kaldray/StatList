@@ -16,10 +16,8 @@ const Login = ({
             Object.values(providers).map((provider) => (
               <button
                 key={provider.id}
-                onClick={() =>
-                  signIn(provider.id, { callbackUrl: "/app/home" })
-                }>
-                Se connecter avec{provider.name}
+                onClick={() => signIn(provider.id, { callbackUrl: "/home" })}>
+                Se connecter avec {provider.name}
               </button>
             ))}
         </div>

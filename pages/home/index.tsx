@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         </>
       ) : (
         <>
-          <h1>Not signed</h1>
+          <h1>Not signed Home</h1>
           <button onClick={() => signIn()}>Sign in</button>
         </>
       )}
