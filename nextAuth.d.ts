@@ -10,8 +10,8 @@ declare module "next-auth" {
       username?: string;
     };
     token: {
-      acces_token?: string | null;
-      refresh_token?: string | null;
+      accessToken?: string | null;
+      refreshToken?: string | null;
       name?: string | null;
       email?: string | null;
       picture?: string | null;

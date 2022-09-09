@@ -1,21 +1,24 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useSession, signIn, signOut, getSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect } from "react";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
   useEffect(() => {
     async function ok() {
-      const response = await fetch("/api/me");
-      const data = await response.json();
-      console.log(data);
+      try {
+        const response = await fetch("/api/artists");
+        const data = await response.json();
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
     }
     if (session) {
       ok();
     }
-    console.log(session);
-  }, [session]);
+  }, []);
 
   return (
     <>

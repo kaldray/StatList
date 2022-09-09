@@ -20,8 +20,8 @@ async function refreshAccessToken(token: JWT) {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
-          grant_type: "refresh_token",
-          refresh_token: token.refreshToken,
+          grant_type: "refreshToken",
+          refreshToken: token.refreshToken,
         }),
       });
       refreshedTokens = await response.json();
@@ -33,13 +33,12 @@ async function refreshAccessToken(token: JWT) {
 
     return {
       ...token,
-      accessToken: refreshedTokens.access_token,
-      accessTokenExpires: Date.now() + refreshedTokens.expires_at * 1000,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+      accessToken: refreshedTokens.accessToken,
+      accessTokenExpires: Date.now() + refreshedTokens.expiresAt * 1000,
+      refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
     };
   } catch (error) {
     console.log(error);
-
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -50,10 +49,9 @@ async function refreshAccessToken(token: JWT) {
 export default NextAuth({
   providers: [
     SpotifyProvider({
-      authorization:
-        "https://accounts.spotify.com/authorize?scope=user-read-email,playlist-read-private,user-read-recently-played,user-top-read",
       clientId: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      authorization: `https://accounts.spotify.com/authorize?scope=user-top-read,playlist-read-private,user-read-recently-played,user-read-private`,
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
@@ -63,6 +61,7 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, account, user }) {
       if (user && account && typeof account.expires_at === "number") {
+        console.log(account.scope);
         return {
           ...token,
           accessToken: account.access_token,
