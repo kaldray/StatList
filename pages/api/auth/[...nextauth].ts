@@ -1,41 +1,27 @@
 import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt";
 import SpotifyProvider from "next-auth/providers/spotify";
+import SpotifyWebApi from "spotify-web-api-node";
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+});
 
 async function refreshAccessToken(token: JWT) {
   try {
-    let refreshedTokens;
-    if (token.refreshToken) {
-      let url = "https://accounts.spotify.com/api/token";
-      const client_id = process.env.SPOTIFY_CLIENT_ID;
-      const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-      const basic = Buffer.from(`${client_id}:${client_secret}`).toString(
-        "base64"
-      );
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${basic}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          grant_type: "refreshToken",
-          refreshToken: token.refreshToken,
-        }),
-      });
-      refreshedTokens = await response.json();
-
-      if (!response.ok) {
-        throw new Error(refreshedTokens);
-      }
+    if (token && token?.accessToken && token?.refreshToken) {
+      spotifyApi.setAccessToken(token?.accessToken);
+      spotifyApi.setRefreshToken(token?.refreshToken);
     }
+
+    const { body: refreshTokens } = await spotifyApi.refreshAccessToken();
 
     return {
       ...token,
-      accessToken: refreshedTokens.accessToken,
-      accessTokenExpires: Date.now() + refreshedTokens.expiresAt * 1000,
-      refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
+      accessToken: refreshTokens?.access_token,
+      accessTokenExpires: Date.now() + refreshTokens?.expires_in * 1000,
+      refreshToken: refreshTokens?.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
     console.log(error);
@@ -78,6 +64,7 @@ export default NextAuth({
       ) {
         return token;
       }
+      ("acces token has expires_at, REFRESHING...");
       return await refreshAccessToken(token);
     },
     async session({ session, token }) {
