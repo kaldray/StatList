@@ -1,0 +1,7 @@
+@import "../Global/variables.scss";
+
+.container {
+  display: grid;
+  place-items: center;
+  padding-top: $xxl;
+}
