@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import { Hamburger } from "./Hamburger";
 
@@ -8,6 +9,7 @@ import styles from "@styles/Components/Navigation.module.scss";
 export const Navigation = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
+  const { data: session } = useSession();
   const { container, nav } = styles;
 
   useEffect(() => {
@@ -28,8 +30,8 @@ export const Navigation = () => {
     <>
       <div className={container}>
         <p>Spoti'stats</p>
-        <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
-        {(isToggle || (innerWidth && innerWidth > 580)) && (
+        {session && <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />}
+        {session && (isToggle || (innerWidth && innerWidth > 580)) && (
           <nav className={nav}>
             <ul>
               <li>
