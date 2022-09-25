@@ -1,0 +1,53 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  place-items: center;
+  background-color: $timberwolf;
+  row-gap: $xs;
+  position: fixed;
+  padding: 1rem;
+  width: 100%;
+  p {
+    grid-row: 1;
+    font-size: clamp($mobileHeading, 2vw, $desktopHeading);
+  }
+}
+
+.nav {
+  grid-column: 1 / span 12;
+  grid-row: 2;
+  ul {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    row-gap: $xs;
+    li {
+      font-size: $mobileText;
+    }
+  }
+}
+
+@include desktopSize {
+  .container {
+    p {
+      grid-column: 1;
+    }
+  }
+  .nav {
+    grid-row: 1;
+    place-self: end;
+    align-self: center;
+    ul {
+      flex-direction: row;
+      column-gap: $s;
+      li {
+        font-size: $desktopText;
+      }
+    }
+  }
+}
