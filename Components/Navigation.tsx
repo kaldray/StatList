@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 import { Hamburger } from "./Hamburger";
 
@@ -9,7 +9,8 @@ import styles from "@styles/Components/Navigation.module.scss";
 export const Navigation = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
   const { container, nav } = styles;
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export const Navigation = () => {
     }
     if (typeof window !== "undefined") {
       setInnerWidth(window.innerWidth);
-      if (window.innerWidth > 580) setIsToggle(false);
+      if (window.innerWidth > 680) setIsToggle(false);
     }
     window.addEventListener("resize", toggleHamburger);
     return () => {
@@ -31,24 +32,25 @@ export const Navigation = () => {
       <div className={container}>
         <p>Spoti'stats</p>
         {session && <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />}
-        {session && (isToggle || (innerWidth && innerWidth > 580)) && (
+        {session && (isToggle || (innerWidth && innerWidth >= 680)) && (
           <nav className={nav}>
             <ul>
               <li>
                 <Link href="/">
-                  <a>Meilleur Artiste</a>
+                  <a>Meilleur artiste</a>
                 </Link>
               </li>
               <li>
                 <Link href="/">
-                  <a>Meilleur Chanson</a>
+                  <a>Meilleur chanson</a>
                 </Link>
               </li>
               <li>
                 <Link href="/">
-                  <a>Meilleur Artiste</a>
+                  <a>Meilleur artiste</a>
                 </Link>
               </li>
+              <li onClick={() => signOut({ callbackUrl: "/" })}>Se déconnecter</li>
             </ul>
           </nav>
         )}

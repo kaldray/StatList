@@ -28,6 +28,9 @@
     row-gap: $xs;
     li {
       font-size: $mobileText;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
