@@ -1,0 +1,47 @@
+@import "../Global/variables.scss";
+
+.search__container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  row-gap: $s;
+
+  h1 {
+    grid-column: 1 / span 12;
+    place-self: center;
+    font-size: $mobileHeading;
+  }
+
+  div {
+    grid-column: 1 / span 12;
+    place-self: center;
+    gap: $s;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+
+    button {
+      background-color: $laurel-green;
+      color: #000;
+      padding: $xs;
+      font-size: $mobileText;
+      font-weight: 300;
+      border: 1px solid $black;
+      border-radius: $smallRadius;
+      &:hover {
+        cursor: pointer;
+        background-color: darken($laurel-green, 5%);
+      }
+      &:active {
+        background-color: darken($laurel-green, 15%);
+      }
+    }
+  }
+}
+
+.artist__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 3fr));
+  place-content: center;
+  column-gap: $s;
+}
