@@ -6,11 +6,11 @@ import Error from "next/error";
 import type { NextPage } from "next";
 import { UserTopItems } from "types";
 
-import { Layout, ArtistCard } from "@components/index";
+import { Layout, ArtistCard, PeriodChoice } from "@components/index";
 import styles from "@styles/Pages/Artist.module.scss";
 
 const Home: NextPage = () => {
-  const { search__container, artist__container } = styles;
+  const { artist__container } = styles;
   const [queryParams, setQueryParams] = useState<string | undefined>(undefined);
   const fetcher = async (url: string, queryParams?: string) => {
     if (queryParams !== undefined) {
@@ -40,17 +40,14 @@ const Home: NextPage = () => {
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
       </Head>
       <Layout>
-        {error && <p>Une Erreur est survenue...</p>}
-        {!data && <p>Loading...</p>}
-        <div className={search__container}>
-          <h1>Rechercher par période</h1>
-          <div>
-            <button onClick={getShortTermArtist}>4 dernière semaine</button>
-            <button onClick={getMediummTermArtist}>6 dernier mois</button>
-            <button onClick={getLongTermArtist}>Toute le période</button>
-          </div>
-        </div>
+        <PeriodChoice
+          getShortTermArtist={getShortTermArtist}
+          getLongTermArtist={getLongTermArtist}
+          getMediummTermArtist={getMediummTermArtist}
+        />
         <section className={artist__container}>
+          {error && <p>Une Erreur est survenue...</p>}
+          {!data && <p>Loading...</p>}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
