@@ -4,7 +4,7 @@ import { Navigation } from "./Navigation";
 import styles from "@styles/Components/Layout.module.scss";
 
 type LayoutProps = {
-  children: JSX.Element;
+  children?: React.ReactNode;
 };
 
 export const Layout = ({ children }: LayoutProps) => {

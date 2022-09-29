@@ -1,48 +1,34 @@
-import type { NextPage } from "next";
+import useSWR from "swr";
 import Head from "next/head";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect } from "react";
+import Error from "next/error";
+
+import type { NextPage } from "next";
+import { UserTopItems } from "types";
+
+import { Layout, Card } from "@components/index";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-  useEffect(() => {
-    async function ok() {
-      try {
-        const response = await fetch("/api/artists");
-        const data = await response.json();
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    if (session) {
-      ok();
-    }
-  }, []);
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error } = useSWR<UserTopItems, Error>("/api/artists", fetcher);
 
   return (
     <>
       <Head>
         <title>Spoti'stats</title>
-        <meta
-          name="description"
-          content="Application web qui permet de consulter vos stats spotify."
-        />
+        <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
       </Head>
-      {session ? (
-        <>
-          <h1>Signed in as {session.user.username}</h1>
-          <button onClick={() => signOut({ callbackUrl: "/" })}>
-            Sign out
-          </button>
-        </>
-      ) : (
-        <>
-          <h1>Not signed Home</h1>
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
+      <Layout>
+        {error && <p>Une Erreur est survenue...</p>}
+        {!data && <p>Loading...</p>}
+        {data !== undefined && (
+          <>
+            {data.items.map((item) => {
+              return <Card key={item?.name} {...item} />;
+            })}
+          </>
+        )}
+      </Layout>
     </>
   );
 };

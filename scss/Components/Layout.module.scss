@@ -2,6 +2,8 @@
 
 .container {
   display: grid;
-  place-items: center;
-  padding-top: $xxl;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-rows: auto;
+  column-gap: $s;
+  padding: $xxl $s 0 $s;
 }
