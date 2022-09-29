@@ -6,7 +6,7 @@ import Error from "next/error";
 import type { NextPage } from "next";
 import { UserTopItems } from "types";
 
-import { Layout, Card } from "@components/index";
+import { Layout, ArtistCard } from "@components/index";
 import styles from "@styles/Pages/Artist.module.scss";
 
 const Home: NextPage = () => {
@@ -53,8 +53,8 @@ const Home: NextPage = () => {
         <section className={artist__container}>
           {data !== undefined && (
             <>
-              {data.items.map((item) => {
-                return <Card key={item?.name} {...item} />;
+              {data.items.map((item, i) => {
+                return <ArtistCard key={item?.name} i={i + 1} items={item} />;
               })}
             </>
           )}

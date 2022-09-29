@@ -1,18 +1,21 @@
 import React from "react";
 import Image from "next/image";
 
-import { Items } from "types";
+import { ArtistCardProps } from "types";
 
 import styles from "@styles/Components/Card.module.scss";
 
-export const Card = ({ external_urls, followers, genres, href, id, images, name, popularity, type, uri }: Items) => {
+export const ArtistCard = ({ items, i }: ArtistCardProps) => {
   const { card__container } = styles;
+  const { images, name } = items;
   return (
     <>
       <section className={card__container}>
         <figure>
           <Image loading="lazy" quality={"100"} src={images[1].url} width={images[1].width} height={images[1].height} />
-          <figcaption>{name}</figcaption>
+          <figcaption>
+            {i} - {name}
+          </figcaption>
         </figure>
       </section>
     </>

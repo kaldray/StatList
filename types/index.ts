@@ -24,4 +24,9 @@ export type Items = {
   uri: string;
 };
 
+export type ArtistCardProps = {
+  items: Items;
+  i: number;
+};
+
 export type QueryItems = "short_term" | "long_term" | "medium_term";
