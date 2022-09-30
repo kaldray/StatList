@@ -96,3 +96,17 @@ export type ExternalIds = {
   ean: string;
   upc: string;
 };
+
+export type UserInfo = {
+  country: string;
+  display_name: string;
+  explicit_content: { filter_enabled: boolean; filter_locked: false };
+  external_urls: { spotify: string };
+  followers: { href: string | null; total: number };
+  href: string;
+  id: string;
+  images: { height: number; width: number; url: string }[];
+  product: "premium" | "free" | "open";
+  type: "user";
+  uri: string;
+};

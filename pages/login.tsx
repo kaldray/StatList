@@ -13,7 +13,7 @@ const Login = ({ providers }: InferGetServerSidePropsType<typeof getServerSidePr
           <Image src={spotify} width={200} height={200} alt="Spotify Icon" />
           {providers &&
             Object.values(providers).map((provider) => (
-              <button key={provider.id} onClick={() => signIn(provider.id, { callbackUrl: "/home" })}>
+              <button key={provider.id} onClick={() => signIn(provider.id, { callbackUrl: "/" })}>
                 Se connecter avec {provider.name}
               </button>
             ))}

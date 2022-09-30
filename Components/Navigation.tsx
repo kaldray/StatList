@@ -9,7 +9,7 @@ import styles from "@styles/Components/Navigation.module.scss";
 export const Navigation = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const { container, nav } = styles;
 
@@ -36,18 +36,18 @@ export const Navigation = () => {
           <nav className={nav}>
             <ul>
               <li>
-                <Link href="/">
+                <Link href="/home/artist">
                   <a>Meilleur artiste</a>
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/home/track">
                   <a>Meilleur chanson</a>
                 </Link>
               </li>
               <li>
                 <Link href="/">
-                  <a>Meilleur artiste</a>
+                  <a>Accueil</a>
                 </Link>
               </li>
               <li onClick={() => signOut({ callbackUrl: "/" })}>Se déconnecter</li>
