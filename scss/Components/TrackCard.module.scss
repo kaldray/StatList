@@ -1,0 +1,24 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.card__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  z-index: -1;
+  padding: $m 0;
+  font-size: $mobileText;
+  font-size: clamp($mobileText, 2vw, $desktopText);
+  column-gap: $m;
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    border: 1px solid black;
+    background-color: black;
+    top: 0;
+  }
+}

@@ -5,6 +5,7 @@
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
   row-gap: $s;
+  margin-bottom: $l;
 
   h1 {
     grid-column: 1 / span 12;

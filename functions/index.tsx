@@ -1,4 +1,4 @@
-import { QueryItems, UserTopItems } from "types";
+import { ArtistItems, QueryItems, TrackItems, UserTopItems } from "types";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";
 const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";
@@ -13,7 +13,19 @@ export const getSpotifyMe = async (accesToken: string) => {
     return response.json();
   });
 };
-export const getSpotifyTopTracks = async (accesToken: string) => {
+export const getSpotifyTopTracks = async (
+  accesToken: string,
+  query?: QueryItems
+): Promise<UserTopItems<TrackItems>> => {
+  if (query) {
+    return fetch(`${USER_TOP_TRACK}?time_range=${query}`, {
+      headers: {
+        Authorization: `Bearer ${accesToken}`,
+      },
+    }).then((response) => {
+      return response.json();
+    });
+  }
   return fetch(USER_TOP_TRACK, {
     headers: {
       Authorization: `Bearer ${accesToken}`,
@@ -22,7 +34,10 @@ export const getSpotifyTopTracks = async (accesToken: string) => {
     return response.json();
   });
 };
-export const getSpotifyTopArtist = async (accesToken: string, query?: QueryItems): Promise<UserTopItems> => {
+export const getSpotifyTopArtist = async (
+  accesToken: string,
+  query?: QueryItems
+): Promise<UserTopItems<ArtistItems>> => {
   if (query) {
     return fetch(`${USER_TOP_ARTIST}?time_range=${query}`, {
       headers: {
