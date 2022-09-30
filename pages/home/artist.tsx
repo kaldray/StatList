@@ -4,12 +4,12 @@ import Head from "next/head";
 import Error from "next/error";
 
 import type { NextPage } from "next";
-import { TrackItems, UserTopItems } from "types";
+import { ArtistItems, UserTopItems } from "types";
 
-import { Layout, PeriodChoice, TrackCard } from "@components/index";
+import { Layout, ArtistCard, PeriodChoice } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
-const Track: NextPage = () => {
+const Artist: NextPage = () => {
   const { artist__container } = styles;
   const [queryParams, setQueryParams] = useState<string | undefined>(undefined);
   const fetcher = async (url: string, queryParams?: string) => {
@@ -20,7 +20,7 @@ const Track: NextPage = () => {
     const res_1 = await fetch(url);
     return await res_1.json();
   };
-  const { data, error } = useSWR<UserTopItems<TrackItems>, Error>(["/api/tracks", queryParams], fetcher);
+  const { data, error } = useSWR<UserTopItems<ArtistItems>, Error>(["/api/artists", queryParams], fetcher);
 
   function getShortTermArtist() {
     setQueryParams("?range=short");
@@ -51,7 +51,7 @@ const Track: NextPage = () => {
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
-                return <TrackCard key={item?.id} i={i + 1} items={item} />;
+                return <ArtistCard key={item?.name} i={i + 1} items={item} />;
               })}
             </>
           )}
@@ -61,4 +61,4 @@ const Track: NextPage = () => {
   );
 };
 
-export default Track;
+export default Artist;
