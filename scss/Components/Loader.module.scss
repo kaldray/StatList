@@ -1,0 +1,25 @@
+.loader {
+  place-self: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: black;
+  box-shadow: 32px 0 black, -32px 0 black;
+  position: relative;
+  animation: flash 1s ease-out infinite alternate;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #fff2;
+    box-shadow: 32px 0 #fff2, -32px 0 black;
+  }
+  50% {
+    background-color: black;
+    box-shadow: 32px 0 #fff2, -32px 0 #fff2;
+  }
+  100% {
+    background-color: #fff2;
+    box-shadow: 32px 0 black, -32px 0 #fff2;
+  }
+}

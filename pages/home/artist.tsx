@@ -6,7 +6,7 @@ import Error from "next/error";
 import type { NextPage } from "next";
 import { ArtistItems, UserTopItems } from "types";
 
-import { Layout, ArtistCard, PeriodChoice } from "@components/index";
+import { Layout, ArtistCard, PeriodChoice, Loader } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Artist: NextPage = () => {
@@ -47,7 +47,7 @@ const Artist: NextPage = () => {
         />
         <section className={artist__container}>
           {error && <p>Une Erreur est survenue...</p>}
-          {!data && <p>Loading...</p>}
+          {!data && <Loader />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {

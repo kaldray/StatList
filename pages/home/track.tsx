@@ -6,7 +6,7 @@ import Error from "next/error";
 import type { NextPage } from "next";
 import { TrackItems, UserTopItems } from "types";
 
-import { Layout, PeriodChoice, TrackCard } from "@components/index";
+import { Layout, PeriodChoice, TrackCard, Loader } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Track: NextPage = () => {
@@ -47,7 +47,7 @@ const Track: NextPage = () => {
         />
         <section className={artist__container}>
           {error && <p>Une Erreur est survenue...</p>}
-          {!data && <p>Loading...</p>}
+          {!data && <Loader />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
