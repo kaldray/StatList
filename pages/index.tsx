@@ -25,7 +25,7 @@ const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServ
             période.
           </p>
           <ol>
-            <li>Une période courte : les quatres dernière semaines</li>
+            <li>Une période courte : les quatre dernières semaines</li>
             <li>Une période moyenne : les six derniers mois</li>
             <li>Une période longue : plusieurs années</li>
           </ol>

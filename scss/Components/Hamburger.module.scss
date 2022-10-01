@@ -5,10 +5,14 @@
   grid-row: 1;
   grid-column: 12;
   width: 2rem;
+  height: 2rem;
+  place-content: center;
+  place-items: center;
+  position: relative;
 
   span {
     display: block;
-    position: relative;
+    position: absolute;
     height: 0.2rem;
     width: 100%;
     border-radius: $mediumRadius;
@@ -24,20 +28,16 @@
   span:nth-child(2) {
     bottom: 0.5rem;
   }
-
-  span:nth-child(2).toggle {
-    bottom: 0rem;
-  }
 }
 
 .toggle {
   span:nth-child(1) {
-    top: 0.3rem;
+    top: 0.8rem;
     transform: rotate(45deg);
   }
 
   span:nth-child(2) {
-    bottom: 0rem;
+    bottom: 1rem;
     transform: rotate(-45deg);
   }
 }
