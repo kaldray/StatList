@@ -31,6 +31,12 @@
       &:hover {
         cursor: pointer;
       }
+      a {
+        color: $black;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 }

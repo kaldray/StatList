@@ -42,7 +42,7 @@ export const Navigation = () => {
               </li>
               <li>
                 <Link href="/home/track">
-                  <a>Meilleur chanson</a>
+                  <a>Meilleure chanson</a>
                 </Link>
               </li>
               <li>

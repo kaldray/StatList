@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useRef } from "react";
 
 import styles from "@styles/Components/Hamburger.module.scss";
 
@@ -8,10 +8,24 @@ type HamburgerProps = {
 };
 
 export const Hamburger = ({ setIsToggle, isToggle }: HamburgerProps) => {
-  const { container__hamb } = styles;
+  const { container__hamb, toggle } = styles;
+  const hamb = useRef<HTMLDivElement>(null);
+
+  function toggleHamburger() {
+    if (hamb) {
+      hamb.current?.classList?.toggle(`${toggle}`);
+    }
+  }
+
   return (
     <>
-      <div onClick={() => setIsToggle(!isToggle)} className={container__hamb}>
+      <div
+        ref={hamb}
+        onClick={() => {
+          setIsToggle(!isToggle);
+          toggleHamburger();
+        }}
+        className={container__hamb}>
         <span></span>
         <span></span>
       </div>
