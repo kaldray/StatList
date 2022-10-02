@@ -36,8 +36,28 @@ export const getSpotifyTopTracks = async (
 };
 export const getSpotifyTopArtist = async (
   accesToken: string,
-  query?: QueryItems
+  query?: QueryItems,
+  limit?: string | string[],
+  offset?: string | string[]
 ): Promise<UserTopItems<ArtistItems>> => {
+  if (limit && offset && query) {
+    return fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}&time_range=${query}`, {
+      headers: {
+        Authorization: `Bearer ${accesToken}`,
+      },
+    }).then((response) => {
+      return response.json();
+    });
+  }
+  if (limit && offset) {
+    return fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}`, {
+      headers: {
+        Authorization: `Bearer ${accesToken}`,
+      },
+    }).then((response) => {
+      return response.json();
+    });
+  }
   if (query) {
     return fetch(`${USER_TOP_ARTIST}?time_range=${query}`, {
       headers: {

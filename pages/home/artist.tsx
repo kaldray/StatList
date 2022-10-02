@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import Error from "next/error";
@@ -6,30 +6,73 @@ import Error from "next/error";
 import type { NextPage } from "next";
 import { ArtistItems, UserTopItems } from "types";
 
-import { Layout, ArtistCard, PeriodChoice, Loader } from "@components/index";
+import { Layout, ArtistCard, PeriodChoice, Loader, Pagination } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Artist: NextPage = () => {
   const { artist__container } = styles;
   const [queryParams, setQueryParams] = useState<string | undefined>(undefined);
-  const fetcher = async (url: string, queryParams?: string) => {
+  const [previousOrNextUrl, setUrl] = useState<string | null>(null);
+  const [nextIsActive, setNextIsActive] = useState<boolean>(false);
+  const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
+
+  const fetcher = async (url: string, queryParams?: string, previousOrNextUrl?: string | null) => {
+    if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
+      const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1);
+      const res = await fetch(`${url}?time_range=${queryParams}&${nextOrPreviousUrl}`);
+      return await res.json();
+    }
+    if (previousOrNextUrl !== null && previousOrNextUrl !== undefined) {
+      const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1);
+      if (nextOrPreviousUrl !== undefined) {
+        const res = await fetch(`${url}?${nextOrPreviousUrl}`);
+        return await res.json();
+      }
+    }
     if (queryParams !== undefined) {
-      const res = await fetch(url + queryParams);
+      const res = await fetch(`${url}?time_range=${queryParams}`);
       return await res.json();
     }
     const res_1 = await fetch(url);
     return await res_1.json();
   };
-  const { data, error } = useSWR<UserTopItems<ArtistItems>, Error>(["/api/artists", queryParams], fetcher);
+
+  const { data, error } = useSWR<UserTopItems<ArtistItems>, Error>(
+    ["/api/artists", queryParams, previousOrNextUrl],
+    fetcher
+  );
+
+  useEffect(() => {
+    if (data?.next === null) {
+      setNextIsActive(true);
+    } else {
+      setNextIsActive(false);
+    }
+    if (data?.previous === null) {
+      setPreviousIsActive(true);
+    } else {
+      setPreviousIsActive(false);
+    }
+  }, [data]);
 
   function getShortTermArtist() {
-    setQueryParams("?range=short");
+    setQueryParams("short_term");
   }
   function getLongTermArtist() {
-    setQueryParams("?range=long");
+    setQueryParams("long_term");
   }
   function getMediummTermArtist() {
     setQueryParams(undefined);
+  }
+  function nextPage() {
+    if (data) {
+      setUrl(data?.next);
+    }
+  }
+  function previousPage() {
+    if (data) {
+      setUrl(data?.previous);
+    }
   }
 
   return (
@@ -56,6 +99,12 @@ const Artist: NextPage = () => {
             </>
           )}
         </section>
+        <Pagination
+          nextIsActive={nextIsActive}
+          previousIsActive={previousIsActive}
+          nextPage={nextPage}
+          previousPage={previousPage}
+        />
       </Layout>
     </>
   );
