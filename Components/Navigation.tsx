@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 
 import { Hamburger } from "./Hamburger";
@@ -10,8 +11,9 @@ export const Navigation = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
   const { data: session } = useSession();
+  const router = useRouter();
 
-  const { container, nav } = styles;
+  const { container, nav, active } = styles;
 
   useEffect(() => {
     function toggleHamburger() {
@@ -27,6 +29,11 @@ export const Navigation = () => {
     };
   }, []);
 
+  function setActiveLink(href: string) {
+    console.log(router.pathname);
+    return router.pathname === href ? active : "";
+  }
+
   return (
     <>
       <div className={container}>
@@ -35,17 +42,17 @@ export const Navigation = () => {
         {session && (isToggle || (innerWidth && innerWidth >= 680)) && (
           <nav className={nav}>
             <ul>
-              <li>
+              <li className={setActiveLink("/home/artist")}>
                 <Link href="/home/artist">
                   <a>Meilleur artiste</a>
                 </Link>
               </li>
-              <li>
+              <li className={setActiveLink("/home/track")}>
                 <Link href="/home/track">
                   <a>Meilleure chanson</a>
                 </Link>
               </li>
-              <li>
+              <li className={setActiveLink("/")}>
                 <Link href="/">
                   <a>Accueil</a>
                 </Link>

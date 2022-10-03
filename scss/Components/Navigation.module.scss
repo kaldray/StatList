@@ -28,6 +28,7 @@
     row-gap: $xs;
     li {
       font-size: $mobileText;
+      position: relative;
       &:hover {
         cursor: pointer;
       }
@@ -38,6 +39,18 @@
         }
       }
     }
+  }
+}
+
+.active {
+  &::after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: $fern-green;
+    position: absolute;
+    left: 0;
+    bottom: -5%;
   }
 }
 
