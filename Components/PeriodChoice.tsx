@@ -48,7 +48,7 @@ export const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLong
           <button
             ref={mediumTermButton}
             onClick={() => {
-              getMediummTermArtist;
+              getMediummTermArtist();
               setActiveButton(mediumTermButton, shortTermButton, longTermButton);
             }}>
             6 dernier mois
@@ -56,7 +56,7 @@ export const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLong
           <button
             ref={longTermButton}
             onClick={() => {
-              getLongTermArtist;
+              getLongTermArtist();
               setActiveButton(longTermButton, shortTermButton, mediumTermButton);
             }}>
             Toute le période
