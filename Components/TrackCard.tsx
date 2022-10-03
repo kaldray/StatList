@@ -15,7 +15,14 @@ export const TrackCard = ({ items, i }: TrackCardPros) => {
     <>
       {items && (
         <section className={card__container}>
-          <Image loading="lazy" quality={"100"} src={images[2].url} width={images[2].width} height={images[2].height} />
+          <Image
+            alt={"Pochette de " + name}
+            loading="lazy"
+            quality={"100"}
+            src={images[2].url}
+            width={images[2].width}
+            height={images[2].height}
+          />
           <ul>
             <li>
               {i} - {name}

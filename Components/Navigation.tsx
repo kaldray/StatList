@@ -36,7 +36,7 @@ export const Navigation = () => {
   return (
     <>
       <div className={container}>
-        <p>Spoti'stats</p>
+        <p>Spoti&apos;stats</p>
         {session && <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />}
         {session && (isToggle || (innerWidth && innerWidth >= 680)) && (
           <nav className={nav}>

@@ -18,7 +18,7 @@ export const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLong
     if (mediumTermButton) {
       mediumTermButton.current?.classList.add(`${active}`);
     }
-  }, []);
+  }, [active]);
 
   function setActiveButton(
     activeButton: RefObject<HTMLButtonElement>,

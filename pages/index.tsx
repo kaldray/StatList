@@ -13,23 +13,23 @@ const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServ
   return (
     <>
       <Head>
-        <title>Spoti'stats</title>
+        <title>Spoti&apos;stats</title>
         <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
       </Head>
       <Layout>
         <section className={presentation__container}>
-          <h1>Bienvenue sur Spoti'stats {userInfo?.display_name} </h1>
+          <h1>Bienvenue sur Spoti&apos;stats {userInfo?.display_name} </h1>
           <p>
             Sur ce site vous pouvez visualiser la liste de vos artistes et chansons les plus écouter sur différentes
             période.
           </p>
           <ol>
-            <li>Une période courte : les quatre dernières semaines</li>
-            <li>Une période moyenne : les six derniers mois</li>
-            <li>Une période longue : plusieurs années</li>
+            <li>Une période courte : les quatre dernières semaines.</li>
+            <li>Une période moyenne : les six derniers mois.</li>
+            <li>Une période longue : plusieurs années.</li>
           </ol>
-          {!userInfo && <p>Pour découvrir tout ceci connecter vous avec votre compte Spotify</p>}
+          {!userInfo && <p>Pour découvrir tout ceci connecter vous avec votre compte Spotify.</p>}
           {!userInfo ? <button onClick={() => signIn()}>Se connecter</button> : null}
         </section>
       </Layout>

@@ -12,7 +12,14 @@ export const ArtistCard = ({ items, i }: ArtistCardProps) => {
     <>
       <section className={card__container}>
         <figure>
-          <Image loading="lazy" quality={"100"} src={images[1].url} width={images[1].width} height={images[1].height} />
+          <Image
+            alt={name}
+            loading="lazy"
+            quality={"100"}
+            src={images[1].url}
+            width={images[1].width}
+            height={images[1].height}
+          />
           <figcaption>
             {i} - {name}
           </figcaption>
