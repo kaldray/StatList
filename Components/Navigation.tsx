@@ -30,7 +30,6 @@ export const Navigation = () => {
   }, []);
 
   function setActiveLink(href: string) {
-    console.log(router.pathname);
     return router.pathname === href ? active : "";
   }
 

@@ -29,6 +29,7 @@
       font-weight: 300;
       border: 1px solid $black;
       border-radius: $smallRadius;
+
       &:hover {
         cursor: pointer;
         background-color: darken($laurel-green, 5%);
@@ -36,6 +37,13 @@
       &:active {
         background-color: darken($laurel-green, 15%);
       }
+      &:focus {
+        background-color: darken($laurel-green, 15%);
+      }
     }
   }
+}
+
+.active {
+  background-color: darken($laurel-green, 20%) !important;
 }
