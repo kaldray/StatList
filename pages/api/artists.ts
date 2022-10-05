@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { getSpotifyTopArtist } from "../../functions";
-import { QueryItems } from "types";
-
-type M = keyof QueryItems;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({

@@ -15,6 +15,7 @@ const Artist: NextPage = () => {
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
+  const [pageIndex, setPageIndex] = useState<number>(1);
 
   const fetcher = async (url: string, queryParams?: string, previousOrNextUrl?: string | null) => {
     if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
@@ -79,12 +80,14 @@ const Artist: NextPage = () => {
     if (data) {
       setUrl(data?.next);
     }
+    setPageIndex(pageIndex + 1);
   }
 
   function previousPage() {
     if (data) {
       setUrl(data?.previous);
     }
+    setPageIndex(pageIndex - 1);
   }
 
   return (
@@ -106,7 +109,7 @@ const Artist: NextPage = () => {
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
-                return <ArtistCard key={item?.name} i={i + 1} items={item} />;
+                return <ArtistCard key={item.name} i={i + 1 + data.offset} items={item} />;
               })}
             </>
           )}

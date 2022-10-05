@@ -105,7 +105,7 @@ const Track: NextPage = () => {
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
-                return <TrackCard key={item?.id} i={i + 1} items={item} />;
+                return <TrackCard key={item?.id} i={i + 1 + data.offset} items={item} />;
               })}
             </>
           )}
