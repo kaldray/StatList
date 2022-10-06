@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
-import Error from "next/error";
+import { ErrorProps } from "next/error";
+import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
 import { ArtistItems, UserTopItems } from "types";
 
 import { Layout, ArtistCard, PeriodChoice, Loader, Pagination } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
+
+const Error = dynamic(() => import("next/error"));
 
 const Artist: NextPage = () => {
   const { artist__container } = styles;
@@ -46,7 +49,7 @@ const Artist: NextPage = () => {
     return await res_1.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<ArtistItems>, Error>(
+  const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
     ["/api/artists", queryParams, previousOrNextUrl],
     fetcher
   );
@@ -104,7 +107,7 @@ const Artist: NextPage = () => {
           getMediummTermArtist={getMediummTermArtist}
         />
         <section className={artist__container}>
-          {error && <p>Une Erreur est survenue...</p>}
+          {error && <Error statusCode={error.statusCode} />}
           {!data && <Loader />}
           {data !== undefined && (
             <>

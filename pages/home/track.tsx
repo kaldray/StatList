@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Head from "next/head";
-import Error from "next/error";
+import { ErrorProps } from "next/error";
+import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
 import { TrackItems, UserTopItems } from "types";
 
 import { Layout, PeriodChoice, TrackCard, Loader, Pagination } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
+
+const Error = dynamic(() => import("next/error"));
 
 const Track: NextPage = () => {
   const { artist__container } = styles;
@@ -44,7 +47,7 @@ const Track: NextPage = () => {
     return await res_1.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<TrackItems>, Error>(
+  const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
     ["/api/tracks", queryParams, previousOrNextUrl],
     fetcher
   );
@@ -100,7 +103,7 @@ const Track: NextPage = () => {
           getMediummTermArtist={getMediummTermArtist}
         />
         <section className={artist__container}>
-          {error && <p>Une Erreur est survenue...</p>}
+          {error && <Error statusCode={error.statusCode} />}
           {!data && <Loader />}
           {data !== undefined && (
             <>
