@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import { ErrorProps } from "next/error";
@@ -7,10 +7,13 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { TrackItems, UserTopItems } from "types";
 
-import { Layout, PeriodChoice, TrackCard, Loader, Pagination } from "@components/index";
+import { Layout, PeriodChoice, Loader, Pagination } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Error = dynamic(() => import("next/error"));
+const TrackCard = dynamic(() => import("@components/TrackCard"), {
+  suspense: true,
+});
 
 const Track: NextPage = () => {
   const { artist__container } = styles;
@@ -104,11 +107,14 @@ const Track: NextPage = () => {
         />
         <section className={artist__container}>
           {error && <Error statusCode={error.statusCode} />}
-          {!data && <Loader />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
-                return <TrackCard key={item?.id} i={i + 1 + data.offset} items={item} />;
+                return (
+                  <Suspense fallback={<Loader />} key={item?.id}>
+                    <TrackCard i={i + 1 + data.offset} items={item} />
+                  </Suspense>
+                );
               })}
             </>
           )}

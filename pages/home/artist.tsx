@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import { ErrorProps } from "next/error";
@@ -7,10 +7,13 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { ArtistItems, UserTopItems } from "types";
 
-import { Layout, ArtistCard, PeriodChoice, Loader, Pagination } from "@components/index";
+import { Layout, PeriodChoice, Loader, Pagination } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Error = dynamic(() => import("next/error"));
+const ArtistCard = dynamic(() => import("@components/ArtistCard"), {
+  suspense: true,
+});
 
 const Artist: NextPage = () => {
   const { artist__container } = styles;
@@ -108,11 +111,14 @@ const Artist: NextPage = () => {
         />
         <section className={artist__container}>
           {error && <Error statusCode={error.statusCode} />}
-          {!data && <Loader />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
-                return <ArtistCard key={item.name} i={i + 1 + data.offset} items={item} />;
+                return (
+                  <Suspense fallback={<Loader />} key={item.name}>
+                    <ArtistCard i={i + 1 + data.offset} items={item} />
+                  </Suspense>
+                );
               })}
             </>
           )}

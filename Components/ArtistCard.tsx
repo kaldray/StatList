@@ -5,9 +5,10 @@ import { ArtistCardProps } from "types";
 
 import styles from "@styles/Components/Card.module.scss";
 
-export const ArtistCard = ({ items, i }: ArtistCardProps) => {
+const ArtistCard = ({ items, i }: ArtistCardProps) => {
   const { card__container } = styles;
   const { images, name } = items;
+
   return (
     <>
       <section className={card__container}>
@@ -16,9 +17,10 @@ export const ArtistCard = ({ items, i }: ArtistCardProps) => {
             alt={name}
             loading="lazy"
             quality={"100"}
-            src={images[1].url}
-            width={images[1].width}
-            height={images[1].height}
+            src={images[0].url}
+            width={images[0].width}
+            height={images[0].height}
+            objectFit="cover"
           />
           <figcaption>
             {i} - {name}
@@ -28,3 +30,5 @@ export const ArtistCard = ({ items, i }: ArtistCardProps) => {
     </>
   );
 };
+
+export default ArtistCard;

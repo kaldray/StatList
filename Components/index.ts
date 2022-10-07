@@ -1,8 +1,6 @@
 export { Layout } from "./Layout";
 export { Hamburger } from "./Hamburger";
 export { Navigation } from "./Navigation";
-export { ArtistCard } from "./ArtistCard";
 export { PeriodChoice } from "./PeriodChoice";
-export { TrackCard } from "./TrackCard";
 export { Loader } from "./Loader";
 export { Pagination } from "./Pagination";
