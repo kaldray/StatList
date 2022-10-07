@@ -5,7 +5,7 @@ import { ArtistCardProps } from "types";
 
 import styles from "@styles/Components/Card.module.scss";
 
-export const ArtistCard = ({ items, i }: ArtistCardProps) => {
+const ArtistCard = ({ items, i }: ArtistCardProps) => {
   const { card__container } = styles;
   const { images, name } = items;
   return (
@@ -28,3 +28,5 @@ export const ArtistCard = ({ items, i }: ArtistCardProps) => {
     </>
   );
 };
+
+export default ArtistCard;

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { TrackCardPros } from "types";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-export const TrackCard = ({ items, i }: TrackCardPros) => {
+const TrackCard = ({ items, i }: TrackCardPros) => {
   const {
     name,
     album: { images },
@@ -34,3 +34,5 @@ export const TrackCard = ({ items, i }: TrackCardPros) => {
     </>
   );
 };
+
+export default TrackCard;
