@@ -6,12 +6,10 @@
   flex-direction: row;
   align-items: center;
   position: relative;
-  z-index: -1;
   padding: $m 0;
-  font-size: $mobileText;
-  font-size: clamp($mobileText, 2vw, $desktopText);
+  font-size: clamp($mobileText, 1.5vw, $desktopText);
   column-gap: $m;
-
+  min-height: 16rem;
   &::before {
     position: absolute;
     content: "";
@@ -21,4 +19,23 @@
     background-color: black;
     top: 0;
   }
+}
+
+.info__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $m;
+  width: 100%;
+}
+.logo__container {
+  min-width: 7rem;
+  max-width: 10rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.cover__container {
+  min-width: 6.4rem;
 }

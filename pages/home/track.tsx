@@ -95,7 +95,7 @@ const Track: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Spoti&apos;stats</title>
+        <title>StatList</title>
         <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
       </Head>

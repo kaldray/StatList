@@ -9,6 +9,7 @@
   background-color: $timberwolf;
   row-gap: $xs;
   position: fixed;
+  z-index: 10;
   padding: 1rem;
   width: 100%;
   p {
