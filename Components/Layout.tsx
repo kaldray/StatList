@@ -12,7 +12,7 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Navigation />
-      <section className={container}>{children}</section>
+      <main className={container}>{children}</main>
     </>
   );
 };
