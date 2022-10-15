@@ -7,13 +7,15 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { ArtistItems, UserTopItems } from "types";
 
-import { Layout, PeriodChoice, Loader, Pagination } from "@components/index";
+import { Layout, Loader } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Error = dynamic(() => import("next/error"));
 const ArtistCard = dynamic(() => import("@components/ArtistCard"), {
   suspense: true,
 });
+const Pagination = dynamic(() => import("@components/Pagination").then((res) => res.Pagination));
+const PeriodChoice = dynamic(() => import("@components/PeriodChoice").then((res) => res.PeriodChoice));
 
 const Artist: NextPage = () => {
   const { artist__container } = styles;
