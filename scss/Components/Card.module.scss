@@ -6,11 +6,32 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: -1;
   margin: $m 0;
+  padding: $s;
+  background-color: $timberwolf;
+  border-radius: $mediumRadius;
+  box-shadow: 2px 2px 5px 0px $black;
+
+  figure {
+    display: flex;
+    flex-direction: column;
+    gap: $s;
+    img {
+      border-radius: $smallRadius;
+    }
+  }
   figcaption {
     font-size: $mobileText;
     text-align: center;
+  }
+}
+
+.logo__container {
+  min-width: 7rem;
+  max-width: 10rem;
+  margin: auto;
+  &:hover {
+    cursor: pointer;
   }
 }
 
@@ -18,7 +39,6 @@
   .card__container {
     display: flex;
     position: relative;
-    z-index: -1;
     margin: $m 0;
     figcaption {
       font-size: $mobileText;

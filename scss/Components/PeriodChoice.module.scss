@@ -5,7 +5,8 @@
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
   row-gap: $s;
-  margin-bottom: $l;
+  margin-bottom: $m;
+  margin-top: $m;
 
   h1 {
     grid-column: 1 / span 12;
@@ -27,7 +28,7 @@
       padding: $xs;
       font-size: $mobileText;
       font-weight: 300;
-      border: 1px solid $black;
+      border: none;
       border-radius: $smallRadius;
 
       &:hover {
@@ -37,13 +38,10 @@
       &:active {
         background-color: darken($laurel-green, 15%);
       }
-      &:focus {
-        background-color: darken($laurel-green, 15%);
-      }
     }
   }
 }
 
 .active {
-  background-color: darken($laurel-green, 20%) !important;
+  box-shadow: 2px 2px 5px 0px black;
 }

@@ -1,18 +1,26 @@
 import React from "react";
 import Image from "next/image";
+import logo from "../public/Spotify_Logo_RGB_Black.png";
 
 import { ArtistCardProps } from "types";
 
 import styles from "@styles/Components/Card.module.scss";
 
 const ArtistCard = ({ items, i }: ArtistCardProps) => {
-  const { card__container } = styles;
+  const { card__container, logo__container } = styles;
   const { images, name } = items;
+
+  function goToSpotifyUrl() {
+    window.location.href = items.external_urls.spotify;
+  }
 
   return (
     <>
       <section className={card__container}>
         <figure>
+          <figcaption>
+            {i} - {name}
+          </figcaption>
           <Image
             alt={name}
             loading="lazy"
@@ -22,9 +30,9 @@ const ArtistCard = ({ items, i }: ArtistCardProps) => {
             height={images[0].height}
             objectFit="cover"
           />
-          <figcaption>
-            {i} - {name}
-          </figcaption>
+          <div onClick={goToSpotifyUrl} className={logo__container}>
+            <Image layout="intrinsic" alt="Spotify Logo" loading="lazy" quality={"100"} src={logo} />
+          </div>
         </figure>
       </section>
     </>

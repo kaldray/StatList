@@ -14,8 +14,11 @@
     padding: $xs;
     font-size: $mobileText;
     font-weight: 300;
-    border: 1px solid $black;
+    border: none;
     border-radius: $smallRadius;
+    min-width: 10rem;
+    width: 10rem;
+    max-height: 4rem;
     &:hover {
       cursor: pointer;
       background-color: darken($kombu-green, 5%);
@@ -25,8 +28,9 @@
     }
     &:disabled {
       cursor: not-allowed;
-      background-color: azure;
-      color: black
+      background-color: transparent;
+      border: 1px solid black;
+      color: black;
     }
   }
 }

@@ -13,13 +13,13 @@ const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServ
   return (
     <>
       <Head>
-        <title>Spoti&apos;stats</title>
+        <title>StatList</title>
         <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
       </Head>
       <Layout>
         <section className={presentation__container}>
-          <h1>Bienvenue sur Spoti&apos;stats {userInfo?.display_name} </h1>
+          <h1>Bienvenue sur StatList {userInfo?.display_name} </h1>
           <p>
             Sur ce site vous pouvez visualiser la liste de vos artistes et chansons les plus écoutées sur différentes
             périodes.
