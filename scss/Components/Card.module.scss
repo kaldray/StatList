@@ -7,16 +7,16 @@
   flex-direction: column;
   position: relative;
   margin: $m 0;
-  border: 1px solid $black;
   padding: $s;
   background-color: $timberwolf;
   border-radius: $mediumRadius;
+  box-shadow: 2px 2px 5px 0px $black;
 
   figure {
     display: flex;
     flex-direction: column;
     gap: $s;
-    img{
+    img {
       border-radius: $smallRadius;
     }
   }
