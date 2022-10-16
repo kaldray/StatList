@@ -1,11 +1,13 @@
-import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
+import { getToken } from "next-auth/jwt";
 import { signIn } from "next-auth/react";
 
+import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
+
 import { Layout } from "@components/index";
+import { getSpotifyMe } from "@providers/spotify";
+
 import styles from "@styles/Pages/home.module.scss";
-import { getToken } from "next-auth/jwt";
-import { getSpotifyMe } from "functions";
 
 const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { presentation__container } = styles;

@@ -1,11 +1,11 @@
 import { useState, useEffect, Suspense } from "react";
 import useSWR from "swr";
 import Head from "next/head";
-import { ErrorProps } from "next/error";
 import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
-import { TrackItems, UserTopItems } from "types";
+import { TrackItems, UserTopItems } from "types/spotify";
+import { ErrorProps } from "next/error";
 
 import { Layout, Loader } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";

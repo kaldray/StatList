@@ -1,4 +1,4 @@
-import { ArtistItems, QueryItems, TrackItems, UserInfo, UserTopItems } from "types";
+import { ArtistItems, QueryItems, TrackItems, UserInfo, UserTopItems } from "types/spotify";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";
 const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";
@@ -13,6 +13,7 @@ export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
     return response.json();
   });
 };
+
 export const getSpotifyTopTracks = async (
   accesToken: string,
   query?: QueryItems,
@@ -54,6 +55,7 @@ export const getSpotifyTopTracks = async (
     return response.json();
   });
 };
+
 export const getSpotifyTopArtist = async (
   accesToken: string,
   query?: QueryItems,

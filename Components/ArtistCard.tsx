@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import logo from "../public/Spotify_Logo_RGB_Black.png";
 
-import { ArtistCardProps } from "types";
+import { ArtistCardProps } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 

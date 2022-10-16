@@ -24,16 +24,6 @@ export type ArtistItems = {
   uri: string;
 };
 
-export type ArtistCardProps = {
-  items: ArtistItems;
-  i: number;
-};
-
-export type TrackCardPros = {
-  items: TrackItems;
-  i: number;
-};
-
 export type TrackItems = {
   album: Album;
   artists: Artist[];

@@ -1,6 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import { getSpotifyTopTracks } from "../../functions";
+
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import { getSpotifyTopTracks } from "@providers/spotify";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({

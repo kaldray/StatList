@@ -1,11 +1,8 @@
-import React, { Dispatch, SetStateAction, useRef } from "react";
+import React, { useRef } from "react";
+
+import { HamburgerProps } from "types/Components";
 
 import styles from "@styles/Components/Hamburger.module.scss";
-
-type HamburgerProps = {
-  setIsToggle: Dispatch<SetStateAction<boolean>>;
-  isToggle: boolean;
-};
 
 export const Hamburger = ({ setIsToggle, isToggle }: HamburgerProps) => {
   const { container__hamb, toggle } = styles;
