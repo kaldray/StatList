@@ -3,10 +3,12 @@ import React from "react";
 import styles from "@styles/Components/Loader.module.scss";
 
 export const Loader = () => {
-  const { loader } = styles;
+  const { loader, loader__container } = styles;
   return (
     <>
-      <span className={loader}></span>
+      <section className={loader__container}>
+        <span className={loader}></span>
+      </section>
     </>
   );
 };

@@ -1,5 +1,20 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.loader__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin: $m 0;
+  padding: $s;
+  border-radius: $mediumRadius;
+}
+
 .loader {
-  place-self: center;
+  display: grid;
+  place-content: center;
   width: 16px;
   height: 16px;
   border-radius: 50%;
