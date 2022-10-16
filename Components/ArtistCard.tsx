@@ -23,7 +23,7 @@ const ArtistCard = ({ items, i }: ArtistCardProps) => {
           </figcaption>
           <Image
             alt={name}
-            loading="lazy"
+            priority={true}
             quality={"100"}
             src={images[0].url}
             width={images[0].width}

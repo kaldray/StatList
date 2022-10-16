@@ -25,7 +25,7 @@ const TrackCard = ({ items, i }: TrackCardPros) => {
             <div className={cover__container}>
               <Image
                 alt={"Pochette de " + name}
-                loading="lazy"
+                priority={true}
                 quality={"100"}
                 layout="intrinsic"
                 src={images[2].url}
