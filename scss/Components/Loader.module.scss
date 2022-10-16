@@ -1,25 +1,38 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.loader__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin: $m 0;
+  padding: $s;
+  border-radius: $mediumRadius;
+}
+
 .loader {
-  place-self: center;
+  display: grid;
+  place-content: center;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background-color: black;
   box-shadow: 32px 0 black, -32px 0 black;
   position: relative;
-  animation: flash 1s ease-out infinite alternate;
+  animation: flash 1s ease-out infinite;
+  animation-timing-function: steps(5, 10);
 }
 
 @keyframes flash {
   0% {
-    background-color: #fff2;
-    box-shadow: 32px 0 #fff2, -32px 0 black;
+    opacity: 1;
   }
   50% {
-    background-color: black;
-    box-shadow: 32px 0 #fff2, -32px 0 #fff2;
+    opacity: 0.5;
   }
   100% {
-    background-color: #fff2;
-    box-shadow: 32px 0 black, -32px 0 #fff2;
+    opacity: 1;
   }
 }

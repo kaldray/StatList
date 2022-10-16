@@ -2,12 +2,7 @@ import React from "react";
 
 import styles from "@styles/Components/Pagination.module.scss";
 
-type PaginationProps = {
-  nextPage: () => void;
-  previousPage: () => void;
-  previousIsActive: boolean;
-  nextIsActive: boolean;
-};
+import { PaginationProps } from "types/Components";
 
 export const Pagination = ({ nextPage, previousPage, previousIsActive, nextIsActive }: PaginationProps) => {
   const { pagination__container } = styles;

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import logo from "../public/Spotify_Logo_RGB_Black.png";
 
-import { TrackCardPros } from "types";
+import { TrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
 const TrackCard = ({ items, i }: TrackCardPros) => {
@@ -25,7 +25,7 @@ const TrackCard = ({ items, i }: TrackCardPros) => {
             <div className={cover__container}>
               <Image
                 alt={"Pochette de " + name}
-                loading="lazy"
+                priority={true}
                 quality={"100"}
                 layout="intrinsic"
                 src={images[2].url}

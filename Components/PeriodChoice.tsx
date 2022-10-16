@@ -2,11 +2,7 @@ import React, { RefObject, useEffect, useRef } from "react";
 
 import styles from "@styles/Components/PeriodChoice.module.scss";
 
-type PeriodChoiceProps = {
-  getShortTermArtist: () => void;
-  getMediummTermArtist: () => void;
-  getLongTermArtist: () => void;
-};
+import { PeriodChoiceProps } from "types/Components";
 
 export const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLongTermArtist }: PeriodChoiceProps) => {
   const { search__container, active } = styles;
