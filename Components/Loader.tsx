@@ -1,8 +1,7 @@
-import React from "react";
-
+import { FC } from "react";
 import styles from "@styles/Components/Loader.module.scss";
 
-export const Loader = () => {
+export const Loader: FC = () => {
   const { loader, loader__container } = styles;
   return (
     <>

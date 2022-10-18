@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
@@ -7,7 +7,7 @@ import { Hamburger } from "./Hamburger";
 
 import styles from "@styles/Components/Navigation.module.scss";
 
-export const Navigation = () => {
+export const Navigation: FC = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
   const { data: session } = useSession();
@@ -16,7 +16,7 @@ export const Navigation = () => {
   const { container, nav, active } = styles;
 
   useEffect(() => {
-    function toggleHamburger() {
+    function toggleHamburger(): void {
       setInnerWidth(window.innerWidth);
     }
     if (typeof window !== "undefined") {
@@ -29,16 +29,23 @@ export const Navigation = () => {
     };
   }, []);
 
-  function setActiveLink(href: string) {
+  function setActiveLink(href: string): string {
+    if (typeof active === "undefined") {
+      return "";
+    }
     return router.pathname === href ? active : "";
+  }
+
+  async function logout(): Promise<void> {
+    await signOut({ callbackUrl: "/" });
   }
 
   return (
     <>
       <div className={container}>
         <p>StatList</p>
-        {session && <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />}
-        {session && (isToggle || (innerWidth && innerWidth >= 680)) && (
+        {session !== null && <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />}
+        {session !== null && (isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
           <nav className={nav}>
             <ul>
               <li className={setActiveLink("/home/artist")}>
@@ -56,7 +63,7 @@ export const Navigation = () => {
                   <a>Accueil</a>
                 </Link>
               </li>
-              <li onClick={() => signOut({ callbackUrl: "/" })}>Se déconnecter</li>
+              <li onClick={async () => await logout()}>Se déconnecter</li>
             </ul>
           </nav>
         )}

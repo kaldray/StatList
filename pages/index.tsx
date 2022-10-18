@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { signIn } from "next-auth/react";
 
 import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
+import { getServerSideUserInfo } from "types/next";
 
 import { Layout } from "@components/index";
 import { getSpotifyMe } from "@providers/spotify";
@@ -31,17 +32,17 @@ const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServ
             <li>Une période moyenne : les six derniers mois.</li>
             <li>Une période longue : plusieurs années.</li>
           </ol>
-          {!userInfo && <p>Pour découvrir tout ceci connectez vous avec votre compte Spotify.</p>}
-          {!userInfo ? <button onClick={() => signIn()}>Se connecter</button> : null}
+          {userInfo == null && <p>Pour découvrir tout ceci connectez vous avec votre compte Spotify.</p>}
+          {userInfo == null ? <button onClick={async () => await signIn()}>Se connecter</button> : null}
         </section>
       </Layout>
     </>
   );
 };
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<getServerSideUserInfo> => {
   const token = await getToken(context);
-  if (!token?.accessToken) {
+  if (token?.accessToken === undefined) {
     return {
       props: {},
     };

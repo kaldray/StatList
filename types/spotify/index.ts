@@ -1,4 +1,4 @@
-export type UserTopItems<T> = {
+export interface UserTopItems<T> {
   href: string;
   items: T[];
   limit: number;
@@ -6,9 +6,9 @@ export type UserTopItems<T> = {
   offset: number;
   previous: string | null;
   total: number;
-};
+}
 
-export type ArtistItems = {
+export interface ArtistItems {
   external_urls: { spotify: string };
   followers: {
     href: number | number;
@@ -17,14 +17,14 @@ export type ArtistItems = {
   genres: string[];
   href: string;
   id: string;
-  images: { height: number; width: number; url: string }[];
+  images: Array<{ height: number; width: number; url: string }>;
   name: string;
   popularity: number;
-  type: "artist";
+  interface: "artist";
   uri: string;
-};
+}
 
-export type TrackItems = {
+export interface TrackItems {
   album: Album;
   artists: Artist[];
   external_ids: ExternalIds;
@@ -41,12 +41,12 @@ export type TrackItems = {
   preview_url: string;
   track_number: number;
   uri: string;
-};
+}
 
 export type QueryItems = "short_term" | "long_term" | "medium_term";
 
-export type Album = {
-  album_type: "album" | "single" | "compilation";
+export interface Album {
+  album_interface: "album" | "single" | "compilation";
   total_tracks: number;
   available_marlets: string[];
   external_urls: {
@@ -54,18 +54,18 @@ export type Album = {
   };
   href: string;
   id: string;
-  images: { height: number; width: number; url: string }[];
+  images: Array<{ height: number; width: number; url: string }>;
   name: string;
   realase_date: string;
   release_date_precision: "year" | "month" | "day";
   restriction: {
     reason: "market" | "product" | "explicit";
   };
-  type: "album";
+  interface: "album";
   uri: string;
-};
+}
 
-export type Artist = {
+export interface Artist {
   external_urls: { spotify: string };
   followers: {
     href: string;
@@ -74,20 +74,20 @@ export type Artist = {
   href: string;
   genres: string[];
   id: string;
-  images: { height: number; width: number; url: string }[];
+  images: Array<{ height: number; width: number; url: string }>;
   name: string;
   popularity: number;
-  type: string;
+  interface: string;
   uri: string;
-};
+}
 
-export type ExternalIds = {
+export interface ExternalIds {
   isrc: string;
   ean: string;
   upc: string;
-};
+}
 
-export type UserInfo = {
+export interface UserInfo {
   country: string;
   display_name: string;
   explicit_content: { filter_enabled: boolean; filter_locked: false };
@@ -95,8 +95,8 @@ export type UserInfo = {
   followers: { href: string | null; total: number };
   href: string;
   id: string;
-  images: { height: number; width: number; url: string }[];
+  images: Array<{ height: number; width: number; url: string }>;
   product: "premium" | "free" | "open";
   type: "user";
   uri: string;
-};
+}

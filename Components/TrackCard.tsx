@@ -1,25 +1,26 @@
-import React from "react";
+import { FC } from "react";
 import Image from "next/image";
 import logo from "../public/Spotify_Logo_RGB_Black.png";
 
 import { TrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const TrackCard = ({ items, i }: TrackCardPros) => {
+const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
   const {
     name,
     album: { images },
     artists,
   } = items;
+
   const { card__container, info__container, logo__container, cover__container } = styles;
 
-  function goToSpotifyUrl() {
-    window.location.href = items.external_urls.spotify;
+  function goToSpotifyUrl(): string {
+    return (window.location.href = items.external_urls.spotify);
   }
 
   return (
     <>
-      {items && (
+      {items !== undefined && images[2] !== undefined && (
         <section className={card__container}>
           <div className={info__container}>
             <div className={cover__container}>
@@ -37,7 +38,7 @@ const TrackCard = ({ items, i }: TrackCardPros) => {
               <li>
                 {i} - {name}
               </li>
-              <li>{artists[0].name}</li>
+              <li>{artists[0]?.name}</li>
             </ul>
           </div>
           <div onClick={goToSpotifyUrl} className={logo__container}>

@@ -8,9 +8,9 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
 
-async function refreshAccessToken(token: JWT) {
+async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
-    if (token && token?.accessToken && token?.refreshToken) {
+    if (token?.accessToken !== undefined && token?.refreshToken !== undefined) {
       spotifyApi.setAccessToken(token?.accessToken);
       spotifyApi.setRefreshToken(token?.refreshToken);
     }
@@ -46,7 +46,7 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, account, user }) {
-      if (user && account && typeof account.expires_at === "number") {
+      if (user != null && account != null && typeof account.expires_at === "number") {
         console.log(account.scope);
         return {
           ...token,
@@ -57,10 +57,9 @@ export default NextAuth({
           user,
         };
       }
-      if (token !== undefined && token.accessTokenExpires && Date.now() < token?.accessTokenExpires) {
+      if (token.accessTokenExpires !== undefined && Date.now() < token?.accessTokenExpires) {
         return token;
       }
-      ("acces token has expires_at, REFRESHING...");
       return await refreshAccessToken(token);
     },
     async session({ session, token }) {
