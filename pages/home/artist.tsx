@@ -10,12 +10,12 @@ import { ErrorProps } from "next/error";
 import { Layout, Loader } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
-const Error = dynamic(() => import("next/error"));
-const ArtistCard = dynamic(() => import("@components/ArtistCard"), {
+const Error = dynamic(async () => await import("next/error"));
+const ArtistCard = dynamic(async () => await import("@components/ArtistCard"), {
   suspense: true,
 });
-const Pagination = dynamic(() => import("@components/Pagination").then((res) => res.Pagination));
-const PeriodChoice = dynamic(() => import("@components/PeriodChoice").then((res) => res.PeriodChoice));
+const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
+const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice").then((res) => res.PeriodChoice));
 
 const Artist: NextPage = () => {
   const { artist__container } = styles;
@@ -25,7 +25,11 @@ const Artist: NextPage = () => {
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(1);
 
-  const fetcher = async (url: string, queryParams?: string, previousOrNextUrl?: string | null) => {
+  const fetcher = async (
+    url: string,
+    queryParams?: string,
+    previousOrNextUrl?: string | null
+  ): Promise<UserTopItems<ArtistItems>> => {
     if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
       const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
       if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
@@ -50,8 +54,8 @@ const Artist: NextPage = () => {
       return await res.json();
     }
 
-    const res_1 = await fetch(url);
-    return await res_1.json();
+    const res = await fetch(url);
+    return await res.json();
   };
 
   const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
@@ -72,27 +76,27 @@ const Artist: NextPage = () => {
     }
   }, [data]);
 
-  function getShortTermArtist() {
+  function getShortTermArtist(): void {
     setQueryParams("short_term");
   }
 
-  function getLongTermArtist() {
+  function getLongTermArtist(): void {
     setQueryParams("long_term");
   }
 
-  function getMediummTermArtist() {
+  function getMediummTermArtist(): void {
     setQueryParams("medium_term");
   }
 
-  function nextPage() {
-    if (data) {
+  function nextPage(): void {
+    if (data != null) {
       setUrl(data?.next);
     }
     setPageIndex(pageIndex + 1);
   }
 
-  function previousPage() {
-    if (data) {
+  function previousPage(): void {
+    if (data != null) {
       setUrl(data?.previous);
     }
     setPageIndex(pageIndex - 1);
@@ -112,7 +116,7 @@ const Artist: NextPage = () => {
           getMediummTermArtist={getMediummTermArtist}
         />
         <section className={artist__container}>
-          {error && <Error statusCode={error.statusCode} />}
+          {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {

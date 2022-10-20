@@ -4,16 +4,15 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { getSpotifyTopArtist } from "@providers/spotify";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const session = await getSession({
     req,
   });
 
   if (
-    session &&
-    session.user.accessToken &&
-    req.query?.limit &&
-    req.query?.offset &&
+    session?.user.accessToken !== undefined &&
+    req.query.limit !== undefined &&
+    req.query.offset !== undefined &&
     (req.query?.time_range === "short_term" ||
       req.query?.time_range === "long_term" ||
       req.query?.time_range === "medium_term")
@@ -28,8 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (
-    session &&
-    session.user.accessToken &&
+    session?.user.accessToken !== undefined &&
     (req.query?.time_range === "short_term" ||
       req.query?.time_range === "long_term" ||
       req.query?.time_range === "medium_term")
@@ -38,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).send(response);
   }
 
-  if (session && session.user.accessToken && req.query?.limit && req.query?.offset) {
+  if (session?.user.accessToken !== undefined && req.query?.limit !== undefined && req.query?.offset !== undefined) {
     const response = await getSpotifyTopArtist(
       session?.user?.accessToken,
       undefined,
@@ -48,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).send(response);
   }
 
-  if (session && session.user.accessToken) {
+  if (session?.user.accessToken !== undefined) {
     const response = await getSpotifyTopArtist(session?.user?.accessToken);
     return res.status(200).send(response);
   }

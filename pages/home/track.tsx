@@ -10,12 +10,12 @@ import { ErrorProps } from "next/error";
 import { Layout, Loader } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
-const Error = dynamic(() => import("next/error"));
-const TrackCard = dynamic(() => import("@components/TrackCard"), {
+const Error = dynamic(async () => await import("next/error"));
+const TrackCard = dynamic(async () => await import("@components/TrackCard"), {
   suspense: true,
 });
-const Pagination = dynamic(() => import("@components/Pagination").then((res) => res.Pagination));
-const PeriodChoice = dynamic(() => import("@components/PeriodChoice").then((res) => res.PeriodChoice));
+const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
+const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice").then((res) => res.PeriodChoice));
 
 const Track: NextPage = () => {
   const { artist__container } = styles;
@@ -24,7 +24,11 @@ const Track: NextPage = () => {
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
 
-  const fetcher = async (url: string, queryParams?: string, previousOrNextUrl?: string | null) => {
+  const fetcher = async (
+    url: string,
+    queryParams?: string,
+    previousOrNextUrl?: string | null
+  ): Promise<UserTopItems<TrackItems>> => {
     if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
       const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
       if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
@@ -48,8 +52,8 @@ const Track: NextPage = () => {
       const res = await fetch(`${url}?time_range=${queryParams}`);
       return await res.json();
     }
-    const res_1 = await fetch(url);
-    return await res_1.json();
+    const res = await fetch(url);
+    return await res.json();
   };
 
   const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
@@ -70,26 +74,26 @@ const Track: NextPage = () => {
     }
   }, [data]);
 
-  function getShortTermArtist() {
+  function getShortTermArtist(): void {
     setQueryParams("short_term");
   }
 
-  function getLongTermArtist() {
+  function getLongTermArtist(): void {
     setQueryParams("long_term");
   }
 
-  function getMediummTermArtist() {
+  function getMediummTermArtist(): void {
     setQueryParams("medium_term");
   }
 
-  function nextPage() {
-    if (data) {
+  function nextPage(): void {
+    if (data != null) {
       setUrl(data?.next);
     }
   }
 
-  function previousPage() {
-    if (data) {
+  function previousPage(): void {
+    if (data != null) {
       setUrl(data?.previous);
     }
   }
@@ -108,7 +112,7 @@ const Track: NextPage = () => {
           getMediummTermArtist={getMediummTermArtist}
         />
         <section className={artist__container}>
-          {error && <Error statusCode={error.statusCode} />}
+          {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {

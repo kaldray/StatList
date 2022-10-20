@@ -1,17 +1,22 @@
-import React, { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef, FC } from "react";
 
+// import styles from "@styles/Components/PeriodChoice.module.scss";
 import styles from "@styles/Components/PeriodChoice.module.scss";
 
 import { PeriodChoiceProps } from "types/Components";
 
-export const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLongTermArtist }: PeriodChoiceProps) => {
+export const PeriodChoice: FC<PeriodChoiceProps> = ({
+  getShortTermArtist,
+  getMediummTermArtist,
+  getLongTermArtist,
+}) => {
   const { search__container, active } = styles;
   const mediumTermButton = useRef<HTMLButtonElement>(null);
   const shortTermButton = useRef<HTMLButtonElement>(null);
   const longTermButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (mediumTermButton) {
+    if (mediumTermButton !== null && typeof active === "string") {
       mediumTermButton.current?.classList.add(`${active}`);
     }
   }, [active]);
@@ -20,8 +25,12 @@ export const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLong
     activeButton: RefObject<HTMLButtonElement>,
     button2: RefObject<HTMLButtonElement>,
     button3: RefObject<HTMLButtonElement>
-  ) {
-    if (!activeButton.current?.classList.contains(`${active}`)) {
+  ): void {
+    if (
+      activeButton.current !== null &&
+      typeof active === "string" &&
+      !activeButton.current?.classList.contains(`${active}`)
+    ) {
       activeButton.current?.classList.add(`${active}`);
       button2.current?.classList?.remove(`${active}`);
       button3.current?.classList?.remove(`${active}`);

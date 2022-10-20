@@ -5,13 +5,12 @@ const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";
 const USER_TOP_ARTIST = "https://api.spotify.com/v1/me/top/artists";
 
 export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
-  return fetch(ME_ENDPOINT, {
+  const response = await fetch(ME_ENDPOINT, {
     headers: {
       Authorization: `Bearer ${accesToken}`,
     },
-  }).then((response) => {
-    return response.json();
   });
+  return await response.json();
 };
 
 export const getSpotifyTopTracks = async (
@@ -20,40 +19,43 @@ export const getSpotifyTopTracks = async (
   limit?: string | string[],
   offset?: string | string[]
 ): Promise<UserTopItems<TrackItems>> => {
-  if (limit && offset && query) {
-    return fetch(`${USER_TOP_TRACK}?limit=${limit}&offset=${offset}&time_range=${query}`, {
+  if (
+    limit !== undefined &&
+    typeof limit === "string" &&
+    offset !== undefined &&
+    query !== undefined &&
+    typeof offset === "string"
+  ) {
+    const response = await fetch(`${USER_TOP_TRACK}?limit=${limit}&offset=${offset}&time_range=${query}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    }).then((response) => {
-      return response.json();
     });
+    return await response.json();
   }
-  if (limit && offset) {
-    return fetch(`${USER_TOP_TRACK}?limit=${limit}&offset=${offset}`, {
+
+  if (limit !== undefined && typeof limit === "string" && offset !== undefined && typeof offset === "string") {
+    const response = await fetch(`${USER_TOP_TRACK}?limit=${limit}&offset=${offset}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    }).then((response) => {
-      return response.json();
     });
+    return await response.json();
   }
-  if (query) {
-    return fetch(`${USER_TOP_TRACK}?time_range=${query}`, {
+  if (query !== undefined) {
+    const response = await fetch(`${USER_TOP_TRACK}?time_range=${query}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    }).then((response) => {
-      return response.json();
     });
+    return await response.json();
   }
-  return fetch(USER_TOP_TRACK, {
+  const response = await fetch(USER_TOP_TRACK, {
     headers: {
       Authorization: `Bearer ${accesToken}`,
     },
-  }).then((response) => {
-    return response.json();
   });
+  return await response.json();
 };
 
 export const getSpotifyTopArtist = async (
@@ -62,38 +64,41 @@ export const getSpotifyTopArtist = async (
   limit?: string | string[],
   offset?: string | string[]
 ): Promise<UserTopItems<ArtistItems>> => {
-  if (limit && offset && query) {
-    return fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}&time_range=${query}`, {
+  if (
+    limit !== undefined &&
+    typeof limit === "string" &&
+    offset !== undefined &&
+    query !== undefined &&
+    typeof offset === "string"
+  ) {
+    const response = await fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}&time_range=${query}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    }).then((response) => {
-      return response.json();
     });
+    return await response.json();
   }
-  if (limit && offset) {
-    return fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}`, {
+
+  if (limit !== undefined && typeof limit === "string" && offset !== undefined && typeof offset === "string") {
+    const response = await fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    }).then((response) => {
-      return response.json();
     });
+    return await response.json();
   }
-  if (query) {
-    return fetch(`${USER_TOP_ARTIST}?time_range=${query}`, {
+  if (query !== undefined) {
+    const response = await fetch(`${USER_TOP_ARTIST}?time_range=${query}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    }).then((response) => {
-      return response.json();
     });
+    return await response.json();
   }
-  return fetch(`${USER_TOP_ARTIST}`, {
+  const response = await fetch(USER_TOP_ARTIST, {
     headers: {
       Authorization: `Bearer ${accesToken}`,
     },
-  }).then((response) => {
-    return response.json();
   });
+  return await response.json();
 };

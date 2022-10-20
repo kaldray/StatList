@@ -1,15 +1,15 @@
-import React, { useRef } from "react";
+import { useRef, FC } from "react";
 
 import { HamburgerProps } from "types/Components";
 
 import styles from "@styles/Components/Hamburger.module.scss";
 
-export const Hamburger = ({ setIsToggle, isToggle }: HamburgerProps) => {
+export const Hamburger: FC<HamburgerProps> = ({ setIsToggle, isToggle }) => {
   const { container__hamb, toggle } = styles;
   const hamb = useRef<HTMLDivElement>(null);
 
-  function toggleHamburger() {
-    if (hamb) {
+  function toggleHamburger(): void {
+    if (hamb !== null && typeof toggle === "string") {
       hamb.current?.classList?.toggle(`${toggle}`);
     }
   }

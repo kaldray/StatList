@@ -1,30 +1,35 @@
 import { Dispatch, SetStateAction } from "react";
 import { ArtistItems, TrackItems } from "../spotify/index";
 
-export type ArtistCardProps = {
+export interface ArtistCardProps {
   items: ArtistItems;
   i: number;
-};
+}
 
-export type TrackCardPros = {
+export interface TrackCardPros {
   items: TrackItems;
   i: number;
-};
+}
 
-export type PaginationProps = {
+export interface PaginationProps {
   nextPage: () => void;
   previousPage: () => void;
   previousIsActive: boolean;
   nextIsActive: boolean;
-};
+}
 
-export type PeriodChoiceProps = {
+export interface PeriodChoiceProps {
   getShortTermArtist: () => void;
   getMediummTermArtist: () => void;
   getLongTermArtist: () => void;
-};
+}
 
-export type HamburgerProps = {
+export interface HamburgerProps {
   setIsToggle: Dispatch<SetStateAction<boolean>>;
   isToggle: boolean;
-};
+}
+
+export interface PeriodChoiceStyle {
+  search__container: string;
+  active: string;
+}
