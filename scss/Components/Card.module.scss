@@ -16,9 +16,6 @@
     display: flex;
     flex-direction: column;
     gap: $s;
-    img {
-      border-radius: $smallRadius;
-    }
   }
   figcaption {
     font-size: $mobileText;
