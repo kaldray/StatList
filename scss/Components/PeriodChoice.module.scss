@@ -11,7 +11,7 @@
   h1 {
     grid-column: 1 / span 12;
     place-self: center;
-    font-size: $mobileHeading;
+    font-size: clamp($mobileHeading, 2vw, $desktopHeading);
   }
 
   div {
