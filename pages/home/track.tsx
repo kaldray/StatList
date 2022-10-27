@@ -7,7 +7,7 @@ import type { NextPage } from "next";
 import { TrackItems, UserTopItems } from "types/spotify";
 import { ErrorProps } from "next/error";
 
-import { Layout, Loader } from "@components/index";
+import { Layout, Loader, NoData } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Error = dynamic(async () => await import("next/error"));
@@ -125,13 +125,16 @@ const Track: NextPage = () => {
               })}
             </>
           )}
+          {data !== undefined && data.items.length === 0 && <NoData />}
         </section>
-        <Pagination
-          nextIsActive={nextIsActive}
-          previousIsActive={previousIsActive}
-          nextPage={nextPage}
-          previousPage={previousPage}
-        />
+        {data !== undefined && data.items.length > 0 && (
+          <Pagination
+            nextIsActive={nextIsActive}
+            previousIsActive={previousIsActive}
+            nextPage={nextPage}
+            previousPage={previousPage}
+          />
+        )}
       </Layout>
     </>
   );
