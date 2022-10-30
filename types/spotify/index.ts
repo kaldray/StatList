@@ -43,8 +43,6 @@ export interface TrackItems {
   uri: string;
 }
 
-export type QueryItems = "short_term" | "long_term" | "medium_term";
-
 export interface Album {
   album_interface: "album" | "single" | "compilation";
   total_tracks: number;
@@ -100,3 +98,7 @@ export interface UserInfo {
   type: "user";
   uri: string;
 }
+
+export type QueryState = "short_term" | "long_term" | "medium_term" | undefined;
+
+export type QueryItems = "short_term" | "long_term" | "medium_term" | undefined;

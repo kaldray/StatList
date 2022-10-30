@@ -4,7 +4,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
-import { TrackItems, UserTopItems } from "types/spotify";
+import { TrackItems, UserTopItems, QueryItems } from "types/spotify";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader, NoData } from "@components/index";
@@ -19,7 +19,7 @@ const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice"
 
 const Track: NextPage = () => {
   const { artist__container } = styles;
-  const [queryParams, setQueryParams] = useState<string | undefined>(undefined);
+  const [queryParams, setQueryParams] = useState<QueryItems>(undefined);
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);

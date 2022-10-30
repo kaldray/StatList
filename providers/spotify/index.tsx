@@ -16,8 +16,8 @@ export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
 export const getSpotifyTopTracks = async (
   accesToken: string,
   query?: QueryItems,
-  limit?: string | string[],
-  offset?: string | string[]
+  limit?: string,
+  offset?: string
 ): Promise<UserTopItems<TrackItems>> => {
   if (
     limit !== undefined &&
@@ -61,8 +61,8 @@ export const getSpotifyTopTracks = async (
 export const getSpotifyTopArtist = async (
   accesToken: string,
   query?: QueryItems,
-  limit?: string | string[],
-  offset?: string | string[]
+  limit?: string,
+  offset?: string
 ): Promise<UserTopItems<ArtistItems>> => {
   if (
     limit !== undefined &&
