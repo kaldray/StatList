@@ -47,7 +47,6 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, account, user }) {
       if (user != null && account != null && typeof account.expires_at === "number") {
-        console.log(account.scope);
         return {
           ...token,
           accessToken: account.access_token,
@@ -68,5 +67,8 @@ export default NextAuth({
       session.user.username = token.username;
       return session;
     },
+  },
+  session: {
+    strategy: "jwt",
   },
 });
