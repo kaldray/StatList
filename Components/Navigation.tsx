@@ -49,19 +49,13 @@ export const Navigation: FC = () => {
           <nav className={nav}>
             <ul>
               <li className={setActiveLink("/home/artist")}>
-                <Link href="/home/artist">
-                  <a>Meilleur artiste</a>
-                </Link>
+                <Link href="/home/artist">Meilleur artiste</Link>
               </li>
               <li className={setActiveLink("/home/track")}>
-                <Link href="/home/track">
-                  <a>Meilleure chanson</a>
-                </Link>
+                <Link href="/home/track">Meilleure chanson</Link>
               </li>
               <li className={setActiveLink("/")}>
-                <Link href="/">
-                  <a>Accueil</a>
-                </Link>
+                <Link href="/">Accueil</Link>
               </li>
               <li onClick={async () => await logout()}>Se déconnecter</li>
             </ul>
