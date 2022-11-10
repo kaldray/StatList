@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import logo from "../public/Spotify_Logo_RGB_Black.png";
 
 import { TrackCardPros } from "types/Components";
@@ -28,10 +28,13 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
                 alt={"Pochette de " + name}
                 priority={true}
                 quality={"100"}
-                layout="intrinsic"
                 src={images[2].url}
                 width={images[2].width}
                 height={images[2].height}
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
               />
             </div>
             <ul>
@@ -42,7 +45,16 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
             </ul>
           </div>
           <div onClick={goToSpotifyUrl} className={logo__container}>
-            <Image layout="intrinsic" alt="Spotify Logo" loading="lazy" quality={"100"} src={logo} />
+            <Image
+              alt="Spotify Logo"
+              loading="lazy"
+              quality={"100"}
+              src={logo}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+            />
           </div>
         </section>
       )}

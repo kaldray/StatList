@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import logo from "../public/Spotify_Logo_RGB_Black.png";
 
 import { ArtistCardProps } from "types/Components";
@@ -29,11 +29,26 @@ const ArtistCard: FC<ArtistCardProps> = ({ items, i }) => {
               src={images[0].url}
               width={images[0].width}
               height={images[0].height}
-              objectFit="cover"
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                objectFit: "cover",
+                aspectRatio: "1/1",
+              }}
             />
           )}
           <div onClick={goToSpotifyUrl} className={logo__container}>
-            <Image layout="intrinsic" alt="Spotify Logo" loading="lazy" quality={"100"} src={logo} />
+            <Image
+              alt="Spotify Logo"
+              loading="lazy"
+              quality={"100"}
+              src={logo}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                objectFit: "cover",
+              }}
+            />
           </div>
         </figure>
       </section>
