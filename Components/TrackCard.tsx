@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import logo from "../public/Spotify_Logo_RGB_Black.png";
 
 import { TrackCardPros } from "types/Components";
