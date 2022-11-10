@@ -4,7 +4,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
-import { ArtistItems, UserTopItems } from "types/spotify";
+import { ArtistItems, UserTopItems, QueryItems } from "types/spotify";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader, NoData } from "@components/index";
@@ -19,7 +19,7 @@ const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice"
 
 const Artist: NextPage = () => {
   const { artist__container } = styles;
-  const [queryParams, setQueryParams] = useState<string | undefined>(undefined);
+  const [queryParams, setQueryParams] = useState<QueryItems>(undefined);
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
@@ -53,7 +53,6 @@ const Artist: NextPage = () => {
       const res = await fetch(`${url}?time_range=${queryParams}`);
       return await res.json();
     }
-
     const res = await fetch(url);
     return await res.json();
   };
@@ -62,8 +61,6 @@ const Artist: NextPage = () => {
     ["/api/artists", queryParams, previousOrNextUrl],
     fetcher
   );
-
-  console.log(data);
 
   useEffect(() => {
     if (data?.next === null) {

@@ -10,8 +10,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
   });
   if (
     session?.user.accessToken !== undefined &&
-    req.query?.limit !== undefined &&
-    req.query?.offset !== undefined &&
+    req.query.limit !== undefined &&
+    typeof req.query.limit === "string" &&
+    req.query.offset !== undefined &&
+    typeof req.query.offset === "string" &&
     (req.query?.time_range === "short_term" ||
       req.query?.time_range === "long_term" ||
       req.query?.time_range === "medium_term")
@@ -35,7 +37,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     return res.status(200).send(response);
   }
 
-  if (session?.user.accessToken !== undefined && req.query?.limit !== undefined && req.query?.offset !== undefined) {
+  if (
+    session?.user.accessToken !== undefined &&
+    req.query.limit !== undefined &&
+    typeof req.query.limit === "string" &&
+    req.query.offset !== undefined &&
+    typeof req.query.offset === "string"
+  ) {
     const response = await getSpotifyTopTracks(
       session?.user?.accessToken,
       undefined,
