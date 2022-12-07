@@ -1,0 +1,19 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.term__container {
+  display: flex;
+  flex-direction: column;
+  gap: $s;
+  margin-top: 3rem;
+
+  h1 {
+    font-size: clamp($mobileHeading, 1.3vw, $desktopHeading);
+    text-align: center;
+  }
+
+  p {
+    text-align: justify;
+    font-size: clamp($mobileText, 1.3vw, $desktopText);
+  }
+}
