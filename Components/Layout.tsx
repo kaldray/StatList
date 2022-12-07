@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Navigation } from "./Navigation";
+import { Footer } from "./Footer";
 
 import styles from "@styles/Components/Layout.module.scss";
 
@@ -13,6 +14,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
     <>
       <Navigation />
       <main className={container}>{children}</main>
+      <Footer />
     </>
   );
 };
