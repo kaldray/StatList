@@ -16,7 +16,6 @@ const Login: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ pro
     <>
       <section className={style.container}>
         <div>
-          <Image src={spotify} width={200} height={200} alt="Spotify Icon" />
           {providers != null &&
             Object.values(providers).map((provider) => (
               <button key={provider.id} onClick={async () => await logIn(provider.id)}>
