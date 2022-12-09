@@ -82,7 +82,7 @@ export default NextAuth({
         url: "https://connect.deezer.com/oauth/auth.php",
         params: {
           redirect_uri: "http://localhost:3000/api/auth/callback/deezer",
-          scope: "basic_access,email,listening_history",
+          scope: "basic_access,email,listening_history,offline_access",
         },
       },
       userinfo: {
@@ -121,7 +121,8 @@ export default NextAuth({
           provider: account.provider,
           user,
         };
-      } else if (account != null && account.provider === "deezer" && typeof account.expires_at === "number") {
+      }
+      if (account != null && account.provider === "deezer" && typeof account.expires_at === "number") {
         return {
           ...token,
           accessToken: account.access_token,
@@ -152,6 +153,7 @@ export default NextAuth({
       return session;
     },
   },
+
   session: {
     strategy: "jwt",
   },
