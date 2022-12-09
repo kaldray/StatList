@@ -11,7 +11,7 @@ import { Layout, Loader, NoData } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Error = dynamic(async () => await import("next/error"));
-const ArtistCard = dynamic(async () => await import("@components/ArtistCard"), {
+const ArtistCard = dynamic(async () => await import("@components/Spotify/ArtistCard"), {
   suspense: true,
 });
 const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
