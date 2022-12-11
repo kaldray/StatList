@@ -19,25 +19,35 @@ const Error = dynamic(async () => await import("next/error"));
 
 const Track: NextPage = () => {
   const { artist__container } = styles;
-  const [previousOrNextUrl, setUrl] = useState<string>("");
+  const [previousOrNextUrl, setUrl] = useState<string | undefined>(undefined);
   const [nextIsActive, setNextIsDisable] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsDisable] = useState<boolean>(false);
-  const { data: session } = useSession();
+  const [offset, setOffset] = useState<number>(0);
 
-  const fetcher = async (url: string): Promise<UserTopTracks> => {
+  const fetcher = async (url: string, previousOrNextUrl: string): Promise<UserTopTracks> => {
+    if (previousOrNextUrl !== undefined) {
+      const arr = previousOrNextUrl.split("?");
+      const query = arr[1];
+      if (query === undefined) {
+        const res = await fetch(url);
+        return await res.json();
+      }
+      const res = await fetch(`${url}?${query}`);
+      return await res.json();
+    }
     const res = await fetch(url);
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopTracks, ErrorProps>("/api/deezer/tracks", fetcher);
+  const { data, error } = useSWR<UserTopTracks, ErrorProps>(["/api/deezer/tracks", previousOrNextUrl], fetcher);
 
   useEffect(() => {
     if (data !== undefined && "prev" in data && "next" in data) {
       setPreviousIsDisable(true);
       setNextIsDisable(true);
     } else if (data !== undefined && "prev" in data) {
-      setNextIsDisable(false);
-      setPreviousIsDisable(true);
+      setNextIsDisable(true);
+      setPreviousIsDisable(false);
     } else if (data !== undefined) {
       setPreviousIsDisable(true);
       setNextIsDisable(false);
@@ -47,12 +57,18 @@ const Track: NextPage = () => {
   function nextPage(): void {
     if (data !== undefined && "next" in data) {
       setUrl(data.next);
+      setOffset((prevState) => {
+        return prevState + 20;
+      });
     }
   }
 
   function previousPage(): void {
     if (data !== undefined && "prev" in data) {
       setUrl(data?.prev);
+      setOffset((prevState) => {
+        return prevState - 20;
+      });
     }
   }
 
@@ -72,7 +88,7 @@ const Track: NextPage = () => {
             data?.data.map((item, index) => {
               return (
                 <Suspense fallback={<Loader />} key={item.id}>
-                  <DeezerTrackCard index={index + 1} items={item} />
+                  <DeezerTrackCard index={index + 1 + offset} items={item} />
                 </Suspense>
               );
             })}
