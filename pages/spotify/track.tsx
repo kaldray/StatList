@@ -1,35 +1,34 @@
-import { useEffect, useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
-import { ArtistItems, UserTopItems, QueryItems } from "types/spotify";
+import { TrackItems, UserTopItems, QueryItems } from "types/spotify";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader, NoData } from "@components/index";
 import styles from "@styles/Pages/artist.module.scss";
 
 const Error = dynamic(async () => await import("next/error"));
-const ArtistCard = dynamic(async () => await import("@components/Spotify/ArtistCard"), {
+const TrackCard = dynamic(async () => await import("@components/Spotify/TrackCard"), {
   suspense: true,
 });
 const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
 const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice").then((res) => res.PeriodChoice));
 
-const Artist: NextPage = () => {
+const Track: NextPage = () => {
   const { artist__container } = styles;
   const [queryParams, setQueryParams] = useState<QueryItems>(undefined);
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
-  const [pageIndex, setPageIndex] = useState<number>(1);
 
   const fetcher = async (
     url: string,
     queryParams?: string,
     previousOrNextUrl?: string | null
-  ): Promise<UserTopItems<ArtistItems>> => {
+  ): Promise<UserTopItems<TrackItems>> => {
     if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
       const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
       if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
@@ -57,8 +56,8 @@ const Artist: NextPage = () => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
-    ["/api/artists", queryParams, previousOrNextUrl],
+  const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
+    ["/api/spotify/tracks", queryParams, previousOrNextUrl],
     fetcher
   );
 
@@ -91,14 +90,12 @@ const Artist: NextPage = () => {
     if (data != null) {
       setUrl(data?.next);
     }
-    setPageIndex(pageIndex + 1);
   }
 
   function previousPage(): void {
     if (data != null) {
       setUrl(data?.previous);
     }
-    setPageIndex(pageIndex - 1);
   }
 
   return (
@@ -107,7 +104,7 @@ const Artist: NextPage = () => {
         <title>StatList</title>
         <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
-        <link rel="preload" href="/api/artists" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/api/tracks" as="fetch" crossOrigin="anonymous" />
       </Head>
       <Layout>
         <PeriodChoice
@@ -121,8 +118,8 @@ const Artist: NextPage = () => {
             <>
               {data.items.map((item, i) => {
                 return (
-                  <Suspense fallback={<Loader />} key={item.name}>
-                    <ArtistCard i={i + 1 + data.offset} items={item} />
+                  <Suspense fallback={<Loader />} key={item?.id}>
+                    <TrackCard i={i + 1 + data.offset} items={item} />
                   </Suspense>
                 );
               })}
@@ -143,4 +140,4 @@ const Artist: NextPage = () => {
   );
 };
 
-export default Artist;
+export default Track;

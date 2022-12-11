@@ -3,11 +3,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 
-import { Hamburger } from "./Hamburger";
+import { Hamburger } from "../Hamburger";
 
 import styles from "@styles/Components/Navigation.module.scss";
 
-export const Navigation: FC = () => {
+export const DeezerNavigation: FC = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
   const { data: session } = useSession();
@@ -48,11 +48,11 @@ export const Navigation: FC = () => {
         {session !== null && (isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
           <nav className={nav}>
             <ul>
-              <li className={setActiveLink("/home/artist")}>
-                <Link href="/home/artist">Meilleur artiste</Link>
+              <li className={setActiveLink("/deezer/artist")}>
+                <Link href="/deezer/artist">Meilleur artiste</Link>
               </li>
-              <li className={setActiveLink("/home/track")}>
-                <Link href="/home/track">Meilleure chanson</Link>
+              <li className={setActiveLink("/deezer/track")}>
+                <Link href="/deezer/track">Meilleure chanson</Link>
               </li>
               <li className={setActiveLink("/")}>
                 <Link href="/">Accueil</Link>

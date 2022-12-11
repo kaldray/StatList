@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Navigation } from "./Navigation";
+import { Navigation } from "@components/Nav";
 import { Footer } from "./Footer";
 
 import styles from "@styles/Components/Layout.module.scss";
