@@ -115,11 +115,23 @@ export interface TrackData {
   type: string;
 }
 
-export interface UserTopTracks {
+export interface UserTopPrevTracks {
+  data: TrackData[];
+  total: number;
+  prev: string;
+}
+export interface UserTopNextTracks {
   data: TrackData[];
   total: number;
   next: string;
 }
+export interface UserTopNextAndPrevTracks {
+  data: TrackData[];
+  total: number;
+  next: string;
+  prev: string;
+}
+export type UserTopTracks = UserTopPrevTracks | UserTopNextTracks | UserTopNextAndPrevTracks;
 
 export interface UserTopArtist {
   data: Artist[];
