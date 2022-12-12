@@ -38,10 +38,3 @@
     }
   }
 }
-
-.artist__container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 3fr));
-  place-content: center;
-  column-gap: $s;
-}

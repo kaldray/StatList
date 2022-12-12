@@ -8,7 +8,7 @@ import { TrackItems, UserTopItems, QueryItems } from "types/spotify";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader, NoData } from "@components/index";
-import styles from "@styles/Pages/artist.module.scss";
+import styles from "@styles/Pages/global.module.scss";
 
 const Error = dynamic(async () => await import("next/error"));
 const TrackCard = dynamic(async () => await import("@components/Spotify/TrackCard"), {
@@ -18,7 +18,7 @@ const Pagination = dynamic(async () => await import("@components/Pagination").th
 const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice").then((res) => res.PeriodChoice));
 
 const Track: NextPage = () => {
-  const { artist__container } = styles;
+  const { container } = styles;
   const [queryParams, setQueryParams] = useState<QueryItems>(undefined);
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
@@ -112,7 +112,7 @@ const Track: NextPage = () => {
           getLongTermArtist={getLongTermArtist}
           getMediummTermArtist={getMediummTermArtist}
         />
-        <section className={artist__container}>
+        <section className={container}>
           {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined && (
             <>

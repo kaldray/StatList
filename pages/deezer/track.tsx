@@ -8,7 +8,8 @@ import { UserTopTracks } from "types/deezer";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader, NoData } from "@components/index";
-import styles from "@styles/Pages/artist.module.scss";
+
+import styles from "@styles/Pages/global.module.scss";
 
 const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
 
@@ -17,7 +18,8 @@ const DeezerTrackCard = dynamic(async () => await import("@components/Deezer/Dee
 const Error = dynamic(async () => await import("next/error"));
 
 const Track: NextPage = () => {
-  const { artist__container } = styles;
+  const { container } = styles;
+
   const [previousOrNextUrl, setUrl] = useState<string | undefined>(undefined);
   const [nextIsActive, setNextIsDisable] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsDisable] = useState<boolean>(false);
@@ -80,7 +82,7 @@ const Track: NextPage = () => {
         <link rel="preload" href="/api/deezer/tracks" as="fetch" crossOrigin="anonymous" />
       </Head>
       <Layout>
-        <section className={artist__container}>
+        <section className={container}>
           {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined &&
             data?.data.length > 0 &&

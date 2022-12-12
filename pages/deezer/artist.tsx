@@ -8,14 +8,14 @@ import { UserTopArtist } from "types/deezer";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader } from "@components/index";
-import styles from "@styles/Pages/artist.module.scss";
+import styles from "@styles/Pages/global.module.scss";
 
 const DeezerArtistCard = dynamic(async () => await import("@components/Deezer/DeezerArtistCard"), { suspense: true });
 
 const Error = dynamic(async () => await import("next/error"));
 
 const Track: NextPage = () => {
-  const { artist__container } = styles;
+  const { container } = styles;
 
   const fetcher = async (url: string): Promise<UserTopArtist> => {
     const res = await fetch(url);
@@ -33,7 +33,7 @@ const Track: NextPage = () => {
         <link rel="preload" href="/api/deezer/artists" as="fetch" crossOrigin="anonymous" />
       </Head>
       <Layout>
-        <section className={artist__container}>
+        <section className={container}>
           {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined &&
             data?.data.length > 0 &&

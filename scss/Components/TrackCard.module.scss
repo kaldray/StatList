@@ -9,7 +9,9 @@
   padding: $m 0;
   font-size: clamp($mobileText, 1.5vw, $desktopText);
   column-gap: $m;
-  min-height: 16rem;
+  min-height: 20rem;
+  max-height: 20rem;
+
   &::before {
     position: absolute;
     content: "";
