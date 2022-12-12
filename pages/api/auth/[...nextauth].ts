@@ -81,7 +81,7 @@ export default NextAuth({
       authorization: {
         url: "https://connect.deezer.com/oauth/auth.php",
         params: {
-          redirect_uri: "http://localhost:3000/api/auth/callback/deezer",
+          redirect_uri: "https://statlist-a83q.vercel.app/api/auth/callback/deezer",
           scope: "basic_access,email,listening_history,offline_access",
         },
       },
