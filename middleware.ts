@@ -4,9 +4,10 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest): Promise<NextResponse | undefined> {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
-  if (token !== null) {
+  if (token !== null && req.nextUrl.pathname.startsWith("/" + token.provider)) {
     NextResponse.next();
+  } else {
+    return NextResponse.redirect(new URL("/", req.url));
   }
   if (token === null) {
     return NextResponse.redirect(new URL("/", req.url));
@@ -14,5 +15,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse | undef
 }
 
 export const config = {
-  matcher: ["/home", "/home/artist", "/home/track"],
+  matcher: ["/deezer", "/deezer/artist", "/deezer/track", "/spotify", "/spotify/artist", "/spotify/track"],
 };
