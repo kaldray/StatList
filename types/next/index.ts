@@ -2,7 +2,7 @@ import { BuiltInProviderType } from "next-auth/providers";
 import { LiteralUnion, ClientSafeProvider } from "next-auth/react";
 import { JWT } from "next-auth/jwt";
 
-export type getServerSideUserInfo = TokenIsInvalid | TokenIsValid;
+export type getServerSideUserInfo = TokenIsInvalid | TokenIsValid | TokenIsValidPageIsNot;
 
 interface TokenIsValid {
   props: {
@@ -14,6 +14,10 @@ interface TokenIsInvalid {
     destination: string;
     permanent: false;
   };
+}
+
+interface TokenIsValidPageIsNot {
+  props: Record<string, never>;
 }
 
 export interface getServerSideProvidersType {

@@ -1,11 +1,13 @@
 import Head from "next/head";
 import { signIn } from "next-auth/react";
-
-import type { NextPage } from "next";
+import { getToken } from "next-auth/jwt";
+import type { NextPage, GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 
 import { Layout } from "@components/index";
 
 import styles from "@styles/Pages/home.module.scss";
+
+import { getServerSideUserInfo } from "types/next";
 
 const Home: NextPage = () => {
   const { presentation__container } = styles;
@@ -40,3 +42,19 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<getServerSideUserInfo> => {
+  const token = await getToken(context);
+  if (token !== null) {
+    return {
+      redirect: {
+        destination: `${token.provider}`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
