@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
-import logo from "../public/Spotify_Logo_RGB_Black.png";
+import logo from "../../public/Spotify_Logo_RGB_Black.png";
 
 import { ArtistCardProps } from "types/Components";
 

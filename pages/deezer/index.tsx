@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { signIn } from "next-auth/react";
 import { getToken } from "next-auth/jwt";
+
 import type { NextPage, GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 
 import { Layout } from "@components/index";
@@ -9,7 +9,9 @@ import styles from "@styles/Pages/home.module.scss";
 
 import { getServerSideUserInfo } from "types/next";
 
-const Home: NextPage = () => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
+  token,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { presentation__container } = styles;
 
   return (
@@ -21,20 +23,18 @@ const Home: NextPage = () => {
       </Head>
       <Layout>
         <section className={presentation__container}>
-          <h1>Bienvenue sur StatList</h1>
+          <h1>Bienvenue sur StatList {token.name}</h1>
           <p>
-            Si vous êtes un amoureux de la musique, vous êtes au bon endroit. Sur notre site web, vous pouvez facilement
-            consulter vos artistes et titres préférés, quel que soit votre fournisseur de musique.
+            Vous êtes connectez avec votre compte <strong>{token.provider}</strong>
           </p>
           <p>
             Grâce à notre outil, vous pouvez découvrir <strong> vos artistes les plus écoutés</strong> et{" "}
             <strong>vos titres les plus populaires</strong>, en temps réel.
           </p>
           <p>
-            Pour découvrir tout ceci, connectez-vous avec votre compte <strong>Deezer</strong> ou{" "}
-            <strong>Spotify</strong>.
+            Pour accéder à vos statistiques, rendez-vous sur les pages de <span>meilleur artiste</span> ou{" "}
+            <span>de meilleure</span> chanson.
           </p>
-          <button onClick={async () => await signIn()}>Se connecter</button>
         </section>
       </Layout>
     </>
@@ -45,16 +45,18 @@ export default Home;
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<getServerSideUserInfo> => {
   const token = await getToken(context);
-  if (token !== null) {
+  if (token === null) {
     return {
       redirect: {
-        destination: `${token.provider}`,
+        destination: "/",
         permanent: false,
       },
     };
   }
 
   return {
-    props: {},
+    props: {
+      token,
+    },
   };
 };

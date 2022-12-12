@@ -1,34 +1,35 @@
-import { useState, useEffect, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
-import { TrackItems, UserTopItems, QueryItems } from "types/spotify";
+import { ArtistItems, UserTopItems, QueryItems } from "types/spotify";
 import { ErrorProps } from "next/error";
 
 import { Layout, Loader, NoData } from "@components/index";
-import styles from "@styles/Pages/artist.module.scss";
+import styles from "@styles/Pages/global.module.scss";
 
 const Error = dynamic(async () => await import("next/error"));
-const TrackCard = dynamic(async () => await import("@components/TrackCard"), {
+const ArtistCard = dynamic(async () => await import("@components/Spotify/ArtistCard"), {
   suspense: true,
 });
 const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
 const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice").then((res) => res.PeriodChoice));
 
-const Track: NextPage = () => {
-  const { artist__container } = styles;
+const Artist: NextPage = () => {
+  const { container } = styles;
   const [queryParams, setQueryParams] = useState<QueryItems>(undefined);
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
+  const [pageIndex, setPageIndex] = useState<number>(1);
 
   const fetcher = async (
     url: string,
     queryParams?: string,
     previousOrNextUrl?: string | null
-  ): Promise<UserTopItems<TrackItems>> => {
+  ): Promise<UserTopItems<ArtistItems>> => {
     if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
       const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
       if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
@@ -56,8 +57,8 @@ const Track: NextPage = () => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
-    ["/api/tracks", queryParams, previousOrNextUrl],
+  const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
+    ["/api/spotify/artists", queryParams, previousOrNextUrl],
     fetcher
   );
 
@@ -90,12 +91,14 @@ const Track: NextPage = () => {
     if (data != null) {
       setUrl(data?.next);
     }
+    setPageIndex(pageIndex + 1);
   }
 
   function previousPage(): void {
     if (data != null) {
       setUrl(data?.previous);
     }
+    setPageIndex(pageIndex - 1);
   }
 
   return (
@@ -104,7 +107,7 @@ const Track: NextPage = () => {
         <title>StatList</title>
         <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
-        <link rel="preload" href="/api/tracks" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/api/artists" as="fetch" crossOrigin="anonymous" />
       </Head>
       <Layout>
         <PeriodChoice
@@ -112,14 +115,14 @@ const Track: NextPage = () => {
           getLongTermArtist={getLongTermArtist}
           getMediummTermArtist={getMediummTermArtist}
         />
-        <section className={artist__container}>
+        <section className={container}>
           {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined && (
             <>
               {data.items.map((item, i) => {
                 return (
-                  <Suspense fallback={<Loader />} key={item?.id}>
-                    <TrackCard i={i + 1 + data.offset} items={item} />
+                  <Suspense fallback={<Loader />} key={item.name}>
+                    <ArtistCard i={i + 1 + data.offset} items={item} />
                   </Suspense>
                 );
               })}
@@ -140,4 +143,4 @@ const Track: NextPage = () => {
   );
 };
 
-export default Track;
+export default Artist;

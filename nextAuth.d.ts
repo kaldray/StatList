@@ -8,14 +8,7 @@ declare module "next-auth" {
       refreshToken?: string;
       accessToken?: string;
       username?: string;
-    };
-    token: {
-      accessToken?: string | null;
-      refreshToken?: string | null;
-      name?: string | null;
-      email?: string | null;
-      picture?: string | null;
-      accesTokenExpires?: number;
+      provider: "spotify" | "deezer";
     };
   }
 }
@@ -26,5 +19,6 @@ declare module "next-auth/jwt" {
     refreshToken?: string;
     accessToken?: string;
     username: string;
+    provider: "spotify" | "deezer";
   }
 }

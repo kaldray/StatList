@@ -1,0 +1,9 @@
+@import "../Global/variables.scss";
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 3fr));
+  place-content: center;
+  gap: $s;
+  margin-top: $m;
+}

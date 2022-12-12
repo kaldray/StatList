@@ -1,26 +1,33 @@
 import { FC } from "react";
 import Image from "next/image";
-import logo from "../public/Spotify_Logo_RGB_Black.png";
+import logo from "../../public/Mono_Full_Black@2x.png";
 
-import { TrackCardPros } from "types/Components";
+import { DeezerTrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
-  const {
-    name,
-    album: { images },
-    artists,
-  } = items;
-
+const TrackCard: FC<DeezerTrackCardPros> = ({ items, index }) => {
   const { card__container, info__container, logo__container, cover__container } = styles;
 
-  function goToSpotifyUrl(): string {
-    return (window.location.href = items.external_urls.spotify);
+  const {
+    album: { cover_small },
+    title,
+    id,
+    artist: { name },
+  } = items;
+
+  function extracckSizeFromUrl(cover: string): number {
+    const regex = /^.*([0-9]+([a-zA-Z]+[0-9]+)+).*$/i;
+    const arr = cover.split(regex);
+    const size = arr[1]?.split("x").at(1);
+    if (size === undefined) {
+      throw new Error("Missing Cover");
+    }
+    return parseInt(size);
   }
 
   return (
     <>
-      {items !== undefined && images[2] !== undefined && (
+      {cover_small !== undefined && (
         <section className={card__container}>
           <div className={info__container}>
             <div className={cover__container}>
@@ -28,9 +35,9 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
                 alt={"Pochette de " + name}
                 priority={true}
                 quality={"100"}
-                src={images[2].url}
-                width={images[2].width}
-                height={images[2].height}
+                src={cover_small}
+                width={extracckSizeFromUrl(cover_small)}
+                height={extracckSizeFromUrl(cover_small)}
                 style={{
                   maxWidth: "100%",
                   height: "auto",
@@ -38,13 +45,13 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
               />
             </div>
             <ul>
+              <li>{title}</li>
               <li>
-                {i} - {name}
+                {index} - {name}
               </li>
-              <li>{artists[0]?.name}</li>
             </ul>
           </div>
-          <div onClick={goToSpotifyUrl} className={logo__container}>
+          <div className={logo__container}>
             <Image
               alt="Spotify Logo"
               loading="lazy"

@@ -17,6 +17,14 @@
     text-align: center;
     margin-bottom: $s;
   }
+  h2 {
+    font-size: clamp($mobileHeading, 1.5vw, $desktopHeading);
+    text-align: center;
+    margin-bottom: $s;
+  }
+  p > span {
+    text-decoration: underline;
+  }
   button {
     align-self: center;
     background-color: $laurel-green;
