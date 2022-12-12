@@ -1,10 +1,18 @@
-import { UserInfo } from "types/spotify";
 import { BuiltInProviderType } from "next-auth/providers";
 import { LiteralUnion, ClientSafeProvider } from "next-auth/react";
+import { JWT } from "next-auth/jwt";
 
-export interface getServerSideUserInfo {
+export type getServerSideUserInfo = TokenIsInvalid | TokenIsValid;
+
+interface TokenIsValid {
   props: {
-    userInfo?: UserInfo;
+    token: JWT;
+  };
+}
+interface TokenIsInvalid {
+  redirect: {
+    destination: string;
+    permanent: false;
   };
 }
 

@@ -1,16 +1,14 @@
 import { FC } from "react";
 import { ClientSafeProvider, getProviders, signIn } from "next-auth/react";
-import Image from "next/image";
 
 import { InferGetServerSidePropsType } from "next";
 import { getServerSideProvidersType } from "types/next";
 
-import spotify from "../public/spotify.png";
 import style from "@styles/Pages/login.module.scss";
 
 const Login: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ providers }) => {
   async function logIn(provider: ClientSafeProvider["id"]): Promise<void> {
-    await signIn(provider, { callbackUrl: "/" });
+    await signIn(provider, { callbackUrl: `/${provider}` });
   }
   return (
     <>

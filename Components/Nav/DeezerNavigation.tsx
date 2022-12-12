@@ -55,7 +55,7 @@ export const DeezerNavigation: FC = () => {
                 <Link href="/deezer/track">Meilleure chanson</Link>
               </li>
               <li className={setActiveLink("/")}>
-                <Link href="/">Accueil</Link>
+                <Link href="/deezer">Accueil</Link>
               </li>
               <li onClick={async () => await logout()}>Se déconnecter</li>
             </ul>

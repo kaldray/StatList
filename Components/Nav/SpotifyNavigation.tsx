@@ -54,7 +54,7 @@ export const SpotifyNavigation: FC = () => {
                 <Link href="/spotify/track">Meilleure chanson</Link>
               </li>
               <li className={setActiveLink("/")}>
-                <Link href="/">Accueil</Link>
+                <Link href="/spotify">Accueil</Link>
               </li>
               <li onClick={async () => await logout()}>Se déconnecter</li>
             </ul>

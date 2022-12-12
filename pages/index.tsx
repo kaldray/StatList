@@ -1,18 +1,14 @@
 import Head from "next/head";
-import { getToken } from "next-auth/jwt";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
-import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
-import { getServerSideUserInfo } from "types/next";
+import type { NextPage } from "next";
 
 import { Layout } from "@components/index";
-import { getSpotifyMe } from "@providers/spotify";
 
 import styles from "@styles/Pages/home.module.scss";
 
-const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage = () => {
   const { presentation__container } = styles;
-  const { data } = useSession();
 
   return (
     <>
@@ -23,38 +19,24 @@ const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServ
       </Head>
       <Layout>
         <section className={presentation__container}>
-          <h1>Bienvenue sur StatList {userInfo?.display_name} </h1>
+          <h1>Bienvenue sur StatList</h1>
           <p>
-            Sur ce site vous pouvez visualiser la liste de vos artistes et chansons les plus écoutées sur différentes
-            périodes.
+            Si vous êtes un amoureux de la musique, vous êtes au bon endroit. Sur notre site web, vous pouvez facilement
+            consulter vos artistes et titres préférés, quel que soit votre fournisseur de musique.
           </p>
-          <ol>
-            <li>Une période courte : les quatre dernières semaines.</li>
-            <li>Une période moyenne : les six derniers mois.</li>
-            <li>Une période longue : plusieurs années.</li>
-          </ol>
-          {userInfo == null && <p>Pour découvrir tout ceci connectez vous avec votre compte Spotify.</p>}
-          {userInfo == null ? <button onClick={async () => await signIn()}>Se connecter</button> : null}
+          <p>
+            Grâce à notre outil, vous pouvez découvrir <strong> vos artistes les plus écoutés</strong> et{" "}
+            <strong>vos titres les plus populaires</strong>, en temps réel.
+          </p>
+          <p>
+            Pour découvrir tout ceci, connectez-vous avec votre compte <strong>Deezer</strong> ou{" "}
+            <strong>Spotify</strong>.
+          </p>
+          <button onClick={async () => await signIn()}>Se connecter</button>
         </section>
       </Layout>
     </>
   );
-};
-
-export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<getServerSideUserInfo> => {
-  const token = await getToken(context);
-  if (token?.accessToken === undefined) {
-    return {
-      props: {},
-    };
-  }
-  const userInfo = await getSpotifyMe(token?.accessToken);
-
-  return {
-    props: {
-      userInfo,
-    },
-  };
 };
 
 export default Home;
