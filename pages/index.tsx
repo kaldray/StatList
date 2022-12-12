@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { getToken } from "next-auth/jwt";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 import { getServerSideUserInfo } from "types/next";
@@ -12,6 +12,7 @@ import styles from "@styles/Pages/home.module.scss";
 
 const Home: NextPage = ({ userInfo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { presentation__container } = styles;
+  const { data } = useSession();
 
   return (
     <>

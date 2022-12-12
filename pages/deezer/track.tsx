@@ -1,5 +1,4 @@
 import { useState, useEffect, Suspense } from "react";
-import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -43,8 +42,8 @@ const Track: NextPage = () => {
 
   useEffect(() => {
     if (data !== undefined && "prev" in data && "next" in data) {
-      setPreviousIsDisable(true);
-      setNextIsDisable(true);
+      setPreviousIsDisable(false);
+      setNextIsDisable(false);
     } else if (data !== undefined && "prev" in data) {
       setNextIsDisable(true);
       setPreviousIsDisable(false);

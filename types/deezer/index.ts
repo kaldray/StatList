@@ -22,7 +22,7 @@ type UserTopTrackAlbumField = Pick<
   "id" | "title" | "cover" | "cover_small" | "cover_medium" | "cover_big" | "cover_xl"
 >;
 
-export interface Artist {
+export interface ArtistData {
   id: string;
   name: string;
   link: string;
@@ -134,6 +134,6 @@ export interface UserTopNextAndPrevTracks {
 export type UserTopTracks = UserTopPrevTracks | UserTopNextTracks | UserTopNextAndPrevTracks;
 
 export interface UserTopArtist {
-  data: Artist[];
+  data: ArtistData[];
   total: number;
 }

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { ArtistItems, TrackItems } from "../spotify/index";
-import { TrackData } from "../deezer";
+import { ArtistData, TrackData } from "../deezer";
 
 export interface ArtistCardProps {
   items: ArtistItems;
@@ -13,6 +13,11 @@ export interface TrackCardPros {
 }
 export interface DeezerTrackCardPros {
   items: TrackData;
+  index: number;
+}
+
+export interface DeezerArtistCardPros {
+  items: ArtistData;
   index: number;
 }
 
