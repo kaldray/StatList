@@ -16,10 +16,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
     typeof req.query.index === "string"
   ) {
     const params = new URLSearchParams({ limit: req.query.limit, index: req.query.index });
-    const response = await getDeezerTopTracks(session?.user.username, params);
+    const response = await getDeezerTopTracks(session.user.username, params);
     return res.status(200).send(response);
   }
-  const response = await getDeezerTopTracks(session?.user.username);
+  const response = await getDeezerTopTracks(session.user.username);
   return res.status(200).send(response);
 };
 

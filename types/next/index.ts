@@ -21,5 +21,5 @@ interface TokenIsValidPageIsNot {
 }
 
 export interface getServerSideProvidersType {
-  props: { providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null };
+  props: { providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider> | null };
 }

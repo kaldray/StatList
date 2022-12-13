@@ -36,8 +36,8 @@ const Track: NextPage = () => {
         <section className={container}>
           {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined &&
-            data?.data.length > 0 &&
-            data?.data.map((item, index) => {
+            data.data.length > 0 &&
+            data.data.map((item, index) => {
               return (
                 <Suspense fallback={<Loader />} key={item.id}>
                   <DeezerArtistCard index={index + 1} items={item} />

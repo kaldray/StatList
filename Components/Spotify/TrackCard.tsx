@@ -20,7 +20,7 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
 
   return (
     <>
-      {items !== undefined && images[2] !== undefined && (
+      {images[2] !== undefined && (
         <section className={card__container}>
           <div className={info__container}>
             <div className={cover__container}>

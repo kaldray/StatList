@@ -11,7 +11,6 @@ const TrackCard: FC<DeezerTrackCardPros> = ({ items, index }) => {
   const {
     album: { cover_small },
     title,
-    id,
     artist: { name },
   } = items;
 
@@ -27,44 +26,42 @@ const TrackCard: FC<DeezerTrackCardPros> = ({ items, index }) => {
 
   return (
     <>
-      {cover_small !== undefined && (
-        <section className={card__container}>
-          <div className={info__container}>
-            <div className={cover__container}>
-              <Image
-                alt={"Pochette de " + name}
-                priority={true}
-                quality={"100"}
-                src={cover_small}
-                width={extracckSizeFromUrl(cover_small)}
-                height={extracckSizeFromUrl(cover_small)}
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                }}
-              />
-            </div>
-            <ul>
-              <li>{title}</li>
-              <li>
-                {index} - {name}
-              </li>
-            </ul>
-          </div>
-          <div className={logo__container}>
+      <section className={card__container}>
+        <div className={info__container}>
+          <div className={cover__container}>
             <Image
-              alt="Spotify Logo"
-              loading="lazy"
+              alt={"Pochette de " + name}
+              priority={true}
               quality={"100"}
-              src={logo}
+              src={cover_small}
+              width={extracckSizeFromUrl(cover_small)}
+              height={extracckSizeFromUrl(cover_small)}
               style={{
                 maxWidth: "100%",
                 height: "auto",
               }}
             />
           </div>
-        </section>
-      )}
+          <ul>
+            <li>{title}</li>
+            <li>
+              {index} - {name}
+            </li>
+          </ul>
+        </div>
+        <div className={logo__container}>
+          <Image
+            alt="Spotify Logo"
+            loading="lazy"
+            quality={"100"}
+            src={logo}
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+            }}
+          />
+        </div>
+      </section>
     </>
   );
 };

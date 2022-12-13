@@ -9,9 +9,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse | undef
   } else {
     return NextResponse.redirect(new URL("/", req.url));
   }
-  if (token === null) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
+  return NextResponse.redirect(new URL("/", req.url));
 }
 
 export const config = {

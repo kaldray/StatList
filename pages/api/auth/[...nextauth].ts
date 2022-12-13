@@ -11,18 +11,18 @@ const spotifyApi = new SpotifyWebApi({
 
 async function spotifyRefreshAccessToken(token: JWT): Promise<JWT> {
   try {
-    if (token?.accessToken !== undefined && token?.refreshToken !== undefined) {
-      spotifyApi.setAccessToken(token?.accessToken);
-      spotifyApi.setRefreshToken(token?.refreshToken);
+    if (token.accessToken !== undefined && token.refreshToken !== undefined) {
+      spotifyApi.setAccessToken(token.accessToken);
+      spotifyApi.setRefreshToken(token.refreshToken);
     }
 
     const { body: refreshTokens } = await spotifyApi.refreshAccessToken();
 
     return {
       ...token,
-      accessToken: refreshTokens?.access_token,
-      accessTokenExpires: Date.now() + refreshTokens?.expires_in * 1000,
-      refreshToken: refreshTokens?.refresh_token ?? token.refreshToken,
+      accessToken: refreshTokens.access_token,
+      accessTokenExpires: Date.now() + refreshTokens.expires_in * 1000,
+      refreshToken: refreshTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
     console.log(error);
@@ -136,11 +136,11 @@ export default NextAuth({
       if (
         token.provider === "spotify" &&
         token.accessTokenExpires !== undefined &&
-        Date.now() < token?.accessTokenExpires
+        Date.now() < token.accessTokenExpires
       ) {
         return token;
       }
-      if (token?.provider === "spotify") {
+      if (token.provider === "spotify") {
         return await spotifyRefreshAccessToken(token);
       }
       return { ...token };

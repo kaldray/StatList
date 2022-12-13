@@ -88,13 +88,13 @@ const Track: NextPage = () => {
 
   function nextPage(): void {
     if (data != null) {
-      setUrl(data?.next);
+      setUrl(data.next);
     }
   }
 
   function previousPage(): void {
     if (data != null) {
-      setUrl(data?.previous);
+      setUrl(data.previous);
     }
   }
 
@@ -118,7 +118,7 @@ const Track: NextPage = () => {
             <>
               {data.items.map((item, i) => {
                 return (
-                  <Suspense fallback={<Loader />} key={item?.id}>
+                  <Suspense fallback={<Loader />} key={item.id}>
                     <TrackCard i={i + 1 + data.offset} items={item} />
                   </Suspense>
                 );

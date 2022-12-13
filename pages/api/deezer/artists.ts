@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void>
   if (session === null || session.user.username === undefined) {
     throw new Error("Session is undefined");
   }
-  const response = await getDeezerTopArtists(session?.user.username);
+  const response = await getDeezerTopArtists(session.user.username);
   return res.status(200).send(response);
 };
 

@@ -7,7 +7,7 @@ import type { NextPage } from "next";
 import { UserTopTracks } from "types/deezer";
 import { ErrorProps } from "next/error";
 
-import { Layout, Loader, NoData } from "@components/index";
+import { Layout, Loader } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
 
@@ -26,7 +26,7 @@ const Track: NextPage = () => {
   const [offset, setOffset] = useState<number>(0);
 
   const fetcher = async (url: string, previousOrNextUrl: string): Promise<UserTopTracks> => {
-    if (previousOrNextUrl !== undefined) {
+    if (previousOrNextUrl.includes("?")) {
       const arr = previousOrNextUrl.split("?");
       const query = arr[1];
       if (query === undefined) {
@@ -66,7 +66,7 @@ const Track: NextPage = () => {
 
   function previousPage(): void {
     if (data !== undefined && "prev" in data) {
-      setUrl(data?.prev);
+      setUrl(data.prev);
       setOffset((prevState) => {
         return prevState - 20;
       });
@@ -85,8 +85,8 @@ const Track: NextPage = () => {
         <section className={container}>
           {error != null && <Error statusCode={error.statusCode} />}
           {data !== undefined &&
-            data?.data.length > 0 &&
-            data?.data.map((item, index) => {
+            data.data.length > 0 &&
+            data.data.map((item, index) => {
               return (
                 <Suspense fallback={<Loader />} key={item.id}>
                   <DeezerTrackCard index={index + 1 + offset} items={item} />

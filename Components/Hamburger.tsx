@@ -9,8 +9,8 @@ export const Hamburger: FC<HamburgerProps> = ({ setIsToggle, isToggle }) => {
   const hamb = useRef<HTMLDivElement>(null);
 
   function toggleHamburger(): void {
-    if (hamb !== null && typeof toggle === "string") {
-      hamb.current?.classList?.toggle(`${toggle}`);
+    if (typeof toggle === "string") {
+      hamb.current?.classList.toggle(`${toggle}`);
     }
   }
 

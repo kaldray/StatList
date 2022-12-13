@@ -89,14 +89,14 @@ const Artist: NextPage = () => {
 
   function nextPage(): void {
     if (data != null) {
-      setUrl(data?.next);
+      setUrl(data.next);
     }
     setPageIndex(pageIndex + 1);
   }
 
   function previousPage(): void {
     if (data != null) {
-      setUrl(data?.previous);
+      setUrl(data.previous);
     }
     setPageIndex(pageIndex - 1);
   }
