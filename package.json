@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "eslint": "eslint . --ext .tsx,.ts",
-    "lint-fix": "eslint Components --fix"
+    "eslint-fix": "eslint . --ext .tsx,.ts --fix"
   },
   "dependencies": {
     "@types/spotify-web-api-node": "^5.0.7",
