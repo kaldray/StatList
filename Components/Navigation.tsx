@@ -1,16 +1,19 @@
-import { useState, useEffect, FC } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { signOut } from "next-auth/react";
 
-import { Hamburger } from "../Hamburger";
+import { useState, useEffect, FC } from "react";
+import { signOut, useSession } from "next-auth/react";
+
+import { useRouter } from "next/router";
+
+import { Hamburger } from "./Hamburger";
 
 import styles from "@styles/Components/Navigation.module.scss";
 
-export const SpotifyNavigation: FC = () => {
+export const Navigation: FC = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
   const router = useRouter();
+  const { data } = useSession();
 
   const { container, nav, active } = styles;
 
@@ -44,17 +47,17 @@ export const SpotifyNavigation: FC = () => {
       <div className={container}>
         <p>StatList</p>
         <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
-        {(isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
+        {data?.user.provider !== undefined && (isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
           <nav className={nav}>
             <ul>
-              <li className={setActiveLink("/spotify/artist")}>
-                <Link href="/spotify/artist">Meilleur artiste</Link>
+              <li className={setActiveLink(`/${data.user.provider}/artist`)}>
+                <Link href={`/${data.user.provider}/artist`}>Meilleur artiste</Link>
               </li>
-              <li className={setActiveLink("/spotify/track")}>
-                <Link href="/spotify/track">Meilleure chanson</Link>
+              <li className={setActiveLink(`/${data.user.provider}/track`)}>
+                <Link href={`/${data.user.provider}/track`}>Meilleure chanson</Link>
               </li>
-              <li className={setActiveLink("/")}>
-                <Link href="/spotify">Accueil</Link>
+              <li className={setActiveLink(`/${data.user.provider}`)}>
+                <Link href={`/${data.user.provider}`}>Accueil</Link>
               </li>
               <li onClick={async () => await logout()}>Se déconnecter</li>
             </ul>
