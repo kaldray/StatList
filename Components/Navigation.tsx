@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, memo } from "react";
 import { signOut, useSession } from "next-auth/react";
 
 import { useRouter } from "next/router";
@@ -9,7 +9,7 @@ import { Hamburger } from "./Hamburger";
 
 import styles from "@styles/Components/Navigation.module.scss";
 
-export const Navigation: FC = () => {
+const MemoNavigation: FC = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
   const router = useRouter();
@@ -67,3 +67,5 @@ export const Navigation: FC = () => {
     </>
   );
 };
+
+export const Navigation = memo(MemoNavigation);

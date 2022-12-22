@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 import { Navigation } from "@components/Navigation";
 
@@ -10,7 +10,7 @@ interface LayoutProps {
   children?: React.ReactNode;
 }
 
-export const Layout: FC<LayoutProps> = ({ children }) => {
+export const MemoLayout: FC<LayoutProps> = ({ children }) => {
   const { container } = styles;
   return (
     <>
@@ -20,3 +20,5 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
     </>
   );
 };
+
+export const Layout = memo(MemoLayout);

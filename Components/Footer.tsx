@@ -1,7 +1,8 @@
 import Link from "next/link";
 import styles from "@styles/Components/Footer.module.scss";
+import { memo } from "react";
 
-export const Footer = (): JSX.Element => {
+export const MemoFooter = (): JSX.Element => {
   const { footer__container } = styles;
   return (
     <>
@@ -11,3 +12,5 @@ export const Footer = (): JSX.Element => {
     </>
   );
 };
+
+export const Footer = memo(MemoFooter);
