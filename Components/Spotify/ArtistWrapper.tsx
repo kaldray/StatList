@@ -1,0 +1,118 @@
+import { useEffect, useState, Suspense } from "react";
+import useSWR from "swr";
+import dynamic from "next/dynamic";
+
+import { ArtistItems, UserTopItems } from "types/spotify";
+import { ArtistWrapperProps } from "types/Components";
+
+import { ErrorProps } from "next/error";
+
+import { Loader, NoData } from "@components/index";
+
+import styles from "@styles/Pages/global.module.scss";
+
+const Error = dynamic(async () => await import("next/error"));
+const ArtistCard = dynamic(async () => await import("@components/Spotify/ArtistCard"), {
+  suspense: true,
+});
+const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
+
+export const ArtistWrapper = ({ queryParams }: ArtistWrapperProps): JSX.Element => {
+  const { container } = styles;
+
+  const [previousOrNextUrl, setUrl] = useState<string | null>(null);
+  const [nextIsActive, setNextIsActive] = useState<boolean>(false);
+  const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
+  const [pageIndex, setPageIndex] = useState<number>(1);
+
+  const fetcher = async (
+    url: string,
+    queryParams?: string,
+    previousOrNextUrl?: string | null
+  ): Promise<UserTopItems<ArtistItems>> => {
+    if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
+      const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
+      if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
+        const limitOffset = nextOrPreviousUrl.slice(0, 2).join("&");
+        const res = await fetch(`${url}?time_range=${queryParams}&${limitOffset}`);
+        return await res.json();
+      }
+      const res = await fetch(`${url}?time_range=${queryParams}`);
+      return await res.json();
+    }
+
+    if (previousOrNextUrl !== null && previousOrNextUrl !== undefined) {
+      const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1);
+      if (nextOrPreviousUrl !== undefined) {
+        const res = await fetch(`${url}?${nextOrPreviousUrl}`);
+        return await res.json();
+      }
+    }
+
+    if (queryParams !== undefined) {
+      const res = await fetch(`${url}?time_range=${queryParams}`);
+      return await res.json();
+    }
+    const res = await fetch(url);
+    return await res.json();
+  };
+
+  const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
+    ["/api/spotify/artists", queryParams, previousOrNextUrl],
+    fetcher
+  );
+
+  useEffect(() => {
+    if (data?.next === null) {
+      setNextIsActive(true);
+    } else {
+      setNextIsActive(false);
+    }
+    if (data?.previous === null) {
+      setPreviousIsActive(true);
+    } else {
+      setPreviousIsActive(false);
+    }
+  }, [data]);
+
+  function nextPage(): void {
+    if (data != null) {
+      setUrl(data.next);
+    }
+    setPageIndex(pageIndex + 1);
+  }
+
+  function previousPage(): void {
+    if (data != null) {
+      setUrl(data.previous);
+    }
+    setPageIndex(pageIndex - 1);
+  }
+  return (
+    <>
+      <section className={container}>
+        {error != null && <Error statusCode={error.statusCode} />}
+        {data !== undefined && (
+          <>
+            {data.items.map((item, i) => {
+              return (
+                <Suspense fallback={<Loader />} key={item.name}>
+                  <ArtistCard i={i + 1 + data.offset} items={item} />
+                </Suspense>
+              );
+            })}
+          </>
+        )}
+        {data !== undefined && data.items.length === 0 && <NoData />}
+      </section>
+      {data !== undefined && data.items.length > 0 && (
+        <Pagination
+          nextIsActive={nextIsActive}
+          previousIsActive={previousIsActive}
+          nextPage={nextPage}
+          previousPage={previousPage}
+        />
+      )}
+    </>
+  );
+};
