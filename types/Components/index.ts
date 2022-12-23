@@ -44,6 +44,6 @@ export interface PeriodChoiceStyle {
   active: string;
 }
 
-export interface ArtistWrapperProps {
+export interface WrapperProps {
   queryParams: QueryItems;
 }

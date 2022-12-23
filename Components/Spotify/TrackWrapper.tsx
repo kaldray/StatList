@@ -2,34 +2,29 @@ import { useEffect, useState, Suspense } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 
-import { ArtistItems, UserTopItems } from "types/spotify";
+import { TrackItems, UserTopItems } from "types/spotify";
 import { WrapperProps } from "types/Components";
 
 import { ErrorProps } from "next/error";
 
-import { Loader, NoData } from "@components/index";
+import { Loader, NoData, Pagination } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
+import TrackCard from "./TrackCard";
 
 const Error = dynamic(async () => await import("next/error"));
-const ArtistCard = dynamic(async () => await import("@components/Spotify/ArtistCard"), {
-  suspense: true,
-});
-const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
 
-export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
+export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
   const { container } = styles;
-
   const [previousOrNextUrl, setUrl] = useState<string | null>(null);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
-  const [pageIndex, setPageIndex] = useState<number>(1);
 
   const fetcher = async (
     url: string,
     queryParams?: string,
     previousOrNextUrl?: string | null
-  ): Promise<UserTopItems<ArtistItems>> => {
+  ): Promise<UserTopItems<TrackItems>> => {
     if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
       const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
       if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
@@ -57,8 +52,8 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
-    ["/api/spotify/artists", queryParams, previousOrNextUrl],
+  const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
+    ["/api/spotify/tracks", queryParams, previousOrNextUrl],
     fetcher
   );
 
@@ -79,15 +74,14 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     if (data != null) {
       setUrl(data.next);
     }
-    setPageIndex(pageIndex + 1);
   }
 
   function previousPage(): void {
     if (data != null) {
       setUrl(data.previous);
     }
-    setPageIndex(pageIndex - 1);
   }
+
   return (
     <>
       <section className={container}>
@@ -96,8 +90,8 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
           <>
             {data.items.map((item, i) => {
               return (
-                <Suspense fallback={<Loader />} key={item.name}>
-                  <ArtistCard i={i + 1 + data.offset} items={item} />
+                <Suspense fallback={<Loader />} key={item.id}>
+                  <TrackCard i={i + 1 + data.offset} items={item} />
                 </Suspense>
               );
             })}
