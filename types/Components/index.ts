@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction } from "react";
 import { ArtistItems, QueryItems, TrackItems } from "../spotify/index";
 import { ArtistData, TrackData } from "../deezer";
 
-export interface ArtistCardProps {
+export interface SpotifyArtistCardProps {
   items: ArtistItems;
   i: number;
 }
 
-export interface TrackCardPros {
+export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
 }

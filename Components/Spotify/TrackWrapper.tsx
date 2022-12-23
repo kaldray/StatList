@@ -10,7 +10,7 @@ import { ErrorProps } from "next/error";
 import { Loader, NoData, Pagination } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
-import TrackCard from "./TrackCard";
+import SpotifyTrackCard from "./SpotifyTrackCard";
 
 const Error = dynamic(async () => await import("next/error"));
 
@@ -91,7 +91,7 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
             {data.items.map((item, i) => {
               return (
                 <Suspense fallback={<Loader />} key={item.id}>
-                  <TrackCard i={i + 1 + data.offset} items={item} />
+                  <SpotifyTrackCard i={i + 1 + data.offset} items={item} />
                 </Suspense>
               );
             })}
