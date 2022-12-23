@@ -33,7 +33,7 @@ const Track: NextPage = () => {
         <title>StatList</title>
         <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
-        <link rel="preload" href="/api/tracks" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/api/spotify/tracks" as="fetch" crossOrigin="anonymous" />
       </Head>
       <Layout>
         <PeriodChoice
