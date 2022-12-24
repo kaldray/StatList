@@ -40,7 +40,7 @@ const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
           <div onClick={goToSpotifyUrl} className={logo__container}>
             <Image
               alt="Spotify Logo"
-              loading="lazy"
+              priority={true}
               quality={"100"}
               src={logo}
               style={{

@@ -45,8 +45,8 @@ const ArtistCard: FC<DeezerArtistCardPros> = ({ items, index }) => {
           />
           <div className={logo__container}>
             <Image
-              alt="Spotify Logo"
-              loading="lazy"
+              alt="Deezer Logo"
+              priority={true}
               quality={"100"}
               src={logo}
               style={{
