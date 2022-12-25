@@ -2,11 +2,11 @@ import { FC } from "react";
 import Image from "next/image";
 import logo from "../../public/Spotify_Logo_RGB_Black.png";
 
-import { ArtistCardProps } from "types/Components";
+import { SpotifyArtistCardProps } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 
-const ArtistCard: FC<ArtistCardProps> = ({ items, i }) => {
+const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
   const { card__container, logo__container } = styles;
   const { images, name } = items;
 
@@ -40,7 +40,7 @@ const ArtistCard: FC<ArtistCardProps> = ({ items, i }) => {
           <div onClick={goToSpotifyUrl} className={logo__container}>
             <Image
               alt="Spotify Logo"
-              loading="lazy"
+              priority={true}
               quality={"100"}
               src={logo}
               style={{
@@ -56,4 +56,4 @@ const ArtistCard: FC<ArtistCardProps> = ({ items, i }) => {
   );
 };
 
-export default ArtistCard;
+export default SpotifyArtistCard;

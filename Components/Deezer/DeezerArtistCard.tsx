@@ -23,44 +23,41 @@ const ArtistCard: FC<DeezerArtistCardPros> = ({ items, index }) => {
 
   return (
     <>
-      {picture_big !== undefined && (
-        <section className={card__container}>
-          <figure>
-            <figcaption>
-              {index} - {name}
-            </figcaption>
-            {picture_big !== undefined && (
-              <Image
-                alt={name}
-                priority={true}
-                quality={"100"}
-                src={picture_big}
-                width={extractSizeFromUrl(picture_big)}
-                height={extractSizeFromUrl(picture_big)}
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                  objectFit: "cover",
-                  aspectRatio: "1/1",
-                }}
-              />
-            )}
-            <div className={logo__container}>
-              <Image
-                alt="Spotify Logo"
-                loading="lazy"
-                quality={"100"}
-                src={logo}
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                  objectFit: "cover",
-                }}
-              />
-            </div>
-          </figure>
-        </section>
-      )}
+      <section className={card__container}>
+        <figure>
+          <figcaption>
+            {index} - {name}
+          </figcaption>
+
+          <Image
+            alt={name}
+            priority={true}
+            quality={"100"}
+            src={picture_big}
+            width={extractSizeFromUrl(picture_big)}
+            height={extractSizeFromUrl(picture_big)}
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              objectFit: "cover",
+              aspectRatio: "1/1",
+            }}
+          />
+          <div className={logo__container}>
+            <Image
+              alt="Deezer Logo"
+              priority={true}
+              quality={"100"}
+              src={logo}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        </figure>
+      </section>
     </>
   );
 };

@@ -16,7 +16,7 @@ export const PeriodChoice: FC<PeriodChoiceProps> = ({
   const longTermButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (mediumTermButton !== null && typeof active === "string") {
+    if (typeof active === "string") {
       mediumTermButton.current?.classList.add(`${active}`);
     }
   }, [active]);
@@ -29,11 +29,11 @@ export const PeriodChoice: FC<PeriodChoiceProps> = ({
     if (
       activeButton.current !== null &&
       typeof active === "string" &&
-      !activeButton.current?.classList.contains(`${active}`)
+      !activeButton.current.classList.contains(`${active}`)
     ) {
-      activeButton.current?.classList.add(`${active}`);
-      button2.current?.classList?.remove(`${active}`);
-      button3.current?.classList?.remove(`${active}`);
+      activeButton.current.classList.add(`${active}`);
+      button2.current?.classList.remove(`${active}`);
+      button3.current?.classList.remove(`${active}`);
     }
   }
 

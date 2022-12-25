@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { signIn } from "next-auth/react";
 import { getToken } from "next-auth/jwt";
-import type { NextPage, GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import type { NextPage, GetServerSidePropsContext } from "next";
 
 import { Layout } from "@components/index";
 

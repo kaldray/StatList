@@ -1,29 +1,10 @@
-import { Suspense } from "react";
-import useSWR from "swr";
 import Head from "next/head";
-import dynamic from "next/dynamic";
 
 import type { NextPage } from "next";
-import { UserTopArtist } from "types/deezer";
-import { ErrorProps } from "next/error";
 
-import { Layout, Loader } from "@components/index";
-import styles from "@styles/Pages/global.module.scss";
-
-const DeezerArtistCard = dynamic(async () => await import("@components/Deezer/DeezerArtistCard"), { suspense: true });
-
-const Error = dynamic(async () => await import("next/error"));
+import { ArtistWrapper } from "@components/Deezer/ArtistWrapper";
 
 const Track: NextPage = () => {
-  const { container } = styles;
-
-  const fetcher = async (url: string): Promise<UserTopArtist> => {
-    const res = await fetch(url);
-    return await res.json();
-  };
-
-  const { data, error } = useSWR<UserTopArtist, ErrorProps>("/api/deezer/artists", fetcher);
-
   return (
     <>
       <Head>
@@ -32,20 +13,7 @@ const Track: NextPage = () => {
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
         <link rel="preload" href="/api/deezer/artists" as="fetch" crossOrigin="anonymous" />
       </Head>
-      <Layout>
-        <section className={container}>
-          {error != null && <Error statusCode={error.statusCode} />}
-          {data !== undefined &&
-            data?.data.length > 0 &&
-            data?.data.map((item, index) => {
-              return (
-                <Suspense fallback={<Loader />} key={item.id}>
-                  <DeezerArtistCard index={index + 1} items={item} />
-                </Suspense>
-              );
-            })}
-        </section>
-      </Layout>
+      <ArtistWrapper />
     </>
   );
 };

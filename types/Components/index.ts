@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
-import { ArtistItems, TrackItems } from "../spotify/index";
+import { ArtistItems, QueryItems, TrackItems } from "../spotify/index";
 import { ArtistData, TrackData } from "../deezer";
 
-export interface ArtistCardProps {
+export interface SpotifyArtistCardProps {
   items: ArtistItems;
   i: number;
 }
 
-export interface TrackCardPros {
+export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
 }
@@ -42,4 +42,8 @@ export interface HamburgerProps {
 export interface PeriodChoiceStyle {
   search__container: string;
   active: string;
+}
+
+export interface WrapperProps {
+  queryParams: QueryItems;
 }

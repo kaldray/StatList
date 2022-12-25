@@ -2,10 +2,10 @@ import { FC } from "react";
 import Image from "next/image";
 import logo from "../../public/Spotify_Logo_RGB_Black.png";
 
-import { TrackCardPros } from "types/Components";
+import { SpotifyTrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
+const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i }) => {
   const {
     name,
     album: { images },
@@ -20,7 +20,7 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
 
   return (
     <>
-      {items !== undefined && images[2] !== undefined && (
+      {images[2] !== undefined && (
         <section className={card__container}>
           <div className={info__container}>
             <div className={cover__container}>
@@ -47,7 +47,7 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
           <div onClick={goToSpotifyUrl} className={logo__container}>
             <Image
               alt="Spotify Logo"
-              loading="lazy"
+              priority={true}
               quality={"100"}
               src={logo}
               style={{
@@ -62,4 +62,4 @@ const TrackCard: FC<TrackCardPros> = ({ items, i }) => {
   );
 };
 
-export default TrackCard;
+export default SpotifyTrackCard;
