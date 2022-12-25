@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { QueryItems } from "types/spotify";
 
-import { Layout } from "@components/index";
 import { ArtistWrapper } from "@components/Spotify/ArtistWrapper";
 
 const PeriodChoice = dynamic(async () => await import("@components/PeriodChoice").then((res) => res.PeriodChoice));
@@ -34,14 +33,12 @@ const Artist: NextPage = () => {
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
         <link rel="preload" href="/api/spotify/artists" as="fetch" crossOrigin="anonymous" />
       </Head>
-      <Layout>
-        <PeriodChoice
-          getShortTermArtist={getShortTermArtist}
-          getLongTermArtist={getLongTermArtist}
-          getMediummTermArtist={getMediummTermArtist}
-        />
-        <ArtistWrapper queryParams={queryParams} />
-      </Layout>
+      <PeriodChoice
+        getShortTermArtist={getShortTermArtist}
+        getLongTermArtist={getLongTermArtist}
+        getMediummTermArtist={getMediummTermArtist}
+      />
+      <ArtistWrapper queryParams={queryParams} />
     </>
   );
 };

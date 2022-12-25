@@ -2,7 +2,6 @@ import Head from "next/head";
 
 import type { NextPage } from "next";
 
-import { Layout } from "@components/index";
 import { TrackWrapper } from "@components/Deezer/TrackWrapper";
 
 const Track: NextPage = () => {
@@ -14,9 +13,7 @@ const Track: NextPage = () => {
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
         <link rel="preload" href="/api/deezer/tracks" as="fetch" crossOrigin="anonymous" />
       </Head>
-      <Layout>
-        <TrackWrapper />
-      </Layout>
+      <TrackWrapper />
     </>
   );
 };

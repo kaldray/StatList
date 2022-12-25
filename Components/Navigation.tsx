@@ -9,7 +9,7 @@ import { Hamburger } from "./Hamburger";
 
 import styles from "@styles/Components/Navigation.module.scss";
 
-const MemoNavigation: FC = () => {
+export const Navigation: FC = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
   const router = useRouter();
@@ -67,5 +67,3 @@ const MemoNavigation: FC = () => {
     </>
   );
 };
-
-export const Navigation = memo(MemoNavigation);

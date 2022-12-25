@@ -10,7 +10,7 @@ interface LayoutProps {
   children?: React.ReactNode;
 }
 
-export const MemoLayout: FC<LayoutProps> = ({ children }) => {
+export const Layout: FC<LayoutProps> = ({ children }) => {
   const { container } = styles;
   return (
     <>
@@ -20,5 +20,3 @@ export const MemoLayout: FC<LayoutProps> = ({ children }) => {
     </>
   );
 };
-
-export const Layout = memo(MemoLayout);
