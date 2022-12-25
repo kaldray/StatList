@@ -1,12 +1,10 @@
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 
-import { ArtistItems, UserTopItems } from "types/spotify";
-import { WrapperProps } from "types/Components";
 import { ErrorProps } from "next/error";
 
-import { Loader, NoData } from "@components/index";
+import { Loader } from "@components/index";
 import styles from "@styles/Pages/global.module.scss";
 import { UserTopArtist } from "types/deezer";
 
