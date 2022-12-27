@@ -5,8 +5,7 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-  background-color: $black;
-  height: 100vh;
+  height: 80vh;
   div {
     display: flex;
     flex-direction: column;
@@ -14,12 +13,14 @@
   button {
     margin-top: 2rem;
     padding: 0.5rem;
-    background-color: $white;
+    background-color: $laurel-green;
+    color: $black;
     padding: $xs;
     font-size: $mobileText;
     font-weight: 300;
     border: 1px solid $black;
     border-radius: $smallRadius;
+    width: 20rem;
     &:hover {
       cursor: pointer;
       background-color: lighten($white, 20%);

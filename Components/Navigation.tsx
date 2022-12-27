@@ -46,22 +46,24 @@ const MemoNavigation: FC = () => {
     <>
       <div className={container}>
         <p>StatList</p>
-        <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
         {data?.user.provider !== undefined && (isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
-          <nav className={nav}>
-            <ul>
-              <li className={setActiveLink(`/${data.user.provider}/artist`)}>
-                <Link href={`/${data.user.provider}/artist`}>Meilleur artiste</Link>
-              </li>
-              <li className={setActiveLink(`/${data.user.provider}/track`)}>
-                <Link href={`/${data.user.provider}/track`}>Meilleure chanson</Link>
-              </li>
-              <li className={setActiveLink(`/${data.user.provider}`)}>
-                <Link href={`/${data.user.provider}`}>Accueil</Link>
-              </li>
-              <li onClick={async () => await logout()}>Se déconnecter</li>
-            </ul>
-          </nav>
+          <>
+            <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
+            <nav className={nav}>
+              <ul>
+                <li className={setActiveLink(`/${data.user.provider}/artist`)}>
+                  <Link href={`/${data.user.provider}/artist`}>Meilleur artiste</Link>
+                </li>
+                <li className={setActiveLink(`/${data.user.provider}/track`)}>
+                  <Link href={`/${data.user.provider}/track`}>Meilleure chanson</Link>
+                </li>
+                <li className={setActiveLink(`/${data.user.provider}`)}>
+                  <Link href={`/${data.user.provider}`}>Accueil</Link>
+                </li>
+                <li onClick={async () => await logout()}>Se déconnecter</li>
+              </ul>
+            </nav>
+          </>
         )}
       </div>
     </>
