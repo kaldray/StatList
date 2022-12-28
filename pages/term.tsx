@@ -1,7 +1,5 @@
 import Head from "next/head";
 
-import { Layout } from "@components/index";
-
 import style from "@styles/Pages/term.module.scss";
 
 const TermOfUse = (): JSX.Element => {
