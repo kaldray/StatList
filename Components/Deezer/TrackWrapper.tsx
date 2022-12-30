@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { ErrorProps } from "next/error";
 import { UserTopTracks } from "types/deezer";
 
-import { Layout, Loader } from "@components/index";
+import { Loader } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
 
@@ -78,28 +78,26 @@ export const TrackWrapper = (): JSX.Element => {
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
         <link rel="preload" href="/api/deezer/artists" as="fetch" crossOrigin="anonymous" />
       </Head>
-      <Layout>
-        <section className={container}>
-          {error != null && <Error statusCode={error.statusCode} />}
-          {data !== undefined &&
-            data.data.length > 0 &&
-            data.data.map((item, index) => {
-              return (
-                <Suspense fallback={<Loader />} key={item.id}>
-                  <DeezerTrackCard index={index + 1 + offset} items={item} />
-                </Suspense>
-              );
-            })}
-        </section>
-        {data !== undefined && data.data.length > 0 && (
-          <Pagination
-            nextIsActive={nextIsActive}
-            previousIsActive={previousIsActive}
-            nextPage={nextPage}
-            previousPage={previousPage}
-          />
-        )}
-      </Layout>
+      <section className={container}>
+        {error != null && <Error statusCode={error.statusCode} />}
+        {data !== undefined &&
+          data.data.length > 0 &&
+          data.data.map((item, index) => {
+            return (
+              <Suspense fallback={<Loader />} key={item.id}>
+                <DeezerTrackCard index={index + 1 + offset} items={item} />
+              </Suspense>
+            );
+          })}
+      </section>
+      {data !== undefined && data.data.length > 0 && (
+        <Pagination
+          nextIsActive={nextIsActive}
+          previousIsActive={previousIsActive}
+          nextPage={nextPage}
+          previousPage={previousPage}
+        />
+      )}
     </>
   );
 };

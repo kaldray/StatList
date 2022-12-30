@@ -10,6 +10,7 @@
     "eslint-fix": "eslint . --ext .tsx,.ts --fix"
   },
   "dependencies": {
+    "@next/font": "^13.1.1",
     "@types/spotify-web-api-node": "^5.0.7",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",

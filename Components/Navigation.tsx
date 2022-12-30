@@ -46,9 +46,11 @@ const MemoNavigation: FC = () => {
     <>
       <div className={container}>
         <p>StatList</p>
+        {data?.user.provider !== undefined && innerWidth !== undefined && innerWidth <= 680 && (
+          <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
+        )}
         {data?.user.provider !== undefined && (isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
           <>
-            <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
             <nav className={nav}>
               <ul>
                 <li className={setActiveLink(`/${data.user.provider}/artist`)}>
