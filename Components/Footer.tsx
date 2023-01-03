@@ -5,9 +5,9 @@ export const Footer = (): JSX.Element => {
   const { footer__container } = styles;
   return (
     <>
-      <section className={footer__container}>
+      <footer className={footer__container}>
         <Link href={"/term"}>Condition d&apos;utilisation</Link>
-      </section>
+      </footer>
     </>
   );
 };

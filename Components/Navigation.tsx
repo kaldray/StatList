@@ -44,7 +44,7 @@ const MemoNavigation: FC = () => {
 
   return (
     <>
-      <div className={container}>
+      <header className={container}>
         <p>StatList</p>
         {data?.user.provider !== undefined && innerWidth !== undefined && innerWidth <= 680 && (
           <Hamburger setIsToggle={setIsToggle} isToggle={isToggle} />
@@ -67,7 +67,7 @@ const MemoNavigation: FC = () => {
             </nav>
           </>
         )}
-      </div>
+      </header>
     </>
   );
 };
