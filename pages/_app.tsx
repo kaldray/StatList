@@ -13,11 +13,11 @@ const lato = Lato({
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <SessionProvider session={pageProps.session}>
-      <main>
-        <Layout font={lato}>
+      <div className={lato.className}>
+        <Layout>
           <Component {...pageProps} />
         </Layout>
-      </main>
+      </div>
     </SessionProvider>
   );
 }
