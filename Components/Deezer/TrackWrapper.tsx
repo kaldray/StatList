@@ -16,14 +16,13 @@ const Pagination = dynamic(async () => await import("@components/Pagination").th
 
 export const TrackWrapper = (): JSX.Element => {
   const { container } = styles;
-
   const [previousOrNextUrl, setUrl] = useState<string | undefined>(undefined);
   const [nextIsActive, setNextIsDisable] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsDisable] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
 
-  const fetcher = async (url: string, previousOrNextUrl: string): Promise<UserTopTracks> => {
-    if (previousOrNextUrl.includes("?")) {
+  const fetcher = async (url: string, previousOrNextUrl: string | undefined): Promise<UserTopTracks> => {
+    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?")) {
       const arr = previousOrNextUrl.split("?");
       const query = arr[1];
       if (query === undefined) {
