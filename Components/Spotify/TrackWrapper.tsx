@@ -2,7 +2,7 @@ import { useEffect, useState, Suspense } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 
-import { TrackItems, UserTopItems } from "types/spotify";
+import { QueryItems, TrackItems, UserTopItems } from "types/spotify";
 import { WrapperProps } from "types/Components";
 
 import { ErrorProps } from "next/error";
@@ -16,36 +16,44 @@ const Error = dynamic(async () => await import("next/error"));
 
 export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
   const { container } = styles;
-  const [previousOrNextUrl, setUrl] = useState<string | null>(null);
+  const [previousOrNextUrl, setUrl] = useState<string | undefined>(undefined);
   const [nextIsActive, setNextIsActive] = useState<boolean>(false);
   const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
 
   const fetcher = async (
     url: string,
-    queryParams?: string,
-    previousOrNextUrl?: string | null
+    queryParams?: QueryItems,
+    previousOrNextUrl?: string
   ): Promise<UserTopItems<TrackItems>> => {
-    if (previousOrNextUrl !== null && previousOrNextUrl !== undefined && queryParams !== undefined) {
-      const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1)?.split("&");
-      if (nextOrPreviousUrl !== undefined && nextOrPreviousUrl.length >= 2) {
-        const limitOffset = nextOrPreviousUrl.slice(0, 2).join("&");
-        const res = await fetch(`${url}?time_range=${queryParams}&${limitOffset}`);
+    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?") && queryParams !== undefined) {
+      const arr = previousOrNextUrl.split("?");
+      const queryOnNextUrl = arr[1];
+      if (queryOnNextUrl === undefined) {
+        const res = await fetch(url);
         return await res.json();
       }
-      const res = await fetch(`${url}?time_range=${queryParams}`);
+      if (queryOnNextUrl.includes("&")) {
+        const splitUrlParams = queryOnNextUrl.split("&");
+        splitUrlParams[2] = queryParams;
+        const params = splitUrlParams.join("&");
+        const res = await fetch(`${url}?${params}`);
+        return await res.json();
+      }
+      const res = await fetch(`${url}?${queryParams}`);
       return await res.json();
     }
-
-    if (previousOrNextUrl !== null && previousOrNextUrl !== undefined) {
-      const nextOrPreviousUrl = previousOrNextUrl.split("?").at(1);
-      if (nextOrPreviousUrl !== undefined) {
-        const res = await fetch(`${url}?${nextOrPreviousUrl}`);
+    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?")) {
+      const arr = previousOrNextUrl.split("?");
+      const query = arr[1];
+      if (query === undefined) {
+        const res = await fetch(url);
         return await res.json();
       }
+      const res = await fetch(`${url}?${query}`);
+      return await res.json();
     }
-
     if (queryParams !== undefined) {
-      const res = await fetch(`${url}?time_range=${queryParams}`);
+      const res = await fetch(`${url}?${queryParams}`);
       return await res.json();
     }
     const res = await fetch(url);
@@ -54,7 +62,10 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
 
   const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
     ["/api/spotify/tracks", queryParams, previousOrNextUrl],
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   useEffect(() => {
@@ -71,13 +82,13 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
   }, [data]);
 
   function nextPage(): void {
-    if (data != null) {
+    if (data !== undefined && data?.next !== null) {
       setUrl(data.next);
     }
   }
 
   function previousPage(): void {
-    if (data != null) {
+    if (data !== undefined && data?.previous !== null) {
       setUrl(data.previous);
     }
   }

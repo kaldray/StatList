@@ -15,35 +15,10 @@ export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
 
 export const getSpotifyTopTracks = async (
   accesToken: string,
-  query?: QueryItems,
-  limit?: string,
-  offset?: string
+  searchParams?: URLSearchParams
 ): Promise<UserTopItems<TrackItems>> => {
-  if (
-    limit !== undefined &&
-    typeof limit === "string" &&
-    offset !== undefined &&
-    query !== undefined &&
-    typeof offset === "string"
-  ) {
-    const response = await fetch(`${USER_TOP_TRACK}?limit=${limit}&offset=${offset}&time_range=${query}`, {
-      headers: {
-        Authorization: `Bearer ${accesToken}`,
-      },
-    });
-    return await response.json();
-  }
-
-  if (limit !== undefined && typeof limit === "string" && offset !== undefined && typeof offset === "string") {
-    const response = await fetch(`${USER_TOP_TRACK}?limit=${limit}&offset=${offset}`, {
-      headers: {
-        Authorization: `Bearer ${accesToken}`,
-      },
-    });
-    return await response.json();
-  }
-  if (query !== undefined) {
-    const response = await fetch(`${USER_TOP_TRACK}?time_range=${query}`, {
+  if (searchParams !== undefined) {
+    const response = await fetch(`${USER_TOP_TRACK}?${searchParams.toString()}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
@@ -60,35 +35,10 @@ export const getSpotifyTopTracks = async (
 
 export const getSpotifyTopArtist = async (
   accesToken: string,
-  query?: QueryItems,
-  limit?: string,
-  offset?: string
+  searchParams?: URLSearchParams
 ): Promise<UserTopItems<ArtistItems>> => {
-  if (
-    limit !== undefined &&
-    typeof limit === "string" &&
-    offset !== undefined &&
-    query !== undefined &&
-    typeof offset === "string"
-  ) {
-    const response = await fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}&time_range=${query}`, {
-      headers: {
-        Authorization: `Bearer ${accesToken}`,
-      },
-    });
-    return await response.json();
-  }
-
-  if (limit !== undefined && typeof limit === "string" && offset !== undefined && typeof offset === "string") {
-    const response = await fetch(`${USER_TOP_ARTIST}?limit=${limit}&offset=${offset}`, {
-      headers: {
-        Authorization: `Bearer ${accesToken}`,
-      },
-    });
-    return await response.json();
-  }
-  if (query !== undefined) {
-    const response = await fetch(`${USER_TOP_ARTIST}?time_range=${query}`, {
+  if (searchParams !== undefined) {
+    const response = await fetch(`${USER_TOP_ARTIST}?${searchParams.toString()}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
