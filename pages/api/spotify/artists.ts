@@ -1,4 +1,4 @@
-import type { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { getSpotifyTopArtist } from "@providers/spotify";
@@ -7,7 +7,7 @@ export const config = {
   runtime: "edge",
 };
 
-const handler = async (req: NextRequest, res: NextResponse): Promise<Response | undefined> => {
+const handler = async (req: NextRequest): Promise<Response | undefined> => {
   const token = await getToken({ req });
   const { searchParams } = new URL(req.url);
   const time_range = searchParams.get("time_range");
