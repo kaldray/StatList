@@ -14,15 +14,15 @@ const Artist: NextPage = () => {
   const [queryParams, setQueryParams] = useState<QueryItems>(undefined);
 
   function getShortTermArtist(): void {
-    setQueryParams("short_term");
+    setQueryParams("time_range=short_term");
   }
 
   function getLongTermArtist(): void {
-    setQueryParams("long_term");
+    setQueryParams("time_range=long_term");
   }
 
   function getMediummTermArtist(): void {
-    setQueryParams("medium_term");
+    setQueryParams("time_range=medium_term");
   }
 
   return (

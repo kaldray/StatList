@@ -1,16 +1,20 @@
-import { getSession } from "next-auth/react";
-
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 import { getDeezerTopArtists } from "@providers/deezer";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  const session = await getSession({ req });
-  if (session === null || session.user.username === undefined) {
-    throw new Error("Session is undefined");
+export const config = {
+  runtime: "edge",
+};
+
+const handler = async (req: NextRequest): Promise<Response | undefined> => {
+  const token = await getToken({ req });
+  if (token === null) {
+    throw new Error("Missing token");
   }
-  const response = await getDeezerTopArtists(session.user.username);
-  return res.status(200).send(response);
+
+  const response = await getDeezerTopArtists(token.username);
+  return new Response(JSON.stringify(response), { status: 200 });
 };
 
 export default handler;

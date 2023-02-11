@@ -1,26 +1,29 @@
-import { getSession } from "next-auth/react";
-
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 import { getDeezerTopTracks } from "@providers/deezer";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  const session = await getSession({ req });
-  if (session === null || session.user.username === undefined) {
-    throw new Error("Session is undefined");
+export const config = {
+  runtime: "edge",
+};
+
+const handler = async (req: NextRequest): Promise<Response | Error> => {
+  const token = await getToken({ req });
+  const { searchParams } = new URL(req.url);
+  const limit = searchParams.get("limit");
+  const index = searchParams.get("index");
+  if (token === null) {
+    throw new Error("Missing token");
   }
-  if (
-    Boolean(req.query.limit) &&
-    Boolean(req.query.index) &&
-    typeof req.query.limit === "string" &&
-    typeof req.query.index === "string"
-  ) {
-    const params = new URLSearchParams({ limit: req.query.limit, index: req.query.index });
-    const response = await getDeezerTopTracks(session.user.username, params);
-    return res.status(200).send(response);
+
+  if (typeof limit === "string" && typeof index === "string") {
+    const params = new URLSearchParams({ limit, index });
+    const response = await getDeezerTopTracks(token.username, params);
+    return new Response(JSON.stringify(response), { status: 200 });
   }
-  const response = await getDeezerTopTracks(session.user.username);
-  return res.status(200).send(response);
+
+  const response = await getDeezerTopTracks(token.username);
+  return new Response(JSON.stringify(response), { status: 200 });
 };
 
 export default handler;

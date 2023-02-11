@@ -101,4 +101,6 @@ export interface UserInfo {
 
 export type QueryState = "short_term" | "long_term" | "medium_term" | undefined;
 
-export type QueryItems = "short_term" | "long_term" | "medium_term" | undefined;
+export type TimeRange = "short_term" | "long_term" | "medium_term";
+
+export type QueryItems = `time_range=${TimeRange}` | undefined;
