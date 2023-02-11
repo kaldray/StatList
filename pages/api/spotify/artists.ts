@@ -1,48 +1,42 @@
-import { getSession } from "next-auth/react";
-
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 import { getSpotifyTopArtist } from "@providers/spotify";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  const session = await getSession({
-    req,
-  });
+export const config = {
+  runtime: "edge",
+};
 
-  if (session?.user.accessToken !== undefined) {
-    if (
-      Boolean(req.query.limit) &&
-      Boolean(req.query.offset) &&
-      Boolean(req.query.time_range) &&
-      typeof req.query.limit === "string" &&
-      typeof req.query.offset === "string" &&
-      typeof req.query.time_range === "string"
-    ) {
+const handler = async (req: NextRequest, res: NextResponse): Promise<Response | undefined> => {
+  const token = await getToken({ req });
+  const { searchParams } = new URL(req.url);
+  const time_range = searchParams.get("time_range");
+  const limit = searchParams.get("limit");
+  const offset = searchParams.get("offset");
+
+  if (token?.accessToken !== undefined) {
+    if (typeof limit === "string" && typeof offset === "string" && typeof time_range === "string") {
       const params = new URLSearchParams({
-        limit: req.query.limit,
-        offset: req.query.offset,
-        time_range: req.query.time_range,
+        limit,
+        offset,
+        time_range,
       });
-      const response = await getSpotifyTopArtist(session.user.accessToken, params);
-      return res.status(200).send(response);
+      const response = await getSpotifyTopArtist(token.accessToken, params);
+      return new Response(JSON.stringify(response), { status: 200 });
     }
-    if (
-      Boolean(req.query.limit) &&
-      Boolean(req.query.offset) &&
-      typeof req.query.limit === "string" &&
-      typeof req.query.offset === "string"
-    ) {
-      const params = new URLSearchParams({ limit: req.query.limit, offset: req.query.offset });
-      const response = await getSpotifyTopArtist(session.user.accessToken, params);
-      return res.status(200).send(response);
+    if (typeof limit === "string" && typeof offset === "string") {
+      const params = new URLSearchParams({ limit, offset });
+      const response = await getSpotifyTopArtist(token.accessToken, params);
+      return new Response(JSON.stringify(response), { status: 200 });
     }
-    if (Boolean(req.query.time_range) && typeof req.query.time_range === "string") {
-      const params = new URLSearchParams({ time_range: req.query.time_range });
-      const response = await getSpotifyTopArtist(session.user.accessToken, params);
-      return res.status(200).send(response);
+    if (typeof time_range === "string") {
+      const params = new URLSearchParams({ time_range });
+      const response = await getSpotifyTopArtist(token.accessToken, params);
+
+      return new Response(JSON.stringify(response), { status: 200 });
     }
-    const response = await getSpotifyTopArtist(session.user.accessToken);
-    return res.status(200).send(response);
+    const response = await getSpotifyTopArtist(token.accessToken);
+    return new Response(JSON.stringify(response), { status: 200 });
   }
 };
 
