@@ -10,10 +10,6 @@ const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
   const { card__container, logo__container } = styles;
   const { images, name } = items;
 
-  function goToSpotifyUrl(): string {
-    return (window.location.href = items.external_urls.spotify);
-  }
-
   return (
     <>
       <section className={card__container}>
@@ -37,7 +33,7 @@ const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
               }}
             />
           )}
-          <div onClick={goToSpotifyUrl} className={logo__container}>
+          <a href={items.external_urls.spotify} className={logo__container}>
             <Image
               alt="Spotify Logo"
               priority={true}
@@ -49,7 +45,7 @@ const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
                 objectFit: "cover",
               }}
             />
-          </div>
+          </a>
         </figure>
       </section>
     </>

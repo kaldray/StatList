@@ -14,10 +14,6 @@ const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i }) => {
 
   const { card__container, info__container, logo__container, cover__container } = styles;
 
-  function goToSpotifyUrl(): string {
-    return (window.location.href = items.external_urls.spotify);
-  }
-
   return (
     <>
       {images[2] !== undefined && (
@@ -44,7 +40,7 @@ const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i }) => {
               <li>{artists[0]?.name}</li>
             </ul>
           </div>
-          <div onClick={goToSpotifyUrl} className={logo__container}>
+          <a href={items.external_urls.spotify} className={logo__container} target="_blank" rel="noreferrer">
             <Image
               alt="Spotify Logo"
               priority={true}
@@ -55,7 +51,7 @@ const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i }) => {
                 height: "auto",
               }}
             />
-          </div>
+          </a>
         </section>
       )}
     </>

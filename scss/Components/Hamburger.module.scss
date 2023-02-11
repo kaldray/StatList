@@ -9,6 +9,11 @@
   place-content: center;
   place-items: center;
   position: relative;
+  background-color: transparent;
+  outline: none;
+  border: none;
+
+
 
   span {
     display: block;
@@ -27,6 +32,18 @@
 
   span:nth-child(2) {
     bottom: 0.5rem;
+  }
+}
+
+.container__hamb:active{
+  span:nth-child(1) {
+    top: 0.8rem;
+    transform: rotate(45deg);
+  }
+
+  span:nth-child(2) {
+    bottom: 1rem;
+    transform: rotate(-45deg);
   }
 }
 

@@ -15,7 +15,7 @@ const MemoNavigation: FC = () => {
   const router = useRouter();
   const { data } = useSession();
 
-  const { container, nav, active } = styles;
+  const { container, nav } = styles;
 
   useEffect(() => {
     function toggleHamburger(): void {
@@ -31,11 +31,8 @@ const MemoNavigation: FC = () => {
     };
   }, []);
 
-  function setActiveLink(href: string): string {
-    if (typeof active === "undefined") {
-      return "";
-    }
-    return router.pathname === href ? active : "";
+  function setCurrentPage(href: string): "page" | undefined {
+    return router.pathname === href ? "page" : undefined;
   }
 
   async function logout(): Promise<void> {
@@ -51,16 +48,26 @@ const MemoNavigation: FC = () => {
         )}
         {data?.user.provider !== undefined && (isToggle || (innerWidth !== undefined && innerWidth >= 680)) && (
           <>
-            <nav className={nav}>
+            <nav role={"navigation"} id="nav-items" className={nav}>
               <ul>
-                <li className={setActiveLink(`/${data.user.provider}/artist`)}>
-                  <Link href={`/${data.user.provider}/artist`}>Meilleur artiste</Link>
+                <li>
+                  <Link
+                    aria-current={setCurrentPage(`/${data.user.provider}/artist`)}
+                    href={`/${data.user.provider}/artist`}>
+                    Meilleur artiste
+                  </Link>
                 </li>
-                <li className={setActiveLink(`/${data.user.provider}/track`)}>
-                  <Link href={`/${data.user.provider}/track`}>Meilleure chanson</Link>
+                <li>
+                  <Link
+                    aria-current={setCurrentPage(`/${data.user.provider}/track`)}
+                    href={`/${data.user.provider}/track`}>
+                    Meilleure chanson
+                  </Link>
                 </li>
-                <li className={setActiveLink(`/${data.user.provider}`)}>
-                  <Link href={`/${data.user.provider}`}>Accueil</Link>
+                <li>
+                  <Link aria-current={setCurrentPage(`/${data.user.provider}`)} href={`/${data.user.provider}`}>
+                    Accueil
+                  </Link>
                 </li>
                 <li onClick={async () => await logout()}>Se déconnecter</li>
               </ul>
