@@ -6,7 +6,7 @@ import styles from "@styles/Components/Hamburger.module.scss";
 
 export const Hamburger: FC<HamburgerProps> = ({ setIsToggle, isToggle }) => {
   const { container__hamb, toggle } = styles;
-  const hamb = useRef<HTMLDivElement>(null);
+  const hamb = useRef<HTMLButtonElement>(null);
 
   function toggleHamburger(): void {
     if (typeof toggle === "string") {
@@ -16,8 +16,12 @@ export const Hamburger: FC<HamburgerProps> = ({ setIsToggle, isToggle }) => {
 
   return (
     <>
-      <div
+      <button
         ref={hamb}
+        type="button"
+        aria-label="hamburger menu"
+        aria-controls="nav-items"
+        aria-expanded={isToggle}
         onClick={() => {
           setIsToggle(!isToggle);
           toggleHamburger();
@@ -25,7 +29,7 @@ export const Hamburger: FC<HamburgerProps> = ({ setIsToggle, isToggle }) => {
         className={container__hamb}>
         <span></span>
         <span></span>
-      </div>
+      </button>
     </>
   );
 };
