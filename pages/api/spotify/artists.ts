@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { getSpotifyTopArtist } from "@providers/spotify";
+import { ResponseError } from "@providers/spotify";
 
 export const config = {
   runtime: "edge",
@@ -15,28 +16,34 @@ const handler = async (req: NextRequest): Promise<Response | undefined> => {
   const offset = searchParams.get("offset");
 
   if (token?.accessToken !== undefined) {
-    if (typeof limit === "string" && typeof offset === "string" && typeof time_range === "string") {
-      const params = new URLSearchParams({
-        limit,
-        offset,
-        time_range,
-      });
-      const response = await getSpotifyTopArtist(token.accessToken, params);
-      return new Response(JSON.stringify(response), { status: 200 });
-    }
-    if (typeof limit === "string" && typeof offset === "string") {
-      const params = new URLSearchParams({ limit, offset });
-      const response = await getSpotifyTopArtist(token.accessToken, params);
-      return new Response(JSON.stringify(response), { status: 200 });
-    }
-    if (typeof time_range === "string") {
-      const params = new URLSearchParams({ time_range });
-      const response = await getSpotifyTopArtist(token.accessToken, params);
+    try {
+      if (typeof limit === "string" && typeof offset === "string" && typeof time_range === "string") {
+        const params = new URLSearchParams({
+          limit,
+          offset,
+          time_range,
+        });
+        const response = await getSpotifyTopArtist(token.accessToken, params);
+        return new Response(JSON.stringify(response), { status: 200 });
+      }
+      if (typeof limit === "string" && typeof offset === "string") {
+        const params = new URLSearchParams({ limit, offset });
+        const response = await getSpotifyTopArtist(token.accessToken, params);
+        return new Response(JSON.stringify(response), { status: 200 });
+      }
+      if (typeof time_range === "string") {
+        const params = new URLSearchParams({ time_range });
+        const response = await getSpotifyTopArtist(token.accessToken, params);
 
+        return new Response(JSON.stringify(response), { status: 200 });
+      }
+      const response = await getSpotifyTopArtist(token.accessToken);
       return new Response(JSON.stringify(response), { status: 200 });
+    } catch (err: unknown) {
+      if (err instanceof ResponseError) {
+        console.log(err.response);
+      }
     }
-    const response = await getSpotifyTopArtist(token.accessToken);
-    return new Response(JSON.stringify(response), { status: 200 });
   }
 };
 

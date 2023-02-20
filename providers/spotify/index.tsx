@@ -1,8 +1,18 @@
-import { ArtistItems, TrackItems, UserInfo, UserTopItems } from "types/spotify";
+import { ZodError } from "zod";
+import { UserInfo, UserTopTracksItems, UserTopArtistsItems, userTopArtistsItemsSchema } from "types/spotify";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";
 const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";
 const USER_TOP_ARTIST = "https://api.spotify.com/v1/me/top/artists";
+
+export class ResponseError extends Error {
+  response: Response | ZodError;
+
+  constructor(message: string, res: Response) {
+    super(message);
+    this.response = res;
+  }
+}
 
 export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
   const response = await fetch(ME_ENDPOINT, {
@@ -16,7 +26,7 @@ export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
 export const getSpotifyTopTracks = async (
   accesToken: string,
   searchParams?: URLSearchParams
-): Promise<UserTopItems<TrackItems>> => {
+): Promise<UserTopTracksItems> => {
   if (searchParams !== undefined) {
     const response = await fetch(`${USER_TOP_TRACK}?${searchParams.toString()}`, {
       headers: {
@@ -36,19 +46,47 @@ export const getSpotifyTopTracks = async (
 export const getSpotifyTopArtist = async (
   accesToken: string,
   searchParams?: URLSearchParams
-): Promise<UserTopItems<ArtistItems>> => {
+): Promise<UserTopArtistsItems> => {
   if (searchParams !== undefined) {
-    const response = await fetch(`${USER_TOP_ARTIST}?${searchParams.toString()}`, {
+    return await fetch(`${USER_TOP_ARTIST}?${searchParams.toString()}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
-    });
-    return await response.json();
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((res) => {
+            throw new ResponseError("Response is not ok", res);
+          });
+        }
+        return response.json();
+      })
+      .then((res) => {
+        const result = userTopArtistsItemsSchema.safeParse(res);
+        if (!result.success) {
+          throw new Error("Response is not ok", result.error);
+        }
+        return result.data;
+      });
   }
-  const response = await fetch(USER_TOP_ARTIST, {
+  return await fetch(USER_TOP_ARTIST, {
     headers: {
       Authorization: `Bearer ${accesToken}`,
     },
-  });
-  return await response.json();
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((res) => {
+          throw new ResponseError("Response is not ok", res);
+        });
+      }
+      return response.json();
+    })
+    .then((res) => {
+      const result = userTopArtistsItemsSchema.safeParse(res);
+      if (!result.success) {
+        throw new Error("Response is not ok", result.error);
+      }
+      return result.data;
+    });
 };
