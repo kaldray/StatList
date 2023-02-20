@@ -2,7 +2,7 @@ import { useEffect, useState, Suspense } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 
-import { QueryItems, TrackItems, UserTopItems } from "types/spotify";
+import { QueryItems, UserTopTracksItems } from "types/spotify";
 import { WrapperProps } from "types/Components";
 
 import { ErrorProps } from "next/error";
@@ -24,7 +24,7 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     url: string,
     queryParams?: QueryItems,
     previousOrNextUrl?: string
-  ): Promise<UserTopItems<TrackItems>> => {
+  ): Promise<UserTopTracksItems> => {
     if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?") && queryParams !== undefined) {
       const arr = previousOrNextUrl.split("?");
       const queryOnNextUrl = arr[1];
@@ -60,7 +60,7 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
+  const { data, error } = useSWR<UserTopTracksItems, ErrorProps>(
     ["/api/spotify/tracks", queryParams, previousOrNextUrl],
     fetcher,
     {
