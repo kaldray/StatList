@@ -1,4 +1,3 @@
-import { ZodError } from "zod";
 import { UserInfo, UserTopTracksItems, UserTopArtistsItems, userTopArtistsItemsSchema } from "types/spotify";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";
@@ -6,7 +5,7 @@ const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";
 const USER_TOP_ARTIST = "https://api.spotify.com/v1/me/top/artists";
 
 export class ResponseError extends Error {
-  response: Response | ZodError;
+  response: Response;
 
   constructor(message: string, res: Response) {
     super(message);
