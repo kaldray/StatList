@@ -1,8 +1,7 @@
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-import { getSpotifyTopArtist } from "@providers/spotify";
-import { ResponseError } from "@providers/spotify";
+import { getSpotifyTopArtist, ResponseError } from "@providers/spotify";
 
 export const config = {
   runtime: "edge",
