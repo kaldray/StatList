@@ -29,7 +29,7 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     queryParams?: QueryItems,
     previousOrNextUrl?: string
   ): Promise<UserTopArtistsItems> => {
-    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?") && queryParams !== undefined) {
+    if (previousOrNextUrl !== undefined && previousOrNextUrl?.includes("?") && queryParams !== undefined) {
       const arr = previousOrNextUrl.split("?");
       const queryOnNextUrl = arr[1];
       if (queryOnNextUrl === undefined) {
@@ -46,7 +46,7 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
       const res = await fetch(`${url}?${queryParams}`);
       return await res.json();
     }
-    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?")) {
+    if (previousOrNextUrl !== undefined && previousOrNextUrl?.includes("?")) {
       const arr = previousOrNextUrl.split("?");
       const query = arr[1];
       if (query === undefined) {
@@ -83,13 +83,13 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
   }, [data]);
 
   function nextPage(): void {
-    if (data !== undefined && data?.next !== null) {
+    if (data !== undefined && data.next !== null) {
       setUrl(data.next);
     }
   }
 
   function previousPage(): void {
-    if (data !== undefined && data?.previous !== null) {
+    if (data !== undefined && data.previous !== null) {
       setUrl(data.previous);
     }
   }

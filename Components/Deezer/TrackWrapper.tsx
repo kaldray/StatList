@@ -22,7 +22,7 @@ export const TrackWrapper = (): JSX.Element => {
   const [offset, setOffset] = useState<number>(0);
 
   const fetcher = async (url: string, previousOrNextUrl: string | undefined): Promise<UserTopTracks> => {
-    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?")) {
+    if (previousOrNextUrl !== undefined && previousOrNextUrl?.includes("?")) {
       const arr = previousOrNextUrl.split("?");
       const query = arr[1];
       if (query === undefined) {

@@ -25,7 +25,7 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     queryParams?: QueryItems,
     previousOrNextUrl?: string
   ): Promise<UserTopTracksItems> => {
-    if (previousOrNextUrl !== undefined && previousOrNextUrl.includes("?") && queryParams !== undefined) {
+    if (previousOrNextUrl !== undefined && previousOrNextUrl?.includes("?") && queryParams !== undefined) {
       const arr = previousOrNextUrl.split("?");
       const queryOnNextUrl = arr[1];
       if (queryOnNextUrl === undefined) {
@@ -82,13 +82,13 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
   }, [data]);
 
   function nextPage(): void {
-    if (data !== undefined && data?.next !== null) {
+    if (data !== undefined && data.next !== null) {
       setUrl(data.next);
     }
   }
 
   function previousPage(): void {
-    if (data !== undefined && data?.previous !== null) {
+    if (data !== undefined && data.previous !== null) {
       setUrl(data.previous);
     }
   }
