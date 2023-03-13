@@ -20,7 +20,13 @@ export const ArtistWrapper = (): JSX.Element => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopArtist, ErrorProps>("/api/deezer/artists", fetcher);
+  type FetcherType = Parameters<typeof fetcher>;
+
+  const { data, error, isValidating } = useSWR<UserTopArtist | undefined, ErrorProps>(
+    ["/api/deezer/artists"],
+    async ([url]: [FetcherType["0"]]) => await fetcher(url),
+    { keepPreviousData: true, revalidateOnFocus: false }
+  );
 
   return (
     <>
@@ -31,7 +37,7 @@ export const ArtistWrapper = (): JSX.Element => {
           data.data.map((item, index) => {
             return (
               <Suspense fallback={<Loader />} key={item.id}>
-                <DeezerArtistCard index={index + 1} items={item} />
+                <DeezerArtistCard index={index + 1} items={item} isValidating={isValidating} />
               </Suspense>
             );
           })}

@@ -6,7 +6,7 @@ import { DeezerArtistCardPros } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 
-const ArtistCard: FC<DeezerArtistCardPros> = ({ items, index }) => {
+const ArtistCard: FC<DeezerArtistCardPros> = ({ items, index, isValidating }) => {
   const { card__container, logo__container } = styles;
 
   const { picture_big, name } = items;
@@ -23,7 +23,7 @@ const ArtistCard: FC<DeezerArtistCardPros> = ({ items, index }) => {
 
   return (
     <>
-      <section className={card__container}>
+      <section style={{ opacity: isValidating ? 0.3 : 1 }} className={card__container}>
         <figure>
           <figcaption>
             {index} - {name}

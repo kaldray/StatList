@@ -36,7 +36,13 @@ export const TrackWrapper = (): JSX.Element => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopTracks, ErrorProps>(["/api/deezer/tracks", previousOrNextUrl], fetcher);
+  type FetcherType = Parameters<typeof fetcher>;
+
+  const { data, error, isValidating } = useSWR<UserTopTracks | undefined, ErrorProps>(
+    ["/api/deezer/tracks", previousOrNextUrl],
+    async ([url, previousOrNextUrl]: [FetcherType["0"], FetcherType["1"]]) => await fetcher(url, previousOrNextUrl),
+    { keepPreviousData: true, revalidateOnFocus: false }
+  );
 
   useEffect(() => {
     if (data !== undefined && "prev" in data && "next" in data) {
@@ -84,7 +90,7 @@ export const TrackWrapper = (): JSX.Element => {
           data.data.map((item, index) => {
             return (
               <Suspense fallback={<Loader />} key={item.id}>
-                <DeezerTrackCard index={index + 1 + offset} items={item} />
+                <DeezerTrackCard index={index + 1 + offset} items={item} isValidating={isValidating} />
               </Suspense>
             );
           })}

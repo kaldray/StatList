@@ -60,12 +60,13 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<TrackItems>, ErrorProps>(
+  type FetcherType = Parameters<typeof fetcher>;
+
+  const { data, error, isValidating } = useSWR<UserTopItems<TrackItems> | undefined, ErrorProps>(
     ["/api/spotify/tracks", queryParams, previousOrNextUrl],
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
+    async ([url, queryParams, previousOrNextUrl]: [FetcherType["0"], FetcherType["1"], FetcherType["2"]]) =>
+      await fetcher(url, queryParams, previousOrNextUrl),
+    { keepPreviousData: true, revalidateOnFocus: false }
   );
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
             {data.items.map((item, i) => {
               return (
                 <Suspense fallback={<Loader />} key={item.id}>
-                  <SpotifyTrackCard i={i + 1 + data.offset} items={item} />
+                  <SpotifyTrackCard i={i + 1 + data.offset} items={item} isValidating={isValidating} />
                 </Suspense>
               );
             })}

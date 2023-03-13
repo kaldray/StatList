@@ -11,15 +11,18 @@ export interface SpotifyArtistCardProps {
 export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
+  isValidating: boolean;
 }
 export interface DeezerTrackCardPros {
   items: TrackData;
   index: number;
+  isValidating: boolean;
 }
 
 export interface DeezerArtistCardPros {
   items: ArtistData;
   index: number;
+  isValidating: boolean;
 }
 
 export interface PaginationProps {
