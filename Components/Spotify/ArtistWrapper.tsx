@@ -65,20 +65,20 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
 
   type FetcherType = Parameters<typeof fetcher>;
 
-  const { data, error, isValidating } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
+  const { data, error, isValidating } = useSWR<UserTopItems<ArtistItems> | undefined, ErrorProps>(
     ["/api/spotify/artists", queryParams, previousOrNextUrl],
     async ([url, queryParams, previousOrNextUrl]: [FetcherType["0"], FetcherType["1"], FetcherType["2"]]) =>
       await fetcher(url, queryParams, previousOrNextUrl),
-    { keepPreviousData: true }
+    { keepPreviousData: true, revalidateOnFocus: false }
   );
 
   useEffect(() => {
-    if (data.next === null) {
+    if (data?.next === null) {
       setNextIsActive(true);
     } else {
       setNextIsActive(false);
     }
-    if (data.previous === null) {
+    if (data?.previous === null) {
       setPreviousIsActive(true);
     } else {
       setPreviousIsActive(false);
