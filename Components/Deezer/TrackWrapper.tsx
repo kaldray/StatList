@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -6,11 +6,13 @@ import dynamic from "next/dynamic";
 import { ErrorProps } from "next/error";
 import { UserTopTracks } from "types/deezer";
 
-import { Loader } from "@components/index";
+import { TrackLoader } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
 
-const DeezerTrackCard = dynamic(async () => await import("@components/Deezer/DeezerTrackCard"), { suspense: true });
+const DeezerTrackCard = dynamic(async () => await import("@components/Deezer/DeezerTrackCard"), {
+  loading: () => <TrackLoader />,
+});
 const Error = dynamic(async () => await import("next/error"));
 const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
 
@@ -89,9 +91,7 @@ export const TrackWrapper = (): JSX.Element => {
           data.data.length > 0 &&
           data.data.map((item, index) => {
             return (
-              <Suspense fallback={<Loader />} key={item.id}>
-                <DeezerTrackCard index={index + 1 + offset} items={item} isValidating={isValidating} />
-              </Suspense>
+              <DeezerTrackCard key={item.id} index={index + 1 + offset} items={item} isValidating={isValidating} />
             );
           })}
       </section>

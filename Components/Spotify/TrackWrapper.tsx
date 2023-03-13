@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 
@@ -7,10 +7,13 @@ import { WrapperProps } from "types/Components";
 
 import { ErrorProps } from "next/error";
 
-import { Loader, NoData, Pagination } from "@components/index";
+import { NoData, Pagination, TrackLoader } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
-import SpotifyTrackCard from "./SpotifyTrackCard";
+
+const SpotifyTrackCard = dynamic(async () => await import("@components/Spotify/SpotifyTrackCard"), {
+  loading: () => <TrackLoader />,
+});
 
 const Error = dynamic(async () => await import("next/error"));
 
@@ -102,9 +105,7 @@ export const TrackWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
           <>
             {data.items.map((item, i) => {
               return (
-                <Suspense fallback={<Loader />} key={item.id}>
-                  <SpotifyTrackCard i={i + 1 + data.offset} items={item} isValidating={isValidating} />
-                </Suspense>
+                <SpotifyTrackCard key={item.id} i={i + 1 + data.offset} items={item} isValidating={isValidating} />
               );
             })}
           </>
