@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Layout } from "@components/index";
-import { Lato } from "@next/font/google";
+import { Lato } from "next/font/google";
 import "@styles/Global/reset.scss";
 
 const lato = Lato({

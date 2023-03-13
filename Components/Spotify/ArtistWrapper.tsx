@@ -4,16 +4,15 @@ import dynamic from "next/dynamic";
 
 import { ArtistItems, QueryItems, UserTopItems } from "types/spotify";
 import { WrapperProps } from "types/Components";
-
 import { ErrorProps } from "next/error";
 
-import { Loader, NoData } from "@components/index";
+import { Loader, NoData, CardLoader } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
 
 const Error = dynamic(async () => await import("next/error"));
 const ArtistCard = dynamic(async () => await import("@components/Spotify/SpotifyArtistCard"), {
-  suspense: true,
+  loading: () => <CardLoader />,
 });
 const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
 
@@ -64,18 +63,22 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
     return await res.json();
   };
 
-  const { data, error } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
+  type FetcherType = Parameters<typeof fetcher>;
+
+  const { data, error, isValidating } = useSWR<UserTopItems<ArtistItems>, ErrorProps>(
     ["/api/spotify/artists", queryParams, previousOrNextUrl],
-    fetcher
+    async ([url, queryParams, previousOrNextUrl]: [FetcherType["0"], FetcherType["1"], FetcherType["2"]]) =>
+      await fetcher(url, queryParams, previousOrNextUrl),
+    { keepPreviousData: true }
   );
 
   useEffect(() => {
-    if (data?.next === null) {
+    if (data.next === null) {
       setNextIsActive(true);
     } else {
       setNextIsActive(false);
     }
-    if (data?.previous === null) {
+    if (data.previous === null) {
       setPreviousIsActive(true);
     } else {
       setPreviousIsActive(false);
@@ -100,13 +103,11 @@ export const ArtistWrapper = ({ queryParams }: WrapperProps): JSX.Element => {
         {error != null && <Error statusCode={error.statusCode} />}
         {data !== undefined && (
           <>
-            {data.items.map((item, i) => {
-              return (
-                <Suspense fallback={<Loader />} key={item.name}>
-                  <ArtistCard i={i + 1 + data.offset} items={item} />
-                </Suspense>
-              );
-            })}
+            <Suspense fallback={<Loader />}>
+              {data.items.map((item, i) => {
+                return <ArtistCard key={item.name} i={i + 1 + data.offset} isValidating={isValidating} items={item} />;
+              })}
+            </Suspense>
           </>
         )}
         {data !== undefined && data.items.length === 0 && <NoData />}
