@@ -5,7 +5,7 @@ import logo from "../../public/Spotify_Logo_RGB_Black.png";
 import { SpotifyTrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i }) => {
+const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i, isValidating }) => {
   const {
     name,
     album: { images },
@@ -17,7 +17,7 @@ const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i }) => {
   return (
     <>
       {images[2] !== undefined && (
-        <section className={card__container}>
+        <section style={{ opacity: isValidating ? 0.3 : 1 }} className={card__container}>
           <div className={info__container}>
             <div className={cover__container}>
               <Image

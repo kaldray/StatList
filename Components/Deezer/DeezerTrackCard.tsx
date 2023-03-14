@@ -5,7 +5,7 @@ import logo from "../../public/Mono_Full_Black@2x.png";
 import { DeezerTrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const TrackCard: FC<DeezerTrackCardPros> = ({ items, index }) => {
+const TrackCard: FC<DeezerTrackCardPros> = ({ items, index, isValidating }) => {
   const { card__container, info__container, logo__container, cover__container } = styles;
 
   const {
@@ -26,7 +26,7 @@ const TrackCard: FC<DeezerTrackCardPros> = ({ items, index }) => {
 
   return (
     <>
-      <section className={card__container}>
+      <section style={{ opacity: isValidating ? 0.3 : 1 }} className={card__container}>
         <div className={info__container}>
           <div className={cover__container}>
             <Image

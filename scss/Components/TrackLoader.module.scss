@@ -1,0 +1,39 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.track__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding: $m 0;
+  font-size: clamp($mobileText, 1.5vw, $desktopText);
+  column-gap: $m;
+  min-height: 20rem;
+  max-height: 20rem;
+  span {
+    height: 67px;
+    width: 67px;
+    background-color: grey;
+    animation: blinker 1s linear infinite;
+  }
+  p {
+    width: 95px;
+    height: 20px;
+    background-color: grey;
+    animation: blinker 1s linear infinite;
+  }
+  div {
+    height: 50px;
+    width: 50px;
+    background-color: grey;
+    margin-left: auto;
+    animation: blinker 1s linear infinite;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

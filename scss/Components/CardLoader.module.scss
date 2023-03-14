@@ -1,0 +1,45 @@
+@import "../Global/variables.scss";
+@import "../Global/mixin.scss";
+
+.card__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 2rem;
+  background-color: #dad7cd;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px 0px #191414;
+  height: 500px;
+
+  p {
+    height: 10px;
+    width: 100px;
+    background-color: grey;
+    animation: blinker 1s linear infinite;
+    margin-bottom: $m;
+  }
+
+  span {
+    width: 100%;
+    height: 100%;
+    max-width: 640px;
+    max-height: 640px;
+    background-color: grey;
+    animation: blinker 1s linear infinite;
+  }
+
+  div {
+    margin-top: $m;
+    width: 100px;
+    height: 29px;
+    background-color: grey;
+    animation: blinker 1s linear infinite;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
