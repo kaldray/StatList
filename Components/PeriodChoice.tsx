@@ -48,7 +48,7 @@ export const PeriodChoice: FC<PeriodChoiceProps> = ({
               getShortTermArtist();
               setActiveButton(shortTermButton, mediumTermButton, longTermButton);
             }}>
-            4 dernière semaine
+            4 dernières semaines
           </button>
           <button
             ref={mediumTermButton}
@@ -56,7 +56,7 @@ export const PeriodChoice: FC<PeriodChoiceProps> = ({
               getMediummTermArtist();
               setActiveButton(mediumTermButton, shortTermButton, longTermButton);
             }}>
-            6 dernier mois
+            6 derniers mois
           </button>
           <button
             ref={longTermButton}
@@ -64,7 +64,7 @@ export const PeriodChoice: FC<PeriodChoiceProps> = ({
               getLongTermArtist();
               setActiveButton(longTermButton, shortTermButton, mediumTermButton);
             }}>
-            Toute le période
+            Toute la période
           </button>
         </div>
       </div>
