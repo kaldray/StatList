@@ -5,5 +5,7 @@ declare namespace NodeJS {
     DEEZER_CLIENT_ID: string;
     SPOTIFY_CLIENT_ID: string;
     NEXTAUTH_SECRET: string;
+    PASSWORD: string;
+    USERNAME: string;
   }
 }
