@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main, e2e]
 jobs:
-  test:
+  test_setup:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     outputs:
@@ -33,4 +33,4 @@ jobs:
         with:
           run: pnpm run test
         env:
-          NEXT_AUTH_URL: ${{ outputs.preview_url }}
+          NEXT_AUTH_URL: ${{ needs.test_setup.outputs.preview_ur }}
