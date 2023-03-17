@@ -17,6 +17,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
   test_e2e:
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
@@ -26,9 +28,8 @@ jobs:
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
     - name: Run headless test
-        uses: GabrielBB/xvfb-action@v1
-    - name: Run Playwright tests
+      uses: GabrielBB/xvfb-action@v1
       with:
         run: pnpm run test
-    env:
-          NEXT_AUTH_URL: ${{ needs.test_setup.outputs.preview_url }}
+      env:
+        NEXT_AUTH_URL: ${{ outputs.preview_url }}
