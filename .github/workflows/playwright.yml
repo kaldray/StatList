@@ -1,8 +1,7 @@
 name: Deployment tests
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main,e2e]
 jobs:
   test:
     timeout-minutes: 10
