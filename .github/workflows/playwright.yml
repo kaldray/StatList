@@ -1,5 +1,7 @@
 name: Deployment tests
 on:
+  push:
+    branches: [e2e, main]
   pull_request:
     branches: [main, e2e]
 jobs:
