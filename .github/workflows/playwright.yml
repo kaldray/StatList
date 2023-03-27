@@ -18,9 +18,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
           check_interval: 10
+          environment: Preview
   test_e2e:
     needs: test_setup
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
       - name: Install Node environnment
@@ -34,15 +36,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
-      - name: Run headless test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: pnpm run test
+        run: pnpm playwright install --with-deps
+      - name: Run server
+        run: xvfb-run --auto-servernum pnpm run test
         env:
-          NEXT_AUTH_URL: ${{ needs.test_setup.outputs.preview_url }}
+          CI: true
+          NEXT_AUTH_URL: ${{ secrets.PREVIEW_URL }}
           PASSWORD: ${{secrets.PASSWORD}}
           USERNAME: ${{secrets.USERNAME}}
           NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
           SPOTIFY_CLIENT_ID: ${{secrets.SPOTIFY_CLIENT_ID}}
           SPOTIFY_CLIENT_SECRET: ${{secrets.SPOTIFY_CLIENT_SECRET}}
+      - name: Download trace of test
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

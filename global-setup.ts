@@ -1,37 +1,34 @@
-import { FullConfig, chromium } from "@playwright/test";
+import { FullConfig, firefox } from "@playwright/test";
 
 async function globalSetup(config: FullConfig): Promise<void> {
   if (config.projects[0] === undefined) return;
   const { baseURL, storageState } = config.projects[0].use;
 
-  const credentials = {
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
-  };
-
   if (baseURL !== undefined) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await firefox.launch({ headless: false });
     const context = await browser.newContext({
+      viewport: {
+        height: 1080,
+        width: 1920,
+      },
       recordVideo: {
-        dir: "./videos/",
+        dir: "playwright-report/",
         size: {
           height: 1080,
           width: 1920,
         },
       },
     });
-    const page = await context.newPage();
     try {
+      const page = await context.newPage();
       page.video();
       await page.goto(baseURL);
-      await page.getByRole("button", { name: "Se connecter" }).click({ delay: 1000 });
+      await page.getByRole("button", { name: "Se connecter" }).click({ delay: 2000 });
       await page.getByRole("button", { name: "Se connecter avec Spotify" }).click({ delay: 1000 });
-      await page.getByTestId("login-username").type(credentials.username);
-      await page.getByTestId("login-password").type(credentials.password);
-      await page.getByTestId("login-button").click({ clickCount: 2, delay: 1200 });
+      await page.getByTestId("login-username").fill(process.env.USERNAME);
+      await page.getByTestId("login-password").fill(process.env.PASSWORD);
+      await page.getByTestId("login-button").dblclick({ delay: 2000 });
       await context.storageState({ path: storageState as string });
-      await page.video()?.saveAs("test");
-      await context.close();
       await browser.close();
     } catch (err: unknown) {
       await browser.close();

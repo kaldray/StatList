@@ -7,5 +7,6 @@ declare namespace NodeJS {
     NEXTAUTH_SECRET: string;
     PASSWORD: string;
     USERNAME: string;
+    CI: boolean;
   }
 }

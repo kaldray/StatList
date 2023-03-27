@@ -9,17 +9,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const authFile = "./playwright/.auth/user.json";
+const authFile = "playwright/.auth/user.json";
 export default defineConfig({
   testDir: "./tests",
   timeout: 30 * 1000,
   globalSetup: require.resolve("./global-setup.ts"),
   reporter: [["html", { open: "on-failure" }]],
+  retries: process.env.CI ? 2 : 0,
   use: {
-    actionTimeout: 1000 * 5,
     baseURL: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
     trace: "on-first-retry",
-    video: "on-first-retry",
+    video: "on",
     storageState: authFile,
   },
   projects: [
@@ -46,10 +46,10 @@ export default defineConfig({
       use: { ...devices["iPhone 12"], storageState: authFile },
     },
   ],
-  outputDir: "./videos",
+  outputDir: "playwright-results/",
   webServer: {
     command: "pnpm dev",
     url: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
 });
