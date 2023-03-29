@@ -1,9 +1,9 @@
 name: Deployment tests
 on:
   push:
-    branches: [e2e, main]
+    branches: main
   pull_request:
-    branches: [main, e2e]
+    branches: main
 jobs:
   test_setup:
     timeout-minutes: 10

@@ -7,7 +7,7 @@ import dotenv from "dotenv";
  */
 // require('dotenv').config();
 
-dotenv.config();
+dotenv.config({ override: true });
 
 const authFile = "playwright/.auth/user.json";
 export default defineConfig({
