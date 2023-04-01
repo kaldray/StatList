@@ -55,6 +55,13 @@
           "match": true
         }
       }
+    ],
+    "@typescript-eslint/return-await": [
+      "off",
+      {
+        "@typescript-eslint/return-await": "off",
+        "no-return-await": "off"
+      }
     ]
   },
   "settings": {
