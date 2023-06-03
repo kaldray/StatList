@@ -2,13 +2,10 @@ import { LoginWithProviderButton } from "@components/Ui";
 import style from "@styles/Pages/login.module.scss";
 import { getProviders } from "next-auth/react";
 
-const getProvidersList = async () => {
-  const providers = await getProviders();
-  return providers;
-};
-
 export default async function Page() {
-  const providers = await getProvidersList();
+  const providers = await getProviders();
+  console.log(providers);
+
   return (
     <>
       <section className={style.container}>
