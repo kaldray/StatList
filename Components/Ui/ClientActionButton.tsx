@@ -15,7 +15,7 @@ export const LoginWithProviderButton = ({ provider }: { provider: ClientSafeProv
     await signIn(provider, { callbackUrl: `/${provider}` });
   }
   return (
-    <button key={provider.id} onClick={async () => await logIn(provider.id)}>
+    <button role="link" key={provider.id} onClick={async () => await logIn(provider.id)}>
       Se connecter avec {provider.name}
     </button>
   );
