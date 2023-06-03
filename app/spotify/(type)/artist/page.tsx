@@ -5,6 +5,7 @@ import { Artist } from "@components/Spotify/Artist";
 import { getSpotifyTopArtist } from "@providers/spotify";
 
 import { SpotifyPageProps } from "types/next";
+import { Suspense } from "react";
 
 const getArtistData = async (params: URLSearchParams | undefined) => {
   const jwt = cookies().get("jwt");
@@ -22,7 +23,9 @@ export default async function Page({ searchParams }: SpotifyPageProps) {
     <>
       {/* @ts-expect-error Async Server Component */}
       <Artist {...data} />
-      <Pagination items={data.items} previous={data.previous} next={data.next} />
+      <Suspense fallback={<p>loading...</p>}>
+        <Pagination items={data.items} previous={data.previous} next={data.next} />
+      </Suspense>
     </>
   );
 }
