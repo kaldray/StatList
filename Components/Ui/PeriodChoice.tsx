@@ -1,12 +1,11 @@
 "use client";
-import { CSSProperties, RefObject, useEffect, useRef, useTransition } from "react";
+import { RefObject, useEffect, useRef, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import styles from "@styles/Components/PeriodChoice.module.scss";
 
 import { TimeRange } from "types/spotify";
 import { PeriodChoiceButton } from "./PeriodChoiceButton";
-import { Spinner } from "./Spinner";
 
 export const PeriodChoice = (): JSX.Element => {
   const { replace } = useRouter();
@@ -40,7 +39,14 @@ export const PeriodChoice = (): JSX.Element => {
   }, [pathname]);
 
   function showPendingState(button: RefObject<HTMLButtonElement>): boolean {
-    return button.current?.getAttribute("aria-pressed") === "true" && isPending === true ? true : false;
+    if (
+      button.current?.getAttribute("aria-pressed") !== null &&
+      button.current?.getAttribute("aria-pressed") === "true" &&
+      isPending
+    ) {
+      return true;
+    }
+    return false;
   }
 
   function setActiveButton(
@@ -56,11 +62,13 @@ export const PeriodChoice = (): JSX.Element => {
   }
 
   function setNewSearchParams({ ...search }: { time_range: TimeRange }, url: string = window.location.search) {
-    let params = new URLSearchParams(url);
+    const params = new URLSearchParams(url);
     params.set(Object.keys(search)[0] as string, Object.values(search)[0] as string);
-    startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
-    });
+    if (pathname !== null) {
+      startTransition(() => {
+        replace(`${pathname}?${params.toString()}`);
+      });
+    }
   }
 
   function getShortTermArtist(): void {
@@ -104,42 +112,6 @@ export const PeriodChoice = (): JSX.Element => {
             showPendingState={showPendingState}>
             Toute la période
           </PeriodChoiceButton>
-          {/* <button
-            role="button"
-            type="button"
-            aria-pressed="false"
-            style={showPendingState(shortTermButton)}
-            ref={shortTermButton}
-            onClick={() => {
-              getShortTermArtist();
-              setActiveButton(shortTermButton, mediumTermButton, longTermButton);
-            }}>
-            4 dernières semaines
-          </button>
-          <button
-            role="button"
-            type="button"
-            aria-pressed="false"
-            style={showPendingState(mediumTermButton)}
-            ref={mediumTermButton}
-            onClick={() => {
-              getMediummTermArtist();
-              setActiveButton(mediumTermButton, shortTermButton, longTermButton);
-            }}>
-            6 derniers mois
-          </button>
-          <button
-            role="button"
-            type="button"
-            aria-pressed="false"
-            style={showPendingState(longTermButton)}
-            ref={longTermButton}
-            onClick={() => {
-              getLongTermArtist();
-              setActiveButton(longTermButton, shortTermButton, mediumTermButton);
-            }}>
-            Toute la période
-          </button> */}
         </div>
       </div>
     </>

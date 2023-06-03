@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { ErrorProps } from "next/error";
 import { UserTopTracks } from "types/deezer";
 
-import { TrackLoader } from "@components/index";
+import { TrackLoader } from "@components/Ui";
 
 import styles from "@styles/Pages/global.module.scss";
 
@@ -14,7 +14,9 @@ const DeezerTrackCard = dynamic(async () => await import("@components/Deezer/Dee
   loading: () => <TrackLoader />,
 });
 const Error = dynamic(async () => await import("next/error"));
-const Pagination = dynamic(async () => await import("@components/Pagination").then((res) => res.Pagination));
+const Pagination = dynamic(
+  async () => await import("@components/Deezer/DeezerPagination").then((res) => res.Pagination)
+);
 
 export const TrackWrapper = (): JSX.Element => {
   const { container } = styles;

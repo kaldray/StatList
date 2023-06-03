@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 import { ErrorProps } from "next/error";
 
-import { CardLoader } from "@components/index";
+import { CardLoader } from "@components/Ui";
 import styles from "@styles/Pages/global.module.scss";
 import { UserTopArtist } from "types/deezer";
 

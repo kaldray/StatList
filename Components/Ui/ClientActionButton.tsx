@@ -1,9 +1,6 @@
 "use client";
 
-import { BuiltInProviderType } from "next-auth/providers";
-import { ClientSafeProvider, LiteralUnion, signIn, signOut } from "next-auth/react";
-
-import React from "react";
+import { ClientSafeProvider, signIn, signOut } from "next-auth/react";
 
 export const LoginButton = () => {
   return (

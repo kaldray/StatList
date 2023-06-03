@@ -19,14 +19,15 @@ export const Pagination = ({
     if (url === null) return;
     const newUrl = new URL(url);
     const params = new URLSearchParams(newUrl.search);
-
-    startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
-    });
+    if (pathname !== null) {
+      startTransition(() => {
+        replace(`${pathname}?${params.toString()}`);
+      });
+    }
   }
 
   function setDisableButton(url: string | null) {
-    return url === null ? true : false;
+    return url === null;
   }
 
   if (items.length === 0) return null;

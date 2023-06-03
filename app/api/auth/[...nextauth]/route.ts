@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions, NextAuthOptions, TokenSet } from "next-auth";
+import NextAuth, { TokenSet } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import SpotifyProvider from "next-auth/providers/spotify";
 import SpotifyWebApi from "spotify-web-api-node";
@@ -147,6 +147,9 @@ const handler = NextAuth({
       return { ...token };
     },
     async session({ session, token }) {
+      if (token.accessToken !== undefined) {
+        cookies().set({ name: "jwt", value: token.accessToken, httpOnly: true, maxAge: 3600 });
+      }
       session.user.accessToken = token.accessToken;
       session.user.refreshToken = token.refreshToken;
       session.user.username = token.username;

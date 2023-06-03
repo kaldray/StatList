@@ -14,7 +14,9 @@ export default async function Page() {
       <section className={style.container}>
         <div>
           {providers != null &&
-            Object.values(providers).map((provider) => <LoginWithProviderButton provider={provider} />)}
+            Object.values(providers).map((provider) => (
+              <LoginWithProviderButton key={provider.id} provider={provider} />
+            ))}
         </div>
       </section>
     </>

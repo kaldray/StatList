@@ -4,12 +4,9 @@
     "es2021": true
   },
   "extends": [
-    "next/core-web-vitals",
-    "next",
-    "plugin:react/recommended",
+
     "standard-with-typescript",
     "eslint:recommended",
-    "plugin:eslint-plugin-next",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/strict",
@@ -23,7 +20,7 @@
     "sourceType": "module",
     "project": ["./tsconfig.json"]
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "@next/eslint-plugin-next"],
   "rules": {
     "prettier/prettier": [
       "error",
