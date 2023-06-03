@@ -1,6 +1,7 @@
+"use client";
 import React, { FC } from "react";
 
-import { Navigation } from "@components/Navigation";
+import { Navigation } from "@components/Ui/Navigation";
 
 import { Footer } from "./Footer";
 

@@ -1,0 +1,23 @@
+@import "../Global/variables.scss";
+
+.spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-top: 2px;
+  border-bottom: 2px;
+  border-radius: $xxl;
+  border-style: solid;
+  border-color: #191414;
+  border-left: none;
+  border-right: none;
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

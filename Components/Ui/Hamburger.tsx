@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, FC } from "react";
 
 import { HamburgerProps } from "types/Components";

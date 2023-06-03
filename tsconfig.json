@@ -20,9 +20,23 @@
     "paths": {
       "@styles/*": ["scss/*"],
       "@components/*": ["Components/*"],
-      "@providers/*": ["providers/*"]
-    }
+      "@providers/*": ["providers/*"],
+      "@context/*": ["Context/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/auth/[...nextauth].js", "nextAuth.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/api/auth/[...nextauth].js",
+    "nextAuth.d.ts",
+    ".next/types/**/*.ts",
+    "pages/api/auth/[...nextauth].ts"
+  ],
   "exclude": ["node_modules"]
 }

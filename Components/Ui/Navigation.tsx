@@ -1,18 +1,18 @@
+"use client";
+
 import Link from "next/link";
-
-import { useState, useEffect, FC, memo } from "react";
+import { useState, useEffect, memo } from "react";
 import { signOut, useSession } from "next-auth/react";
-
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 import { Hamburger } from "./Hamburger";
 
 import styles from "@styles/Components/Navigation.module.scss";
 
-const MemoNavigation: FC = () => {
+const MemoNavigation = (): JSX.Element => {
   const [isToggle, setIsToggle] = useState(false);
   const [innerWidth, setInnerWidth] = useState<number>();
-  const router = useRouter();
+  const pathname = usePathname();
   const { data } = useSession();
 
   const { container, nav } = styles;
@@ -32,7 +32,7 @@ const MemoNavigation: FC = () => {
   }, []);
 
   function setCurrentPage(href: string): "page" | undefined {
-    return router.pathname === href ? "page" : undefined;
+    return pathname === href ? "page" : undefined;
   }
 
   async function logout(): Promise<void> {

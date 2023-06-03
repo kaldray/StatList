@@ -5,13 +5,12 @@ import { ArtistData, TrackData } from "../deezer";
 export interface SpotifyArtistCardProps {
   items: ArtistItems;
   i: number;
-  isValidating: boolean;
+  isValidating?: boolean;
 }
 
 export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
-  isValidating: boolean;
 }
 export interface DeezerTrackCardPros {
   items: TrackData;

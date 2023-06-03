@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { Layout } from "@components/index";
+import { Layout } from "@components/Ui/index";
 import { Lato } from "next/font/google";
 import "@styles/Global/reset.scss";
 

@@ -1,8 +1,9 @@
-import NextAuth, { TokenSet } from "next-auth";
+import NextAuth, { AuthOptions, NextAuthOptions, TokenSet } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import SpotifyProvider from "next-auth/providers/spotify";
 import SpotifyWebApi from "spotify-web-api-node";
 import { User } from "types/deezer";
+import { cookies } from "next/headers";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -51,7 +52,7 @@ async function getDeezerToken(paramsUrl: URLSearchParams): Promise<TokenSet> {
   };
 }
 
-export default NextAuth({
+const handler = NextAuth({
   providers: [
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -158,3 +159,5 @@ export default NextAuth({
     strategy: "jwt",
   },
 });
+
+export { handler as GET, handler as POST, handler as authOptions };

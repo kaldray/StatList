@@ -9,6 +9,7 @@
     "plugin:react/recommended",
     "standard-with-typescript",
     "eslint:recommended",
+    "plugin:eslint-plugin-next",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/strict",
@@ -62,7 +63,8 @@
         "@typescript-eslint/return-await": "off",
         "no-return-await": "off"
       }
-    ]
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
   "settings": {
     "react": {

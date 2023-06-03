@@ -6,13 +6,13 @@ import { SpotifyArtistCardProps } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 
-const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i, isValidating }) => {
+const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
   const { card__container, logo__container } = styles;
   const { images, name } = items;
 
   return (
     <>
-      <section style={{ opacity: isValidating ? 0.3 : 1 }} className={card__container}>
+      <div className={card__container}>
         <figure>
           <figcaption>
             {i} - {name}
@@ -47,7 +47,7 @@ const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i, isValidating 
             />
           </a>
         </figure>
-      </section>
+      </div>
     </>
   );
 };

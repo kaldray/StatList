@@ -1,16 +1,32 @@
-import Head from "next/head";
-
 import style from "@styles/Pages/term.module.scss";
+import { Metadata } from "next";
 
-const TermOfUse = (): JSX.Element => {
+export const metadata: Metadata = {
+  title: {
+    default: "Condition",
+    template: "| Stalist",
+  },
+  description: "Condition d'utilisation du site Statlist",
+  keywords: ["Spotify", "Statistiques", "Condition d'utilisation"],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      follow: true,
+      index: true,
+    },
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Stalist",
+    url: "/",
+  },
+};
+
+export default async function Page() {
   const { term__container } = style;
   return (
     <>
-      <Head>
-        <title>StatList</title>
-        <meta name="description" content="Application web qui permet de consulter vos stats spotify." />
-        <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
-      </Head>
       <section className={term__container}>
         <h1>Condition d&apos;utilisation </h1>
         <p>StatList n&apos;est en aucun cas affilié à Spotify ni Deezer.</p>
@@ -35,6 +51,4 @@ const TermOfUse = (): JSX.Element => {
       </section>
     </>
   );
-};
-
-export default TermOfUse;
+}

@@ -1,6 +1,7 @@
 import { BuiltInProviderType } from "next-auth/providers";
 import { LiteralUnion, ClientSafeProvider } from "next-auth/react";
 import { JWT } from "next-auth/jwt";
+import { TimeRange } from "types/spotify";
 
 export type getServerSideUserInfo = TokenIsInvalid | TokenIsValid | TokenIsValidPageIsNot;
 
@@ -23,3 +24,10 @@ interface TokenIsValidPageIsNot {
 export interface getServerSideProvidersType {
   props: { providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider> | null };
 }
+
+export type SpotifyPageProps = {
+  params?: {
+    id: string;
+  };
+  searchParams?: { time_range: TimeRange };
+};
