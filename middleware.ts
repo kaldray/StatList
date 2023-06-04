@@ -4,11 +4,14 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest): Promise<NextResponse | undefined> {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const allowIfNonToken = ["/term", "/", "/login"];
 
-  if (!config.matcher.includes(req.nextUrl.pathname)) {
+  if (token === null && !allowIfNonToken.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/", req.url));
+  } else if (token === null && allowIfNonToken.includes(req.nextUrl.pathname)) {
+    return NextResponse.next();
   }
-  if (token === null && req.nextUrl.pathname !== "/") {
+  if (!config.matcher.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/", req.url));
   }
   if (token !== null && req.nextUrl.pathname === "/") {
@@ -29,5 +32,7 @@ export const config = {
     "/spotify/artist",
     "/spotify/track",
     "/",
+    "/login",
+    "/term",
   ],
 };
