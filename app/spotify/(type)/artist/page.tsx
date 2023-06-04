@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { Pagination } from "@components/Ui/Pagination";
+import { Pagination } from "@components/Spotify/Pagination";
 import { Artist } from "@components/Spotify/Artist";
 import { getSpotifyTopArtist } from "@providers/spotify";
 
