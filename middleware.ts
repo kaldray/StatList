@@ -4,14 +4,30 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest): Promise<NextResponse | undefined> {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  if (token !== null && req.nextUrl.pathname.startsWith("/" + token.provider)) {
-    return NextResponse.next();
+
+  if (!config.matcher.includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+  if (token === null && req.nextUrl.pathname !== "/") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
   if (token !== null && req.nextUrl.pathname === "/") {
     return NextResponse.redirect(new URL(`/${token.provider}`, req.url));
   }
+  if (token !== null && req.nextUrl.pathname.startsWith("/" + token.provider)) {
+    return NextResponse.next();
+  }
 }
 
 export const config = {
-  matcher: ["/deezer", "/deezer/artist", "/deezer/track", "/spotify", "/spotify/artist", "/spotify/track", "/"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/deezer",
+    "/deezer/artist",
+    "/deezer/track",
+    "/spotify",
+    "/spotify/artist",
+    "/spotify/track",
+    "/",
+  ],
 };

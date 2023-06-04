@@ -26,7 +26,7 @@ async function spotifyRefreshAccessToken(token: JWT): Promise<JWT> {
       refreshToken: refreshTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       ...token,
       error: "RefreshAccessTokenError",
