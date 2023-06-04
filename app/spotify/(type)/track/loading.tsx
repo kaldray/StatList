@@ -3,7 +3,7 @@ import { TrackLoader } from "@components/Ui/TrackLoader";
 export default async function SpotifyLoading() {
   return (
     <>
-      <TrackLoader />;
+      <TrackLoader itemsLength={20} />;
     </>
   );
 }

@@ -1,13 +1,17 @@
 import styles from "@styles/Components/CardLoader.module.scss";
 import global from "@styles/Pages/global.module.scss";
 
-export const CardLoader = (): JSX.Element => {
+type CardLoaderProps = {
+  itemsLength: number;
+};
+
+export const CardLoader = ({ itemsLength }: CardLoaderProps): JSX.Element => {
   const { card__container } = styles;
   const { container } = global;
   return (
     <>
       <section className={container}>
-        {Array(20)
+        {Array(itemsLength)
           .fill(20)
           .map(() => {
             return (

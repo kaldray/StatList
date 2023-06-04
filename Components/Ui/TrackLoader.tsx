@@ -2,13 +2,17 @@ import styles from "@styles/Components/TrackLoader.module.scss";
 
 import global from "@styles/Pages/global.module.scss";
 
-export const TrackLoader = (): JSX.Element => {
+type TrackLoaderProps = {
+  itemsLength: number;
+};
+
+export const TrackLoader = ({ itemsLength }: TrackLoaderProps): JSX.Element => {
   const { track__container } = styles;
   const { container } = global;
   return (
     <>
       <div className={container}>
-        {Array(20)
+        {Array(itemsLength)
           .fill(20)
           .map(() => {
             return (
