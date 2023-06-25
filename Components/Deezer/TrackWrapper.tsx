@@ -11,7 +11,7 @@ import { TrackLoader } from "@components/Ui";
 import styles from "@styles/Pages/global.module.scss";
 
 const DeezerTrackCard = dynamic(async () => await import("@components/Deezer/DeezerTrackCard"), {
-  loading: () => <TrackLoader />,
+  loading: () => <TrackLoader itemsLength={20} />,
 });
 const Error = dynamic(async () => await import("next/error"));
 const Pagination = dynamic(

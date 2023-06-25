@@ -8,7 +8,7 @@ import styles from "@styles/Pages/global.module.scss";
 import { UserTopArtist } from "types/deezer";
 
 const DeezerArtistCard = dynamic(async () => await import("@components/Deezer/DeezerArtistCard"), {
-  loading: () => <CardLoader />,
+  loading: () => <CardLoader itemsLength={20} />,
 });
 
 const Error = dynamic(async () => await import("next/error"));
