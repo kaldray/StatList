@@ -23,7 +23,7 @@ async function globalSetup(config: FullConfig): Promise<void> {
       const page = await context.newPage();
       page.video();
       await page.goto(baseURL);
-      await page.getByRole("button", { name: "Se connecter" }).click({ delay: 2000 });
+      await page.getByRole("button", { name: "Se connecter" }).click();
       await page.getByRole("button", { name: "Se connecter avec Spotify" }).click({ delay: 1000 });
       await page.getByTestId("login-username").fill(process.env.USERNAME);
       await page.getByTestId("login-password").fill(process.env.PASSWORD);
