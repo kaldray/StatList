@@ -3,7 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["i.scdn.co", "e-cdns-images.dzcdn.net"],
+    remotePatterns: [{
+      hostname: "i.scdn.co"
+    }, { hostname: "e-cdns-images.dzcdn.net" }],
   },
 };
 

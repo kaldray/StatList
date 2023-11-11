@@ -21,7 +21,7 @@ export const Pagination = ({
     const params = new URLSearchParams(newUrl.search);
     if (pathname !== null) {
       startTransition(() => {
-        replace(`${pathname}?${params.toString()}`);
+        replace(`${pathname}?${params.toString()}`, { scroll: false });
       });
     }
   }

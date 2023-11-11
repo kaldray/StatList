@@ -21,7 +21,6 @@ export default async function Page({ searchParams }: SpotifyPageProps) {
   const data = await getArtistData(params);
   return (
     <>
-      {/* @ts-expect-error Async Server Component */}
       <Track {...data} />
       <Suspense fallback={<p>loading...</p>}>
         <Pagination items={data.items} previous={data.previous} next={data.next} />

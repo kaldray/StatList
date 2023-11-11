@@ -1,8 +1,10 @@
-import { Layout } from "@components/Ui";
-import { type Metadata } from "next";
-import "@styles/Global/reset.scss";
 import { Lato } from "next/font/google";
+import { Viewport, type Metadata } from "next";
+
+import { Layout } from "@components/Ui";
 import { NextAuthProvider } from "@context/NextAuthProvider";
+
+import "@styles/Global/reset.scss";
 
 const lato = Lato({
   weight: ["400", "700", "900", "300"],
@@ -10,14 +12,15 @@ const lato = Lato({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+}
+
 export const metadata: Metadata = {
   title: "Statlist",
   description: "Application web qui permet de consulter vos stats spotify",
   keywords: ["Spotify", "Statistiques"],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

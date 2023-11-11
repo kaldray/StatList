@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noUnusedLocals": true,
+    "allowArbitraryExtensions":true,
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true,
