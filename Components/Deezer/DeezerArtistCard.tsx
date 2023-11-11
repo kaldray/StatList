@@ -1,12 +1,11 @@
-import { FC } from "react";
 import Image from "next/image";
 import logo from "../../public/Mono_Full_Black@2x.png";
 
-import { DeezerArtistCardPros } from "types/Components";
+import { type DeezerArtistCardPros } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 
-const ArtistCard: FC<DeezerArtistCardPros> = ({ items, index, isValidating }) => {
+const ArtistCard = ({ items, index, isValidating }: DeezerArtistCardPros) => {
   const { card__container, logo__container } = styles;
 
   const { picture_big, name } = items;

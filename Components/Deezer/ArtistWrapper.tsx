@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 
-import { ErrorProps } from "next/error";
+import { type ErrorProps } from "next/error";
 
 import { CardLoader } from "@components/Ui";
 import styles from "@styles/Pages/global.module.scss";
-import { UserTopArtist } from "types/deezer";
+import { type UserTopArtist } from "types/deezer";
 
 const DeezerArtistCard = dynamic(async () => await import("@components/Deezer/DeezerArtistCard"), {
   loading: () => <CardLoader itemsLength={20} />,

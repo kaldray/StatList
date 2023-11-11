@@ -4,7 +4,7 @@ import { Pagination } from "@components/Spotify/Pagination";
 import { Track } from "@components/Spotify/Track";
 import { getSpotifyTopTracks } from "@providers/spotify";
 
-import { SpotifyPageProps } from "types/next";
+import { type SpotifyPageProps } from "types/next";
 import { Suspense } from "react";
 
 const getArtistData = async (params: URLSearchParams | undefined) => {

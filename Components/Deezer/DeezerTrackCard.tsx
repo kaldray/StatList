@@ -1,11 +1,10 @@
-import { FC } from "react";
 import Image from "next/image";
 import logo from "../../public/Mono_Full_Black@2x.png";
 
-import { DeezerTrackCardPros } from "types/Components";
+import { type DeezerTrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const TrackCard: FC<DeezerTrackCardPros> = ({ items, index, isValidating }) => {
+const TrackCard = ({ items, index, isValidating }: DeezerTrackCardPros) => {
   const { card__container, info__container, logo__container, cover__container } = styles;
 
   const {

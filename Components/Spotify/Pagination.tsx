@@ -4,7 +4,7 @@ import styles from "@styles/Components/Pagination.module.scss";
 import { usePathname, useRouter } from "next/navigation";
 import { startTransition } from "react";
 
-import { ArtistItems, TrackItems, UserTopItems } from "types/spotify";
+import type { ArtistItems, TrackItems, UserTopItems } from "types/spotify";
 
 export const Pagination = ({
   items,

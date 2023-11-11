@@ -5,7 +5,7 @@ import type { NextPage, GetServerSidePropsContext, InferGetServerSidePropsType }
 
 import styles from "@styles/Pages/home.module.scss";
 
-import { getServerSideUserInfo } from "types/next";
+import { type getServerSideUserInfo } from "types/next";
 
 const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   token,

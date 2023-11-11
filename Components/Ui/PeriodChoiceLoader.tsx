@@ -9,7 +9,7 @@ export const PeriodChoiceLoader = () => {
         <div>
           {Array(3)
             .fill(3)
-            .map((val, index) => (
+            .map((_, index) => (
               <button key={index}></button>
             ))}
         </div>

@@ -1,7 +1,7 @@
-import { BuiltInProviderType } from "next-auth/providers";
-import { LiteralUnion, ClientSafeProvider } from "next-auth/react";
-import { JWT } from "next-auth/jwt";
-import { TimeRange } from "types/spotify";
+import type { BuiltInProviderType } from "next-auth/providers";
+import type { LiteralUnion, ClientSafeProvider } from "next-auth/react";
+import type { JWT } from "next-auth/jwt";
+import type { TimeRange } from "types/spotify";
 
 export type getServerSideUserInfo = TokenIsInvalid | TokenIsValid | TokenIsValidPageIsNot;
 

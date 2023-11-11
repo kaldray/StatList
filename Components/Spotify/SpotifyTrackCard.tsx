@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logo from "../../public/Spotify_Logo_RGB_Black.png";
 
-import { SpotifyTrackCardPros } from "types/Components";
+import type { SpotifyTrackCardPros } from "types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
 export const SpotifyTrackCard = ({ items, i }: SpotifyTrackCardPros) => {

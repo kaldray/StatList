@@ -1,5 +1,5 @@
 import styles from "@styles/Pages/home.module.scss";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import { LoginButton } from "../Components/Ui/ClientActionButton";
 
 export const metadata: Metadata = {

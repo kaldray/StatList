@@ -1,4 +1,4 @@
-import { ArtistItems, TrackItems, UserInfo, UserTopItems } from "types/spotify";
+import type { ArtistItems, TrackItems, UserInfo, UserTopItems } from "types/spotify";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";
 const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";

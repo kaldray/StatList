@@ -1,5 +1,5 @@
 import { Lato } from "next/font/google";
-import { Viewport, type Metadata } from "next";
+import { type Viewport, type Metadata } from "next";
 
 import { Layout } from "@components/Ui";
 import { NextAuthProvider } from "@context/NextAuthProvider";

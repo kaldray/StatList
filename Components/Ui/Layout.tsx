@@ -1,16 +1,15 @@
-import React, { FC } from "react";
+import React from "react";
 
 import { Navigation } from "@components/Ui/Navigation";
 
 import { Footer } from "./Footer";
 
 import styles from "@styles/Components/Layout.module.scss";
+import type { PropsWithChildren } from "react";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
 
-export const Layout: FC<LayoutProps> = ({ children }) => {
+
+export const Layout = ({ children }: PropsWithChildren) => {
   const { container } = styles;
 
   return (

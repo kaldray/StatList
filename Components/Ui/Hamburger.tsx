@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, FC } from "react";
+import { useRef } from "react";
 
-import { HamburgerProps } from "types/Components";
+import { type HamburgerProps } from "types/Components";
 
 import styles from "@styles/Components/Hamburger.module.scss";
 
-export const Hamburger: FC<HamburgerProps> = ({ setIsToggle, isToggle }) => {
+export const Hamburger = ({ setIsToggle, isToggle }: HamburgerProps) => {
   const { container__hamb, toggle } = styles;
   const hamb = useRef<HTMLButtonElement>(null);
 

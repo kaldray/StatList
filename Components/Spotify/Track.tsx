@@ -1,4 +1,4 @@
-import { TrackItems, UserTopItems } from "types/spotify";
+import type { TrackItems, UserTopItems } from "types/spotify";
 import { SpotifyTrackCard } from "./SpotifyTrackCard";
 import styles from "@styles/Pages/global.module.scss";
 

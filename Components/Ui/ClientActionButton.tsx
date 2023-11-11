@@ -1,6 +1,6 @@
 "use client";
 
-import { ClientSafeProvider, signIn, signOut } from "next-auth/react";
+import { type ClientSafeProvider, signIn, signOut } from "next-auth/react";
 
 export const LoginButton = () => {
   return (

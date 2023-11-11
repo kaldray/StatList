@@ -1,5 +1,5 @@
 import style from "@styles/Pages/term.module.scss";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {

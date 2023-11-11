@@ -1,5 +1,5 @@
 import SpotifyArtistCard from "@components/Spotify/SpotifyArtistCard";
-import { ArtistItems, UserTopItems } from "types/spotify";
+import type { ArtistItems, UserTopItems } from "types/spotify";
 
 import styles from "@styles/Pages/global.module.scss";
 

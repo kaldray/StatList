@@ -1,10 +1,8 @@
-import { FC } from "react";
-
 import styles from "@styles/Components/Pagination.module.scss";
 
-import { PaginationProps } from "types/Components";
+import { type PaginationProps } from "types/Components";
 
-export const Pagination: FC<PaginationProps> = ({
+export const Pagination = ({
   nextPage,
   previousPage,
   previousIsActive,

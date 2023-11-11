@@ -1,4 +1,4 @@
-import { FullConfig, firefox } from "@playwright/test";
+import { type FullConfig, firefox } from "@playwright/test";
 
 async function globalSetup(config: FullConfig): Promise<void> {
   if (config.projects[0] === undefined) return;

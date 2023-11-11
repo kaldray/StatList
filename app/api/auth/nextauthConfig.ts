@@ -10,6 +10,9 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
 
+interface SpotifyUser extends User {
+  picture: string | undefined,
+}
 async function spotifyRefreshAccessToken(token: JWT): Promise<JWT> {
   try {
     if (token.accessToken !== undefined && token.refreshToken !== undefined) {
@@ -96,7 +99,7 @@ export const authOptions: NextAuthOptions = {
           return await client.userinfo(access_token, { params: { access_token } });
         },
       },
-      async profile(user: User) {
+      async profile(user: SpotifyUser) {
         return {
           id: user.id,
           name: user.name,

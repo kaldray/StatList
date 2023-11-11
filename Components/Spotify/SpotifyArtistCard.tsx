@@ -1,12 +1,11 @@
-import { FC } from "react";
 import Image from "next/image";
 import logo from "../../public/Spotify_Logo_RGB_Black.png";
 
-import { SpotifyArtistCardProps } from "types/Components";
+import type { SpotifyArtistCardProps } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 
-const SpotifyArtistCard: FC<SpotifyArtistCardProps> = ({ items, i }) => {
+const SpotifyArtistCard = ({ items, i }: SpotifyArtistCardProps) => {
   const { card__container, logo__container } = styles;
   const { images, name } = items;
 

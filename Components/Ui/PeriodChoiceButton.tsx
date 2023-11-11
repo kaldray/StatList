@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { type RefObject } from "react";
 import { Spinner } from "./Spinner";
 
 type PeriodChoiceButtonProps<T = RefObject<HTMLButtonElement>> = {

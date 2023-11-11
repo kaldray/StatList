@@ -1,10 +1,11 @@
 "use client";
-import { RefObject, useEffect, useRef, useTransition } from "react";
+
+import { type RefObject, useEffect, useRef, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import styles from "@styles/Components/PeriodChoice.module.scss";
 
-import { TimeRange } from "types/spotify";
+import { type TimeRange } from "types/spotify";
 import { PeriodChoiceButton } from "./PeriodChoiceButton";
 
 export const PeriodChoice = (): JSX.Element => {

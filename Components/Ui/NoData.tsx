@@ -1,8 +1,6 @@
-import { FC } from "react";
-
 import styles from "@styles/Components/NoData.module.scss";
 
-export const NoData: FC = () => {
+export const NoData = () => {
   const { info__container } = styles;
   return (
     <div className={info__container}>
