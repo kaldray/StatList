@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -13,16 +17,25 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noUnusedLocals": true,
-    "allowArbitraryExtensions":true,
+    "allowArbitraryExtensions": true,
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
     "baseUrl": "./",
     "paths": {
-      "@styles/*": ["scss/*"],
-      "@components/*": ["Components/*"],
-      "@providers/*": ["providers/*"],
-      "@context/*": ["Context/*"]
+      "@styles/*": [
+        "scss/*"
+      ],
+      "@components/*": [
+        "Components/*"
+      ],
+      "@providers/*": [
+        "providers/*"
+      ],
+      "@context/*": [
+        "Context/*"
+      ]
     },
     "plugins": [
       {
@@ -39,5 +52,7 @@
     ".next/types/**/*.ts",
     "pages/api/auth/[...nextauth].ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
