@@ -7,8 +7,6 @@ import { Footer } from "./Footer";
 import styles from "@styles/Components/Layout.module.scss";
 import type { PropsWithChildren } from "react";
 
-
-
 export const Layout = ({ children }: PropsWithChildren) => {
   const { container } = styles;
 

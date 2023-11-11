@@ -1,7 +1,5 @@
-import { type AuthOptions, getServerSession } from "next-auth";
+import { type AuthOptions, getServerSession, type Session } from "next-auth";
 import { authOptions } from "app/api/auth/nextauthConfig";
-
-import type { Session } from "next-auth";
 
 import styles from "@styles/Pages/home.module.scss";
 

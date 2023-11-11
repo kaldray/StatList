@@ -53,7 +53,7 @@ export const PeriodChoice = (): JSX.Element => {
   function setActiveButton(
     activeButton: RefObject<HTMLButtonElement>,
     button2: RefObject<HTMLButtonElement>,
-    button3: RefObject<HTMLButtonElement>
+    button3: RefObject<HTMLButtonElement>,
   ): void {
     if (activeButton.current !== null && activeButton.current.getAttribute("aria-pressed") === "false") {
       activeButton.current.setAttribute("aria-pressed", "true");
@@ -64,7 +64,7 @@ export const PeriodChoice = (): JSX.Element => {
 
   function setNewSearchParams({ ...search }: { time_range: TimeRange }, url: string = window.location.search) {
     const params = new URLSearchParams(url);
-    params.set(Object.keys(search)[0] as string, Object.values(search)[0] as string);
+    params.set(Object.keys(search)[0]!, Object.values(search)[0] as string);
     if (pathname !== null) {
       startTransition(() => {
         replace(`${pathname}?${params.toString()}`);

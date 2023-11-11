@@ -15,7 +15,7 @@ const lato = Lato({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-}
+};
 
 export const metadata: Metadata = {
   title: "Statlist",

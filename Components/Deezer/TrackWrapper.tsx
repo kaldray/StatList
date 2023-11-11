@@ -10,12 +10,12 @@ import { TrackLoader } from "@components/Ui";
 
 import styles from "@styles/Pages/global.module.scss";
 
-const DeezerTrackCard = dynamic(async () => (await import("@components/Deezer/DeezerTrackCard")), {
+const DeezerTrackCard = dynamic(async () => await import("@components/Deezer/DeezerTrackCard"), {
   loading: () => <TrackLoader itemsLength={20} />,
 });
-const Error = dynamic(async () => (await import("next/error")));
+const Error = dynamic(async () => await import("next/error"));
 const Pagination = dynamic(
-  async () => await import("@components/Deezer/DeezerPagination").then((res) => res.Pagination)
+  async () => await import("@components/Deezer/DeezerPagination").then((res) => res.Pagination),
 );
 
 export const TrackWrapper = (): JSX.Element => {
@@ -45,7 +45,7 @@ export const TrackWrapper = (): JSX.Element => {
   const { data, error, isValidating } = useSWR<UserTopTracks | undefined, ErrorProps>(
     ["/api/deezer/tracks", previousOrNextUrl],
     async ([url, previousOrNextUrl]: [FetcherType["0"], FetcherType["1"]]) => await fetcher(url, previousOrNextUrl),
-    { keepPreviousData: true, revalidateOnFocus: false }
+    { keepPreviousData: true, revalidateOnFocus: false },
   );
 
   useEffect(() => {

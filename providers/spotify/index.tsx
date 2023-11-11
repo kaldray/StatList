@@ -15,7 +15,7 @@ export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
 
 export const getSpotifyTopTracks = async (
   accesToken: string,
-  searchParams?: URLSearchParams
+  searchParams?: URLSearchParams,
 ): Promise<UserTopItems<TrackItems>> => {
   if (searchParams !== undefined) {
     const response = await fetch(`${USER_TOP_TRACK}?${searchParams.toString()}`, {
@@ -35,7 +35,7 @@ export const getSpotifyTopTracks = async (
 
 export const getSpotifyTopArtist = async (
   accesToken: string,
-  searchParams?: URLSearchParams
+  searchParams?: URLSearchParams,
 ): Promise<UserTopItems<ArtistItems>> => {
   if (searchParams !== undefined) {
     const response = await fetch(`${USER_TOP_ARTIST}?${searchParams.toString()}`, {

@@ -1,9 +1,9 @@
 import styles from "@styles/Components/CardLoader.module.scss";
 import global from "@styles/Pages/global.module.scss";
 
-type CardLoaderProps = {
+interface CardLoaderProps {
   itemsLength: number;
-};
+}
 
 export const CardLoader = ({ itemsLength }: CardLoaderProps): JSX.Element => {
   const { card__container } = styles;

@@ -25,9 +25,9 @@ export interface getServerSideProvidersType {
   props: { providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider> | null };
 }
 
-export type SpotifyPageProps = {
+export interface SpotifyPageProps {
   params?: {
     id: string;
   };
   searchParams?: { time_range: TimeRange };
-};
+}

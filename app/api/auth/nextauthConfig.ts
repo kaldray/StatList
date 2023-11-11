@@ -11,7 +11,7 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 interface SpotifyUser extends User {
-  picture: string | undefined,
+  picture: string | undefined;
 }
 async function spotifyRefreshAccessToken(token: JWT): Promise<JWT> {
   try {

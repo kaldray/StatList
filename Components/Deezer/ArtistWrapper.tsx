@@ -26,7 +26,7 @@ export const ArtistWrapper = (): JSX.Element => {
   const { data, error, isValidating } = useSWR<UserTopArtist | undefined, ErrorProps>(
     ["/api/deezer/artists"],
     async ([url]: [FetcherType["0"]]) => await fetcher(url),
-    { keepPreviousData: true, revalidateOnFocus: false }
+    { keepPreviousData: true, revalidateOnFocus: false },
   );
 
   return (

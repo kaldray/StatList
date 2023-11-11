@@ -1,14 +1,14 @@
 import { type RefObject } from "react";
 import { Spinner } from "./Spinner";
 
-type PeriodChoiceButtonProps<T = RefObject<HTMLButtonElement>> = {
+interface PeriodChoiceButtonProps<T = RefObject<HTMLButtonElement>> {
   showPendingState: (ref: T) => boolean;
   buttons: [T, T, T];
   setActiveButton: (btn1: T, btn2: T, btn3: T) => void;
   getPeriodTermArtist: () => void;
   children: React.ReactNode;
   isPending: boolean;
-};
+}
 
 export const PeriodChoiceButton = ({
   getPeriodTermArtist,

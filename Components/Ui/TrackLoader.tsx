@@ -2,9 +2,9 @@ import styles from "@styles/Components/TrackLoader.module.scss";
 
 import global from "@styles/Pages/global.module.scss";
 
-type TrackLoaderProps = {
+interface TrackLoaderProps {
   itemsLength: number;
-};
+}
 
 export const TrackLoader = ({ itemsLength }: TrackLoaderProps): JSX.Element => {
   const { track__container } = styles;
