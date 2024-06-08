@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  next:
-    container_name: myspotify
+  app:
+    container_name: statlist
     build:
       context: ../
       dockerfile: ./docker/dev.Dockerfile
