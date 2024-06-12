@@ -53,7 +53,7 @@ jobs:
           echo 'updating docker services...🔄'
           docker stack deploy --with-registry-auth -c ./docker/docker-compose.prod.yml test
           echo 'services updated succesfully ✅'
-         EOF
+          EOF
         env:
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_DIR: ${{ secrets.DEPLOY_DIR }}
