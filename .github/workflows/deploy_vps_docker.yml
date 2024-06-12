@@ -44,7 +44,7 @@ jobs:
           docker buildx build --push $BUILD_ARGS -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
 
           echo 'build successful ✅'
-          ls
+          ls -a
           # Start docker instances
           echo 'updating docker services...🔄'
           docker stack deploy --with-registry-auth --compose-file ./docker/docker-compose.prod.yml statlist
