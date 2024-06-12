@@ -38,7 +38,7 @@ jobs:
           export DOCKER_BUILDKIT=1
 
           current_directory=$(pwd)
-          current_f=$(ls)
+
 
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
@@ -47,7 +47,7 @@ jobs:
           # Build & push docker image
           docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
 
-          current_directory=$(pwd)
+          current_f=$(ls)
 
           echo 'build successful ✅'
           # Start docker instances
