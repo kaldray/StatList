@@ -28,6 +28,7 @@ jobs:
           source ~/.zshrc
           set -e -o errexit
           cd $DEPLOY_DIR
+          ls -a
 
           echo 'Login to docker registry...'
           echo ${{ secrets.DCR_PASSWD }} | docker login  --username=kaldray --password-stdin
@@ -39,6 +40,8 @@ jobs:
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
           git pull
+
+          ls -a
 
           # Build & push docker image
           docker buildx build --push $BUILD_ARGS -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
