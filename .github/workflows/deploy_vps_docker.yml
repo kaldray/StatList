@@ -37,7 +37,6 @@ jobs:
           export DOCKER_BUILDKIT=1
 
           current_directory=$(pwd)
-          "echo Le répertoire actuel est : $current_directory"
 
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
@@ -47,8 +46,8 @@ jobs:
           docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
 
           current_directory=$(pwd)
-          echo Le répertoire actuel est : $current_directory
-          "ls"
+
+          ls
 
           echo 'build successful ✅'
           # Start docker instances
