@@ -27,7 +27,7 @@ jobs:
           "
           source ~/.zshrc
           set -e -o errexit
-          cd $DEPLOY_DIR
+
 
           echo 'Login to docker registry...'
           echo ${{ secrets.DCR_PASSWD }} | docker login  --username=kaldray --password-stdin
