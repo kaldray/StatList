@@ -29,6 +29,7 @@ jobs:
           set -e -o errexit
           cd $DEPLOY_DIR
 
+          docker network inspect statlist-net >/dev/null 2>&1 || docker network create --driver overlay statlist-net
 
           echo 'Login to docker registry...'
           echo ${{ secrets.DCR_PASSWD }} | docker login  --username=kaldray --password-stdin
@@ -37,17 +38,13 @@ jobs:
           echo 'Build with docker (and cache)...🔄'
           export DOCKER_BUILDKIT=1
 
-          current_directory=$(pwd)
-
-
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
           git pull
 
           # Build & push docker image
-          docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
+          docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest .
 
-          current_f=$(ls)
 
           echo 'build successful ✅'
           # Start docker instances
