@@ -27,9 +27,9 @@ jobs:
 
           source ~/.zshrc
           set -e -o errexit
-          echo Current directory before cd: $(pwd)
+          ok=$(pwd)
           cd $DEPLOY_DIR
-          echo Current directory after cd: $(pwd)
+          curr_f$(pwd)
 
           docker network inspect statlist-net >/dev/null 2>&1 || docker network create --driver overlay statlist-net
 
