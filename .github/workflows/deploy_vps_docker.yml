@@ -17,7 +17,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_SERVER_KEY }}
-          name: id_rsa # optional
+          name: github_actions # optional
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Deploy to Server
         run: |
