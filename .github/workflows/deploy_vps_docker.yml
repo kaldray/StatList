@@ -1,0 +1,50 @@
+name: CI/CD For docker deploy
+
+# Controls when the action will run.
+on:
+  push:
+    branches:
+      - docker
+  workflow_dispatch:
+
+jobs:
+  build-push-docker:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_SERVER_KEY }}
+          name: id_rsa # optional
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Deploy to Server
+        run: |
+          BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=preview.statlist.fr --build-arg GITHUB_REDIRECT_URI=https://preview.statlist.fr/api/auth/callback --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
+          ssh -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_DOMAIN
+          source ~/.zshrc
+          set -e -o errexit
+          cd $DEPLOY_DIR
+
+          echo 'Login to docker registry...'
+          echo ${{ secrets.DCR_PASSWD }} | docker login  --username=kaldray --password-stdin
+          echo 'succesfully logged in to registry docker'
+
+          echo 'Build with docker (and cache)...🔄'
+          export DOCKER_BUILDKIT=1
+
+          # Build & push docker image
+          docker buildx build --push $BUILD_ARGS -f ./docker/prod.Dockerfile -t kaldray/statlist-next .
+
+          echo 'build successful ✅'
+
+          # Start docker instances
+          echo 'updating docker services...🔄'
+          docker stack deploy --with-registry-auth --compose-file ./docker/docker-compose.prod.yml statlist
+          echo 'services updated succesfully ✅'
+        env:
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_DIR: ${{ secrets.DEPLOY_DIR }}
+          DEPLOY_DOMAIN: ${{ secrets.DEPLOY_DOMAIN }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}

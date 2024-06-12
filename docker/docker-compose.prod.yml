@@ -1,0 +1,22 @@
+services:
+  app:
+    image: kaldray/statlist-next:latest
+    ports:
+      - 3000:3000
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - statlist-net
+networks:
+  statlist-net:
+    external: true
