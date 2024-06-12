@@ -23,10 +23,11 @@ jobs:
         run: |
           BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=preview.statlist.fr --build-arg GITHUB_REDIRECT_URI=https://preview.statlist.fr/api/auth/callback --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
           ssh -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_DOMAIN
-
+          ls
           "
           source ~/.zshrc
           set -e -o errexit
+          cd $DEPLOY_DIR
 
 
           echo 'Login to docker registry...'
@@ -37,6 +38,7 @@ jobs:
           export DOCKER_BUILDKIT=1
 
           current_directory=$(pwd)
+          current_f=$(ls)
 
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
@@ -46,8 +48,6 @@ jobs:
           docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
 
           current_directory=$(pwd)
-
-          ls
 
           echo 'build successful ✅'
           # Start docker instances
