@@ -36,6 +36,9 @@ jobs:
           echo 'Build with docker (and cache)...🔄'
           export DOCKER_BUILDKIT=1
 
+          current_directory=$(pwd)
+          "echo Le répertoire actuel est : $current_directory"
+
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
           git pull
@@ -45,6 +48,7 @@ jobs:
 
           current_directory=$(pwd)
           echo Le répertoire actuel est : $current_directory
+          "ls"
 
           echo 'build successful ✅'
           # Start docker instances
