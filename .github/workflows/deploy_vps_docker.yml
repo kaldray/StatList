@@ -36,12 +36,11 @@ jobs:
 
           echo 'Build with docker (and cache)...🔄'
           export DOCKER_BUILDKIT=1
-          curr_f$(pwd)
 
+          ls -a
           git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
           git pull
-          ls -a
           # Build & push docker image
           docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
 
