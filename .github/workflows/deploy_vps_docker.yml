@@ -38,7 +38,7 @@ jobs:
           export DOCKER_BUILDKIT=1
 
           ls -a
-          git fetch origin $BRANCH_NAME
+          git clone https://github.com/kaldray/StatList.git
           git checkout $BRANCH_NAME
           git pull
           # Build & push docker image
