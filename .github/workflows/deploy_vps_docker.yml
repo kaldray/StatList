@@ -41,7 +41,7 @@ jobs:
           git checkout $BRANCH_NAME
           git pull
           # Build & push docker image
-          docker buildx build --push $BUILD_ARGS -f /docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
+          docker buildx build --push $BUILD_ARGS -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
 
 
           echo 'build successful ✅'
