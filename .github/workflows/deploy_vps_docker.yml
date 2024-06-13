@@ -38,8 +38,10 @@ jobs:
 
           cd projects
           cd StatList
+          git fetch origin $BRANCH_NAME
           git checkout $BRANCH_NAME
           git pull
+          ls
           # Build & push docker image
           docker buildx build --push $BUILD_ARGS -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest ./
 
