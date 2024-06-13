@@ -26,7 +26,7 @@ jobs:
 
           source ~/.zshrc
           set -e -o errexit
-          cd $DEPLOY_DIR
+          cd projects
 
           docker network inspect statlist-net >/dev/null 2>&1 || docker network create --driver overlay statlist-net
 
@@ -37,7 +37,7 @@ jobs:
           echo 'Build with docker (and cache)...🔄'
           export DOCKER_BUILDKIT=1
 
-          ls -a
+          ls 
           git clone https://github.com/kaldray/StatList.git
           git checkout $BRANCH_NAME
           git pull
