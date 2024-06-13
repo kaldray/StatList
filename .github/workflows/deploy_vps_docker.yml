@@ -37,7 +37,6 @@ jobs:
           echo 'Build with docker (and cache)...🔄'
           export DOCKER_BUILDKIT=1
 
-          git clone https://github.com/kaldray/StatList.git
           cd StatList
           git checkout $BRANCH_NAME
           git pull
