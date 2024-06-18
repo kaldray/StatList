@@ -21,7 +21,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Deploy to Server
         run: |
-          BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=https://statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
+          BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=https://statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }} --build-arg NEXTAUTH_URL_INTERNAL=${{ secrets.NEXTAUTH_URL_INTERNAL }}"
           ssh -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_DOMAIN << 'EOF'
 
           source ~/.zshrc
