@@ -26,7 +26,7 @@ jobs:
 
           source ~/.zshrc
           set -e -o errexit
-
+          export BUILD_ARGS="$BUILD_ARGS"
           docker network inspect statlist-net >/dev/null 2>&1 || docker network create --driver overlay statlist-net
 
           echo 'Login to docker registry...'
@@ -42,7 +42,8 @@ jobs:
           git checkout docker
           git pull origin docker
           # Build & push docker image
-          docker buildx build --push $BUILD_ARGS -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
+          echo "Running docker build with build arguments: $BUILD_ARGS"
+          docker buildx build $BUILD_ARGS --push -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
 
 
           echo 'build successful ✅'
