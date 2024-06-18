@@ -9,6 +9,7 @@ import { getServerSideUserInfo } from "types/next";
 
 const Home: NextPage = () => {
   const { presentation__container } = styles;
+  console.log(process.env.NEXT_PUBLIC_VERCEL_URL, "=========");
 
   return (
     <>
@@ -41,6 +42,7 @@ export default Home;
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<getServerSideUserInfo> => {
   const token = await getToken(context);
+  console.log(process.env.NEXTAUTH_SECRET, "=========");
   if (token !== null) {
     return {
       redirect: {
