@@ -9,6 +9,8 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
 
+console.log(process.env.NEXTAUTH_SECRET, "==========ENV");
+
 async function spotifyRefreshAccessToken(token: JWT): Promise<JWT> {
   try {
     if (token.accessToken !== undefined && token.refreshToken !== undefined) {
