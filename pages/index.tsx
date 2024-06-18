@@ -9,7 +9,6 @@ import { getServerSideUserInfo } from "types/next";
 
 const Home: NextPage = () => {
   const { presentation__container } = styles;
-  console.log(process.env.NEXT_PUBLIC_VERCEL_URL, "=========");
 
   return (
     <>
