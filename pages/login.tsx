@@ -8,7 +8,7 @@ import style from "@styles/Pages/login.module.scss";
 
 const Login: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ providers }) => {
   async function logIn(provider: ClientSafeProvider["id"]): Promise<void> {
-    await signIn(provider, { callbackUrl: `https://statlist.fr/${provider}` });
+    await signIn(provider, { callbackUrl: `/${provider}` });
   }
   return (
     <>
