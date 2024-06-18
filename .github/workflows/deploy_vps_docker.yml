@@ -21,10 +21,6 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Deploy to Server
         run: |
-          BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
-
-          echo "Build Args before SSH: $BUILD_ARGS"
-
           ssh -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_DOMAIN << 'EOF'
 
           source ~/.zshrc
@@ -46,7 +42,9 @@ jobs:
           git pull origin docker
 
           # Build & push docker image
-          docker buildx build -f ./docker/prod.Dockerfile \ -t kaldray/statlist-next:latest \ --build-arg NEXT_PUBLIC_VERCEL_URL=statlist.fr \ --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \ --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} \ --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} \ --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} \ --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} \ --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \ --build-arg USERNAME=${{ secrets.USERNAME }} \ --build-arg PASSWORD=${{ secrets.PASSWORD }} \ --push .
+          BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
+          
+          docker buildx build $BUILD_ARGS --push -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
 
 
           echo 'build successful ✅'
