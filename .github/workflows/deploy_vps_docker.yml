@@ -30,11 +30,6 @@ jobs:
           source ~/.zshrc
           set -e -o errexit
 
-          echo "Build Args inside SSH before export: $BUILD_ARGS"
-          export BUILD_ARGS="$BUILD_ARGS"
-          echo "Build Args inside SSH after export: \$BUILD_ARGS"
-
-
           docker network inspect statlist-net >/dev/null 2>&1 || docker network create --driver overlay statlist-net
 
           echo 'Login to docker registry...'
@@ -51,8 +46,7 @@ jobs:
           git pull origin docker
 
           # Build & push docker image
-          echo "Running docker build with build arguments: $BUILD_ARGS"
-          docker buildx build $BUILD_ARGS --push -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
+          docker buildx build --build-arg NEXT_PUBLIC_VERCEL_URL=statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }} --push -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
 
 
           echo 'build successful ✅'
