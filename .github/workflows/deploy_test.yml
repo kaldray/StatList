@@ -1,16 +1,14 @@
-name: CI/CD For docker deploy
-
-# Controls when the action will run.
+name: Deployment tests
 on:
-  push:
-    branches:
-      - docker
+  pull_request:
+    branches: main
   workflow_dispatch:
-
 jobs:
   build-push-docker:
     runs-on: ubuntu-latest
-    environment: staging
+    environment:
+      name: Production
+      url: https://statlist.fr
     steps:
       - uses: actions/checkout@v4
       - name: Install SSH key
@@ -20,7 +18,9 @@ jobs:
           name: id_rsa # optional
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Deploy to Server
+      - id: vps_deployement
         run: |
+          echo "test=https://statlist.fr" >> "$GITHUB_OUTPUT"
           ssh -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_DOMAIN << 'EOF'
 
           source ~/.zshrc
@@ -37,13 +37,13 @@ jobs:
 
           cd projects/StatList
 
-          git fetch origin docker
-          git checkout docker
-          git pull origin docker
+          git fetch origin main
+          git checkout main
+          git pull origin main
 
           # Build & push docker image
           BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
-          
+
           docker buildx build $BUILD_ARGS --push -f ./docker/prod.Dockerfile -t kaldray/statlist-next:latest .
 
 
@@ -60,3 +60,38 @@ jobs:
           DEPLOY_DOMAIN: ${{ secrets.DEPLOY_DOMAIN }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  test_e2e:
+    needs: build-push-docker
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node environnment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 7.14.2
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: pnpm playwright install --with-deps
+      - name: Run server
+        run: xvfb-run --auto-servernum pnpm run test
+        env:
+          CI: true
+          NEXT_AUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          PASSWORD: ${{secrets.PASSWORD}}
+          USERNAME: ${{secrets.USERNAME}}
+          NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
+          SPOTIFY_CLIENT_ID: ${{secrets.SPOTIFY_CLIENT_ID}}
+          SPOTIFY_CLIENT_SECRET: ${{secrets.SPOTIFY_CLIENT_SECRET}}
+      - name: Download trace of test
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
