@@ -36,9 +36,9 @@ jobs:
 
           cd projects/StatList
 
-          git fetch origin main
-          git checkout main
-          git pull origin main
+          git fetch origin ${GITHUB_REF##*/}
+          git checkout ${GITHUB_REF##*/}
+          git pull origin ${GITHUB_REF##*/}
 
           # Build & push docker image
           BUILD_ARGS="--build-arg NEXT_PUBLIC_VERCEL_URL=statlist.fr --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} --build-arg SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }} --build-arg SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }} --build-arg DEEZER_CLIENT_ID=${{ secrets.DEEZER_CLIENT_ID }} --build-arg DEEZER_CLIENT_SECRET=${{ secrets.DEEZER_CLIENT_SECRET }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} --build-arg USERNAME=${{ secrets.USERNAME }} --build-arg PASSWORD=${{ secrets.PASSWORD }}"
