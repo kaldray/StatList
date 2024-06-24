@@ -31,7 +31,9 @@ const Home: NextPage = () => {
           Pour découvrir tout ceci, connectez-vous avec votre compte <strong>Deezer</strong> ou <strong>Spotify</strong>
           .
         </p>
-        <button onClick={async () => await signIn()}>Se connecter</button>
+        <button onClick={async () => await signIn(undefined, { callbackUrl: `https://statlist.fr` })}>
+          Se connecter
+        </button>
       </section>
     </>
   );
