@@ -1,17 +1,18 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables";
+@use "../Global/mixin";
+@use "sass:color";
 
 .footer__container {
   position: fixed;
   bottom: 0%;
-  padding: $xs;
-  background-color: darken($color: $timberwolf, $amount: 20%);
+  padding: variables.$xs;
+  background-color: color.adjust(variables.$timberwolf, $lightness: 20%, $space: hsl);
   width: 100%;
   display: flex;
   justify-content: center;
 
   a {
-    color: $black;
-    font-size: clamp($mobileText, 1.3vw, $desktopText);
+    color: variables.$black;
+    font-size: clamp(variables.$mobileText, 1.3vw, variables.$desktopText);
   }
 }

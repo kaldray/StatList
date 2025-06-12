@@ -1,4 +1,4 @@
-import { UserTopArtist, UserTopTracks } from "types/deezer";
+import { UserTopArtist, UserTopTracks } from "@src/types/deezer";
 
 export const getDeezerTopTracks = async (userId: string, params?: URLSearchParams): Promise<UserTopTracks> => {
   if (params !== undefined) {

@@ -1,12 +1,12 @@
-import Link from "next/link";
+import { NavLink as Link } from "react-router";
 import styles from "@styles/Components/Footer.module.scss";
 
-export const Footer = (): JSX.Element => {
+export const Footer = () => {
   const { footer__container } = styles;
   return (
     <>
       <footer className={footer__container}>
-        <Link href={"/term"}>Condition d&apos;utilisation</Link>
+        <Link to="/term">Condition d&apos;utilisation</Link>
       </footer>
     </>
   );

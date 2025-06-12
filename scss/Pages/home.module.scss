@@ -1,55 +1,58 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
+@use "sass:color";
 
 .presentation__container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: $m;
+  row-gap: variables.$m;
   p,
   li {
-    font-size: $mobileText;
+    font-size: variables.$mobileText;
   }
 
   h1 {
-    font-size: clamp($mobileHeading, 3vw, $desktopHeading);
+    font-size: clamp(variables.$mobileHeading, 3vw, variables.$desktopHeading);
     text-align: center;
-    margin-bottom: $s;
+    margin-bottom: variables.$s;
   }
   h2 {
-    font-size: clamp($mobileHeading, 1.5vw, $desktopHeading);
+    font-size: clamp(variables.$mobileHeading, 1.5vw, variables.$desktopHeading);
     text-align: center;
-    margin-bottom: $s;
+    margin-bottom: variables.$s;
   }
   p > span {
     text-decoration: underline;
   }
-  button {
+  button,
+  a {
     align-self: center;
-    background-color: $laurel-green;
+    background-color: variables.$laurel-green;
     color: #000;
-    padding: $xs;
-    font-size: $mobileText;
+    padding: variables.$xs;
+    font-size: variables.$mobileText;
     font-weight: 300;
-    border: 1px solid $black;
-    border-radius: $smallRadius;
-    width: $xxl * 3;
+    border: 1px solid variables.$black;
+    border-radius: variables.$smallRadius;
+    width: variables.$xxl * 3;
+    text-align: center;
     &:hover {
       cursor: pointer;
-      background-color: darken($laurel-green, 5%);
+      background-color: color.scale(variables.$laurel-green, $lightness: 15%);
     }
     &:active {
-      background-color: darken($laurel-green, 15%);
+      background-color: color.scale(variables.$laurel-green, $lightness: 15%);
     }
   }
 }
 
-@include desktopSize {
+@include mixin.desktopSize {
   .presentation__container {
     p,
     li {
-      font-size: $desktopText;
+      font-size: variables.$desktopText;
     }
   }
 }

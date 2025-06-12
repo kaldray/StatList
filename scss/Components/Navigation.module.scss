@@ -1,20 +1,20 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
 
 .container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
   place-items: center;
-  background-color: $timberwolf;
-  row-gap: $xs;
+  background-color: variables.$timberwolf;
+  row-gap: variables.$xs;
   position: fixed;
   z-index: 10;
   padding: 1rem;
   width: 100%;
   p {
     grid-row: 1;
-    font-size: clamp($mobileHeading, 2vw, $desktopHeading);
+    font-size: clamp(variables.$mobileHeading, 2vw, variables.$desktopHeading);
   }
 }
 
@@ -26,24 +26,37 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    row-gap: $xs;
+    row-gap: variables.$xs;
     li {
-      font-size: $mobileText;
+      font-size: variables.$mobileText;
       position: relative;
       &:hover {
         cursor: pointer;
       }
       a {
-        color: $black;
+        color: variables.$black;
         &:hover {
           cursor: pointer;
         }
       }
     }
+    form button {
+      bordder: none;
+      background-color: transparent;
+      color: variables.$black;
+      border: none;
+      padding: 0;
+      border-radius: variables.$xs;
+      outline: none;
+      font-size: variables.$mobileText;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }
 
-@include desktopSize {
+@include mixin.desktopSize {
   .container {
     p {
       grid-column: 1;
@@ -55,9 +68,10 @@
     align-self: center;
     ul {
       flex-direction: row;
-      column-gap: $s;
-      li {
-        font-size: $desktopText;
+      column-gap: variables.$s;
+      li,
+      form button {
+        font-size: variables.$desktopText;
       }
     }
   }

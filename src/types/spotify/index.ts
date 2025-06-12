@@ -104,3 +104,11 @@ export type QueryState = "short_term" | "long_term" | "medium_term" | undefined;
 export type TimeRange = "short_term" | "long_term" | "medium_term";
 
 export type QueryItems = `time_range=${TimeRange}` | undefined;
+
+export interface AccessTokenResponse {
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+  token_type: string;
+}
