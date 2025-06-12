@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2018",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,14 +13,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noUnusedLocals": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "noUncheckedIndexedAccess": true,
-    "baseUrl": "./",
+    "rootDirs": [".", "./.react-router/types"],
+    "types": ["@react-router/node", "vite/client"],
     "paths": {
-      "@styles/*": ["scss/*"],
-      "@components/*": ["Components/*"],
-      "@providers/*": ["providers/*"]
+      "@styles/*": ["./scss/*"],
+      "@components/*": ["./src/components/*"],
+      "@providers/*": ["./providers/*"],
+      "@src/*": ["./src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/auth/[...nextauth].js", "nextAuth.d.ts"],

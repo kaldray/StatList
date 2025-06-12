@@ -1,7 +1,7 @@
-@import "../Global/variables.scss";
+@use "../Global/variables.scss";
 
 .container {
-  padding: $xxl 0;
+  padding: variables.$xxl 0;
   width: 80%;
   margin: auto;
 }
