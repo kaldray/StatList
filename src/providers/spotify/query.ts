@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getSpotifyTopTracks } from "./endpoint";
+import { getSpotifyTopArtist, getSpotifyTopTracks } from "./endpoint";
 import { z } from "zod/v4";
 
 export const SpotifyQuerySchema = z.object({
@@ -16,6 +16,13 @@ export const spotify_query_options = {
       queryKey: ["tracks", searchParams] as const,
       queryFn: async ({ signal }) => {
         return await getSpotifyTopTracks(accessToken, signal, searchParams);
+      },
+    }),
+  artist: (accessToken: string, searchParams?: SpotifyQueryItems) =>
+    queryOptions({
+      queryKey: ["artist", searchParams] as const,
+      queryFn: async ({ signal }) => {
+        return await getSpotifyTopArtist(accessToken, signal, searchParams);
       },
     }),
 };

@@ -27,7 +27,7 @@ export const getSpotifyTopTracks = async (
       },
       signal: signal,
     });
-    return await response.json();
+    return response.json();
   }
   const response = await fetch(USER_TOP_TRACK, {
     headers: {
@@ -35,25 +35,29 @@ export const getSpotifyTopTracks = async (
     },
     signal: signal,
   });
-  return await response.json();
+  return response.json();
 };
 
 export const getSpotifyTopArtist = async (
   accesToken: string,
-  searchParams?: URLSearchParams,
+  signal: AbortSignal,
+  searchParams?: SpotifyQueryItems,
 ): Promise<UserTopItems<ArtistItems>> => {
   if (searchParams !== undefined) {
-    const response = await fetch(`${USER_TOP_ARTIST}?${searchParams.toString()}`, {
+    const s = new URLSearchParams(searchParams);
+    const response = await fetch(`${USER_TOP_ARTIST}?${s.toString()}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
+      signal: signal,
     });
-    return await response.json();
+    return response.json();
   }
   const response = await fetch(USER_TOP_ARTIST, {
     headers: {
       Authorization: `Bearer ${accesToken}`,
     },
+    signal: signal,
   });
-  return await response.json();
+  return response.json();
 };

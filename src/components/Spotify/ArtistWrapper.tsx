@@ -1,69 +1,58 @@
-import { useEffect, useState, Suspense, lazy } from "react";
-import useSWR from "swr";
-
-import { Loader, NoData } from "@components/index";
-
+import { lazy } from "react";
+import type { WrapperPropsArtist } from "@src/types/Components";
+import { NoData } from "@components/index";
 import styles from "@styles/Pages/global.module.scss";
-import { WrapperProps } from "@src/types/Components";
-import { ArtistItems, QueryItems, UserTopItems } from "@src/types/spotify";
 
-const ArtistCard = lazy(async () => await import("@components/Spotify/SpotifyArtistCard"));
-const Pagination = lazy(async () => await import("@components/Pagination"));
+const SpotifyArtistCard = lazy(async () => await import("@src/components/Spotify/SpotifyArtistCard"));
 
-export const ArtistWrapper = ({ queryParams }: WrapperProps) => {
+export const ArtistWrapper = ({ tracks }: WrapperPropsArtist) => {
   const { container } = styles;
 
-  const [previousOrNextUrl, setUrl] = useState<string | undefined>(undefined);
-  const [nextIsActive, setNextIsActive] = useState<boolean>(false);
-  const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
+  // useEffect(() => {
+  //   if (data?.next === null) {
+  //     setNextIsActive(true);
+  //   } else {
+  //     setNextIsActive(false);
+  //   }
+  //   if (data?.previous === null) {
+  //     setPreviousIsActive(true);
+  //   } else {
+  //     setPreviousIsActive(false);
+  //   }
+  // }, [data]);
 
-  useEffect(() => {
-    if (data?.next === null) {
-      setNextIsActive(true);
-    } else {
-      setNextIsActive(false);
-    }
-    if (data?.previous === null) {
-      setPreviousIsActive(true);
-    } else {
-      setPreviousIsActive(false);
-    }
-  }, [data]);
+  // function nextPage(): void {
+  //   if (data !== undefined && data?.next !== null) {
+  //     setUrl(data.next);
+  //   }
+  // }
 
-  function nextPage(): void {
-    if (data !== undefined && data?.next !== null) {
-      setUrl(data.next);
-    }
-  }
-
-  function previousPage(): void {
-    if (data !== undefined && data?.previous !== null) {
-      setUrl(data.previous);
-    }
-  }
+  // function previousPage(): void {
+  //   if (data !== undefined && data?.previous !== null) {
+  //     setUrl(data.previous);
+  //   }
+  // }
 
   return (
     <>
       <section className={container}>
-        {data !== undefined && (
+        {
           <>
-            <Suspense fallback={<Loader />}>
-              {data.items.map((item, i) => {
-                return <ArtistCard key={item.name} i={i + 1 + data.offset} isValidating={isValidating} items={item} />;
-              })}
-            </Suspense>
+            {tracks.items.map((item, i) => {
+              return <SpotifyArtistCard key={item.id} i={i + 1 + tracks.offset} items={item} />;
+            })}
           </>
-        )}
-        {data !== undefined && data.items.length === 0 && <NoData />}
+        }
+        {tracks !== undefined && tracks.items.length === 0 && <NoData />}
       </section>
-      {data !== undefined && data.items.length > 0 && (
+      {/* {data !== undefined && data.items.length > 0 && (
         <Pagination
           nextIsActive={nextIsActive}
           previousIsActive={previousIsActive}
           nextPage={nextPage}
           previousPage={previousPage}
         />
-      )}
+      )} */}
     </>
   );
 };

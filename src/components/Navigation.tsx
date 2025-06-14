@@ -38,17 +38,25 @@ export const Navigation = ({ auth, provider }: NavigationProps) => {
           <nav role={"navigation"} id="nav-items" className={nav}>
             <ul>
               <li>
-                <NavLink end={true} aria-current={setCurrentPage(`/${provider}/artist`)} to={`${provider}/artist`}>
+                <NavLink
+                  prefetch="intent"
+                  end={true}
+                  aria-current={setCurrentPage(`/${provider}/artist`)}
+                  to={`${provider}/artist`}>
                   Meilleur artiste
                 </NavLink>
               </li>
               <li>
-                <NavLink end={true} aria-current={setCurrentPage(`/${provider}/track`)} to={`${provider}/track`}>
+                <NavLink
+                  prefetch="intent"
+                  end={true}
+                  aria-current={setCurrentPage(`/${provider}/track`)}
+                  to={`${provider}/track`}>
                   Meilleure chanson
                 </NavLink>
               </li>
               <li>
-                <NavLink end={true} aria-current={setCurrentPage(`/${provider}`)} to={`${provider}`}>
+                <NavLink prefetch="intent" end={true} aria-current={setCurrentPage(`/${provider}`)} to={`${provider}`}>
                   Accueil
                 </NavLink>
               </li>

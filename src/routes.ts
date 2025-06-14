@@ -8,7 +8,7 @@ export default [
     route("login", "routes/login.tsx"),
     ...prefix("spotify", [
       index("routes/spotify/index.tsx"),
-      // route("/artist", "routes/spotify/artist.tsx"),
+      route("/artist", "routes/spotify/artist.tsx"),
       route("/track", "routes/spotify/track.tsx"),
     ]),
     ...prefix("deezer", [
