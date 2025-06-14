@@ -13,6 +13,7 @@ import {
 import { spotify_query_options, SpotifyQuerySchema } from "@src/providers/spotify/query";
 import { dehydrate, HydrationBoundary, QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { assertIsString } from "@src/utils";
+import { PeriodChoiceLoader } from "@components/PeriodChoiceLoader";
 
 const PeriodChoice = lazy(async () => await import("@components/PeriodChoice"));
 
@@ -88,7 +89,7 @@ export default function TrackRoute({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <HydrationBoundary state={loaderData.dehydratedState}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<PeriodChoiceLoader />}>
           <Track token={loaderData.token} />
         </Suspense>
       </HydrationBoundary>
