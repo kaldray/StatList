@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { ArtistItems, QueryItems, TrackItems } from "../spotify/index";
+import { ArtistItems, QueryItems, TrackItems, UserTopItems } from "../spotify/index";
 import { ArtistData, TrackData } from "../deezer";
 
 export interface SpotifyArtistCardProps {
@@ -11,7 +11,7 @@ export interface SpotifyArtistCardProps {
 export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
-  isValidating: boolean;
+  isValidating?: boolean;
 }
 export interface DeezerTrackCardPros {
   items: TrackData;
@@ -49,5 +49,6 @@ export interface PeriodChoiceStyle {
 }
 
 export interface WrapperProps {
-  queryParams: QueryItems;
+  queryParams?: QueryItems;
+  tracks: UserTopItems<TrackItems>;
 }

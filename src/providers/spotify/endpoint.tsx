@@ -1,4 +1,5 @@
 import { ArtistItems, TrackItems, UserInfo, UserTopItems } from "@src/types/spotify";
+import type { SpotifyQueryItems } from "./query";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";
 const USER_TOP_TRACK = "https://api.spotify.com/v1/me/top/tracks";
@@ -15,13 +16,16 @@ export const getSpotifyMe = async (accesToken: string): Promise<UserInfo> => {
 
 export const getSpotifyTopTracks = async (
   accesToken: string,
-  searchParams?: URLSearchParams,
+  signal?: AbortSignal,
+  searchParams?: SpotifyQueryItems,
 ): Promise<UserTopItems<TrackItems>> => {
   if (searchParams !== undefined) {
-    const response = await fetch(`${USER_TOP_TRACK}?${searchParams.toString()}`, {
+    const s = new URLSearchParams(searchParams);
+    const response = await fetch(`${USER_TOP_TRACK}?${s.toString()}`, {
       headers: {
         Authorization: `Bearer ${accesToken}`,
       },
+      signal: signal,
     });
     return await response.json();
   }
@@ -29,6 +33,7 @@ export const getSpotifyTopTracks = async (
     headers: {
       Authorization: `Bearer ${accesToken}`,
     },
+    signal: signal,
   });
   return await response.json();
 };

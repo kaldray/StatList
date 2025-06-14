@@ -1,14 +1,14 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
 
 .card__container {
   display: flex;
   flex-direction: row;
   align-items: center;
   position: relative;
-  padding: $m 0;
-  font-size: clamp($mobileText, 1.5vw, $desktopText);
-  column-gap: $m;
+  padding: variables.$m 0;
+  font-size: clamp(variables.$mobileText, 1.5vw, variables.$desktopText);
+  column-gap: variables.$m;
   min-height: 20rem;
   max-height: 20rem;
 
@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: $m;
+  gap: variables.$m;
   width: 100%;
 }
 .logo__container {

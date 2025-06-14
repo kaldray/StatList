@@ -1,4 +1,4 @@
-import { Form, NavLink as Link } from "react-router";
+import { Form, NavLink } from "react-router";
 
 // import { Hamburger } from "./Hamburger";
 
@@ -6,10 +6,11 @@ import styles from "@styles/Components/Navigation.module.scss";
 
 type NavigationProps = {
   auth: boolean | null;
-  provider: "spotify" | "deezer" | null;
+  provider: "spotify" | "deezer" | null | undefined;
 };
 export const Navigation = ({ auth, provider }: NavigationProps) => {
   const { container, nav } = styles;
+
   // useEffect(() => {
   //   function toggleHamburger(): void {
   //     setInnerWidth(window.innerWidth);
@@ -24,6 +25,11 @@ export const Navigation = ({ auth, provider }: NavigationProps) => {
   //   };
   // }, []);
 
+  function setCurrentPage(href: string): "page" | undefined {
+    if (typeof window === "undefined") return undefined;
+    return window.location.pathname === href ? "page" : undefined;
+  }
+
   return (
     <>
       <header className={container}>
@@ -32,13 +38,19 @@ export const Navigation = ({ auth, provider }: NavigationProps) => {
           <nav role={"navigation"} id="nav-items" className={nav}>
             <ul>
               <li>
-                <Link to={`${provider}/artist`}>Meilleur artiste</Link>
+                <NavLink end={true} aria-current={setCurrentPage(`/${provider}/artist`)} to={`${provider}/artist`}>
+                  Meilleur artiste
+                </NavLink>
               </li>
               <li>
-                <Link to={`${provider}/track`}>Meilleure chanson</Link>
+                <NavLink end={true} aria-current={setCurrentPage(`/${provider}/track`)} to={`${provider}/track`}>
+                  Meilleure chanson
+                </NavLink>
               </li>
               <li>
-                <Link to={`${provider}`}>Accueil</Link>
+                <NavLink end={true} aria-current={setCurrentPage(`/${provider}`)} to={`${provider}`}>
+                  Accueil
+                </NavLink>
               </li>
               <Form action="/logout" method="post">
                 <button>Se déconnecter</button>

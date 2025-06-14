@@ -1,15 +1,7 @@
-import { FC } from "react";
-
 import styles from "@styles/Components/Pagination.module.scss";
+import { PaginationProps } from "@src/types/Components";
 
-import { PaginationProps } from "types/Components";
-
-export const Pagination: FC<PaginationProps> = ({
-  nextPage,
-  previousPage,
-  previousIsActive,
-  nextIsActive,
-}: PaginationProps) => {
+const Pagination = ({ nextPage, previousPage, previousIsActive, nextIsActive }: PaginationProps) => {
   const { pagination__container } = styles;
   return (
     <>
@@ -24,3 +16,5 @@ export const Pagination: FC<PaginationProps> = ({
     </>
   );
 };
+
+export default Pagination;
