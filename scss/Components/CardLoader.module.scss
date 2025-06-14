@@ -1,5 +1,5 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
 
 .card__container {
   align-items: center;
@@ -17,7 +17,7 @@
     width: 100px;
     background-color: grey;
     animation: blinker 1s linear infinite;
-    margin-bottom: $m;
+    margin-bottom: variables.$m;
   }
 
   span {
@@ -30,7 +30,7 @@
   }
 
   div {
-    margin-top: $m;
+    margin-top: variables.$m;
     width: 100px;
     height: 29px;
     background-color: grey;

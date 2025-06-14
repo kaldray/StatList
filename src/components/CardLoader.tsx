@@ -1,6 +1,6 @@
 import styles from "@styles/Components/CardLoader.module.scss";
 
-export const CardLoader = (): JSX.Element => {
+export const CardLoader = () => {
   const { card__container } = styles;
   return (
     <>
