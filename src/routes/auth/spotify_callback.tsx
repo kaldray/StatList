@@ -3,7 +3,7 @@ import type { Route } from "./+types/spotify_callback";
 import { assertIsString, verifyState } from "@src/utils";
 import { getSession, destroySession, commitSession } from "@src/sessions.server";
 import { SpotifyApi } from "@src/lib/auth";
-import { getSpotifyMe } from "@src/providers/spotify";
+import { getSpotifyMe } from "@src/providers/spotify/endpoint";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));

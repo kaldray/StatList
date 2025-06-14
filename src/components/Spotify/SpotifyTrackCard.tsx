@@ -1,11 +1,9 @@
-import { FC } from "react";
-import Image from "next/image";
-import logo from "../../public/Spotify_Logo_RGB_Black.png";
+import logo from "@src/public/Spotify_Logo_RGB_Black.png";
 
-import { SpotifyTrackCardPros } from "types/Components";
+import { SpotifyTrackCardPros } from "@src/types/Components";
 import styles from "@styles/Components/TrackCard.module.scss";
 
-const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i, isValidating }) => {
+const SpotifyTrackCard = ({ items, i }: SpotifyTrackCardPros) => {
   const {
     name,
     album: { images },
@@ -17,13 +15,11 @@ const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i, isValidating }) 
   return (
     <>
       {images[2] !== undefined && (
-        <section style={{ opacity: isValidating ? 0.3 : 1 }} className={card__container}>
+        <section className={card__container}>
           <div className={info__container}>
             <div className={cover__container}>
-              <Image
+              <img
                 alt={"Pochette de " + name}
-                priority={true}
-                quality={"100"}
                 src={images[2].url}
                 width={images[2].width}
                 height={images[2].height}
@@ -41,10 +37,8 @@ const SpotifyTrackCard: FC<SpotifyTrackCardPros> = ({ items, i, isValidating }) 
             </ul>
           </div>
           <a href={items.external_urls.spotify} className={logo__container} target="_blank" rel="noreferrer">
-            <Image
+            <img
               alt="Spotify Logo"
-              priority={true}
-              quality={"100"}
               src={logo}
               style={{
                 maxWidth: "100%",

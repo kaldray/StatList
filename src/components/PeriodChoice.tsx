@@ -1,41 +1,51 @@
-import { RefObject, useEffect, useRef, FC } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 
-// import styles from "@styles/Components/PeriodChoice.module.scss";
 import styles from "@styles/Components/PeriodChoice.module.scss";
 
-import { PeriodChoiceProps } from "types/Components";
+import { PeriodChoiceProps } from "@src/types/Components";
+import { useSearchParams } from "react-router";
 
-export const PeriodChoice: FC<PeriodChoiceProps> = ({
-  getShortTermArtist,
-  getMediummTermArtist,
-  getLongTermArtist,
-}) => {
+const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLongTermArtist }: PeriodChoiceProps) => {
   const { search__container, active } = styles;
-  const mediumTermButton = useRef<HTMLButtonElement>(null);
   const shortTermButton = useRef<HTMLButtonElement>(null);
+  const mediumTermButton = useRef<HTMLButtonElement>(null);
   const longTermButton = useRef<HTMLButtonElement>(null);
+  const [searchParams] = useSearchParams();
+  const activeButton = searchParams.get("time_range");
+
+  const setActiveButton = useCallback(
+    (
+      activeButton: RefObject<HTMLButtonElement | null>,
+      button2: RefObject<HTMLButtonElement | null>,
+      button3: RefObject<HTMLButtonElement | null>,
+    ) => {
+      if (
+        activeButton.current !== null &&
+        typeof active === "string" &&
+        !activeButton.current.classList.contains(`${active}`)
+      ) {
+        activeButton.current.classList.add(`${active}`);
+        button2.current?.classList.remove(`${active}`);
+        button3.current?.classList.remove(`${active}`);
+      }
+    },
+    [active],
+  );
 
   useEffect(() => {
-    if (typeof active === "string") {
+    if (activeButton === "short_term") {
+      setActiveButton(shortTermButton, mediumTermButton, longTermButton);
+    }
+    if (activeButton === "medium_term") {
+      setActiveButton(mediumTermButton, shortTermButton, longTermButton);
+    }
+    if (activeButton === "long_term") {
+      setActiveButton(longTermButton, shortTermButton, mediumTermButton);
+    }
+    if (activeButton === null) {
       mediumTermButton.current?.classList.add(`${active}`);
     }
-  }, [active]);
-
-  function setActiveButton(
-    activeButton: RefObject<HTMLButtonElement>,
-    button2: RefObject<HTMLButtonElement>,
-    button3: RefObject<HTMLButtonElement>
-  ): void {
-    if (
-      activeButton.current !== null &&
-      typeof active === "string" &&
-      !activeButton.current.classList.contains(`${active}`)
-    ) {
-      activeButton.current.classList.add(`${active}`);
-      button2.current?.classList.remove(`${active}`);
-      button3.current?.classList.remove(`${active}`);
-    }
-  }
+  }, [activeButton, setActiveButton, active]);
 
   return (
     <>
@@ -71,3 +81,4 @@ export const PeriodChoice: FC<PeriodChoiceProps> = ({
     </>
   );
 };
+export default PeriodChoice;

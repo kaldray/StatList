@@ -1,5 +1,5 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
 
 .container__hamb {
   grid-row: 1;
@@ -13,15 +13,13 @@
   outline: none;
   border: none;
 
-
-
   span {
     display: block;
     position: absolute;
     height: 0.2rem;
     width: 100%;
-    border-radius: $mediumRadius;
-    background-color: $black;
+    border-radius: variables.$mediumRadius;
+    background-color: variables.$black;
     transition-property: transform;
     transition-duration: 0.2s;
   }
@@ -35,7 +33,7 @@
   }
 }
 
-.container__hamb:active{
+.container__hamb:active {
   span:nth-child(1) {
     top: 0.8rem;
     transform: rotate(45deg);
@@ -59,7 +57,7 @@
   }
 }
 
-@include desktopSize {
+@include mixin.desktopSize {
   .container__hamb {
     display: none;
   }

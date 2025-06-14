@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from "react-router";
+import { createCookieSessionStorage, Session } from "react-router";
 import { AccessTokenResponse, UserInfo } from "./types/spotify";
 
 type SessionData = {
@@ -28,9 +28,14 @@ export async function is_statlist_user_connected(request: Request): Promise<bool
 export async function get_session_user(
   request: Request,
 ): Promise<Partial<AccessTokenResponse & UserInfo & { provider: "spotify" | "deezer" }>> {
-  const session = await getSession(request.headers.get("Cookie"));
+  const session = await get_current_session(request);
   const user = session.get("statlist_user") as Partial<AccessTokenResponse>;
   return user;
+}
+
+export async function get_current_session(request: Request): Promise<Session<SessionData, SessionData>> {
+  const session = await getSession(request.headers.get("Cookie"));
+  return session;
 }
 
 export { getSession, commitSession, destroySession };
