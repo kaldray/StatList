@@ -56,15 +56,30 @@ function Artist({ token }: { token: string }) {
   });
 
   function getShortTermArtist(): void {
-    startTransition(() => setQueryParams({ time_range: "short_term" }));
+    startTransition(() =>
+      setQueryParams((oldParams) => ({
+        time_range: "short_term",
+        ...oldParams,
+      })),
+    );
   }
 
   function getLongTermArtist(): void {
-    startTransition(() => setQueryParams({ time_range: "long_term" }));
+    startTransition(() =>
+      setQueryParams((oldParams) => ({
+        time_range: "long_term",
+        ...oldParams,
+      })),
+    );
   }
 
   function getMediummTermArtist(): void {
-    startTransition(() => setQueryParams({ time_range: "medium_term" }));
+    startTransition(() =>
+      setQueryParams((oldParams) => ({
+        time_range: "medium_term",
+        ...oldParams,
+      })),
+    );
   }
 
   return (

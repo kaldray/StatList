@@ -1,42 +1,43 @@
-@import "../Global/variables.scss";
+@use "../Global/variables.scss";
+@use "sass:color";
 
 .search__container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
-  row-gap: $s;
-  margin-bottom: $m;
-  margin-top: $m;
+  row-gap: variables.$s;
+  margin-bottom: variables.$m;
+  margin-top: variables.$m;
 
   h1 {
     grid-column: 1 / span 12;
     place-self: center;
-    font-size: clamp($mobileHeading, 2vw, $desktopHeading);
+    font-size: clamp(variables.$mobileHeading, 2vw, variables.$desktopHeading);
   }
 
   div {
     grid-column: 1 / span 12;
     place-self: center;
-    gap: $s;
+    gap: variables.$s;
     display: flex;
     flex-flow: wrap;
     justify-content: center;
 
     button {
-      background-color: $laurel-green;
+      background-color: variables.$laurel-green;
       color: #000;
-      padding: $xs;
-      font-size: $mobileText;
+      padding: variables.$xs;
+      font-size: variables.$mobileText;
       font-weight: 300;
       border: none;
-      border-radius: $smallRadius;
+      border-radius: variables.$smallRadius;
 
       &:hover {
         cursor: pointer;
-        background-color: darken($laurel-green, 5%);
+        background-color: color.adjust(variables.$laurel-green, $lightness: 5%, $space: hsl);
       }
       &:active {
-        background-color: darken($laurel-green, 15%);
+        background-color: color.adjust(variables.$laurel-green, $lightness: 15%, $space: hsl);
       }
     }
   }

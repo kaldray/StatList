@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, startTransition, useEffect, useState } from "react";
 
 import type { WrapperPropsTrack } from "@src/types/Components";
 
@@ -6,35 +6,48 @@ import { NoData } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
 
+import Pagination from "@src/components/Pagination";
+import { useSearchParams } from "react-router";
 const SpotifyTrackCard = lazy(async () => await import("@src/components/Spotify/SpotifyTrackCard"));
 
 export const TrackWrapper = ({ tracks }: WrapperPropsTrack) => {
   const { container } = styles;
+  const [, setQueryParams] = useSearchParams();
+  const [nextIsActive, setNextIsActive] = useState(false);
+  const [previousIsActive, setPreviousIsActive] = useState(false);
 
-  // useEffect(() => {
-  //   if (data?.next === null) {
-  //     setNextIsActive(true);
-  //   } else {
-  //     setNextIsActive(false);
-  //   }
-  //   if (data?.previous === null) {
-  //     setPreviousIsActive(true);
-  //   } else {
-  //     setPreviousIsActive(false);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (tracks?.next === null) {
+      setNextIsActive(true);
+    } else {
+      setNextIsActive(false);
+    }
+    if (tracks?.previous === null) {
+      setPreviousIsActive(true);
+    } else {
+      setPreviousIsActive(false);
+    }
+  }, [tracks.next, tracks.previous]);
 
-  // function nextPage(): void {
-  //   if (data !== undefined && data?.next !== null) {
-  //     setUrl(data.next);
-  //   }
-  // }
+  function nextPage(): void {
+    if (tracks !== undefined && tracks?.next !== null) {
+      const url = new URL(tracks.next);
+      const s = new URLSearchParams(url.search);
+      s.delete("locale");
+      const searchParamsObject = Object.fromEntries(s);
+      startTransition(() => setQueryParams((oldParams) => ({ ...oldParams, ...searchParamsObject })));
+    }
+  }
 
-  // function previousPage(): void {
-  //   if (data !== undefined && data?.previous !== null) {
-  //     setUrl(data.previous);
-  //   }
-  // }
+  function previousPage(): void {
+    if (tracks !== undefined && tracks?.previous !== null) {
+      const url = new URL(tracks.previous);
+      const s = new URLSearchParams(url.search);
+      s.delete("locale");
+      const searchParamsObject = Object.fromEntries(s);
+      startTransition(() => setQueryParams((oldParams) => ({ ...oldParams, ...searchParamsObject })));
+    }
+  }
 
   return (
     <>
@@ -48,14 +61,14 @@ export const TrackWrapper = ({ tracks }: WrapperPropsTrack) => {
         }
         {tracks !== undefined && tracks.items.length === 0 && <NoData />}
       </section>
-      {/* {data !== undefined && data.items.length > 0 && (
+      {tracks !== undefined && tracks.items.length > 0 && (
         <Pagination
           nextIsActive={nextIsActive}
           previousIsActive={previousIsActive}
           nextPage={nextPage}
           previousPage={previousPage}
         />
-      )} */}
+      )}
     </>
   );
 };
