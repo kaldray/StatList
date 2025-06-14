@@ -5,13 +5,11 @@ import { ArtistData, TrackData } from "../deezer";
 export interface SpotifyArtistCardProps {
   items: ArtistItems;
   i: number;
-  isValidating: boolean;
 }
 
 export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
-  isValidating?: boolean;
 }
 export interface DeezerTrackCardPros {
   items: TrackData;
@@ -48,7 +46,12 @@ export interface PeriodChoiceStyle {
   active: string;
 }
 
-export interface WrapperProps {
+export interface WrapperPropsTrack {
   queryParams?: QueryItems;
   tracks: UserTopItems<TrackItems>;
+}
+
+export interface WrapperPropsArtist {
+  queryParams?: QueryItems;
+  tracks: UserTopItems<ArtistItems>;
 }

@@ -1,18 +1,15 @@
-import { lazy, useState } from "react";
+import { lazy } from "react";
 
-import type { WrapperProps } from "@src/types/Components";
+import type { WrapperPropsTrack } from "@src/types/Components";
 
-import { NoData, TrackLoader } from "@components/index";
+import { NoData } from "@components/index";
 
 import styles from "@styles/Pages/global.module.scss";
 
 const SpotifyTrackCard = lazy(async () => await import("@src/components/Spotify/SpotifyTrackCard"));
 
-export const TrackWrapper = ({ tracks }: WrapperProps) => {
+export const TrackWrapper = ({ tracks }: WrapperPropsTrack) => {
   const { container } = styles;
-  const [previousOrNextUrl, setUrl] = useState<string | undefined>(undefined);
-  const [nextIsActive, setNextIsActive] = useState<boolean>(false);
-  const [previousIsActive, setPreviousIsActive] = useState<boolean>(false);
 
   // useEffect(() => {
   //   if (data?.next === null) {
