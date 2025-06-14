@@ -6,7 +6,7 @@
   position: fixed;
   bottom: 0%;
   padding: variables.$xs;
-  background-color: color.adjust(variables.$timberwolf, $lightness: 20%, $space: hsl);
+  background-color: color.adjust(variables.$timberwolf, $lightness: 10%, $space: hsl);
   width: 100%;
   display: flex;
   justify-content: center;
