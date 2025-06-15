@@ -1,3 +1,4 @@
+import { vercelPreset } from "@vercel/react-router/vite";
 import type { Config } from "@react-router/dev/config";
 
 export default {
@@ -10,4 +11,5 @@ export default {
   async prerender() {
     return ["/", "/term", "/login"];
   },
+  presets: [vercelPreset()],
 } satisfies Config;
