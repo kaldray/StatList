@@ -10,16 +10,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   const state = generateState();
   if (params.provider === "spotify") {
-    if (!env.success) {
-      console.error("Spotify API is not configured");
-      console.error(env.data);
-    } else {
-      const SPOTIFY_API = new SpotifyApi(env.data.SPOTIFY_CLIENT_ID, env.data.SPOTIFY_CLIENT_SECRET);
-      session.set("state", state);
-      assertIsString(state);
-      return redirect(SPOTIFY_API.get_authorization(state), {
-        headers: { "Set-Cookie": await commitSession(session) },
-      });
-    }
+    const SPOTIFY_API = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
+    session.set("state", state);
+    assertIsString(state);
+    return redirect(SPOTIFY_API.get_authorization(state), {
+      headers: { "Set-Cookie": await commitSession(session) },
+    });
   }
 }
