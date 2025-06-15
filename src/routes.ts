@@ -2,7 +2,7 @@ import { type RouteConfig, route, layout, prefix, index } from "@react-router/de
 
 export default [
   layout("./components/Layout.tsx", [
-    route("/", "routes/index.tsx"),
+    index("routes/index.tsx"),
     route("/term", "routes/term.tsx"),
     route("logout", "routes/logout.ts"),
     route("login", "routes/login.tsx"),
@@ -20,5 +20,5 @@ export default [
   route("/api/auth/callback/spotify", "routes/auth/spotify_callback.tsx"),
   route("/api/auth/callback/deezer", "routes/auth/deezer_callback.tsx"),
   route("/api/auth/autorization/:provider", "routes/auth/autorization.tsx"),
-  route("*?", "catchall.tsx"),
+  route("*", "catchall.tsx"),
 ] satisfies RouteConfig;
