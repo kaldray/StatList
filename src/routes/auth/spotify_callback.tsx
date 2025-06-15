@@ -2,9 +2,9 @@ import { redirect } from "react-router";
 import type { Route } from "./+types/spotify_callback";
 import { assertIsString, verifyState } from "@src/utils";
 import { getSession, destroySession, commitSession } from "@src/sessions.server";
-import { SpotifyApi } from "@src/lib/auth";
+import { SpotifyApi } from "@src/lib/auth.server";
 import { getSpotifyMe } from "@src/providers/spotify/endpoint";
-import { env } from "@src/lib/env_validator";
+import { env } from "@src/lib/env_validator.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
@@ -26,24 +26,29 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!isStateValid) {
     redirect("/", { headers: { "Set-Cookie": await destroySession(session) } });
   }
-  const SPOTIFY_API = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
-  const auth_data = await SPOTIFY_API.get_access_token(code);
-  session.unset("state");
-  const user_info = await getSpotifyMe(auth_data.access_token);
-  session.set("statlist_user", {
-    access_token: auth_data.access_token,
-    refresh_token: auth_data.refresh_token,
-    expires_in: new Date(Date.now() + auth_data.expires_in * 1000),
-    provider: "spotify",
-    display_name: user_info.display_name,
-  });
+  if (!env.success) {
+    console.error("Spotify API is not configured");
+    console.error(env.data);
+  } else {
+    const SPOTIFY_API = new SpotifyApi(env.data.SPOTIFY_CLIENT_ID, env.data.SPOTIFY_CLIENT_SECRET);
+    const auth_data = await SPOTIFY_API.get_access_token(code);
+    session.unset("state");
+    const user_info = await getSpotifyMe(auth_data.access_token);
+    session.set("statlist_user", {
+      access_token: auth_data.access_token,
+      refresh_token: auth_data.refresh_token,
+      expires_in: new Date(Date.now() + auth_data.expires_in * 1000),
+      provider: "spotify",
+      display_name: user_info.display_name,
+    });
 
-  return redirect("/spotify", {
-    headers: {
-      "Set-Cookie": await commitSession(session, {
-        maxAge: auth_data.expires_in,
-        expires: new Date(Date.now() + auth_data.expires_in * 1000),
-      }),
-    },
-  });
+    return redirect("/spotify", {
+      headers: {
+        "Set-Cookie": await commitSession(session, {
+          maxAge: auth_data.expires_in,
+          expires: new Date(Date.now() + auth_data.expires_in * 1000),
+        }),
+      },
+    });
+  }
 }
