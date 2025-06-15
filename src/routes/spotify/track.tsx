@@ -57,7 +57,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       {
         headers: {
           "Set-Cookie": await commitSession(session, {
-            expires: user_session.expires_in,
+            expires: new Date(Date.now() + response.expires_in * 1000),
             maxAge: response.expires_in,
           }),
         },
