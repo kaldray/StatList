@@ -15,5 +15,6 @@ export const env = envSchema.safeParse(process.env);
 
 if (!env.success) {
   console.error("❌ Invalid environment variables. Check that you have all the variables");
+  console.error(env.data);
   process.exit(1);
 }
