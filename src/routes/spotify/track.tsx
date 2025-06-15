@@ -70,6 +70,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   } else {
     console.error("❌ Invalid environment variables. Check that you have all the variables");
     console.log(env.error);
+    console.error(env.data);
     process.exit(1);
   }
   const queryClient = new QueryClient();

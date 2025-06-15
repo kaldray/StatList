@@ -36,6 +36,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!env.success) {
     console.error("❌ Invalid environment variables. Check that you have all the variables");
     console.log(env.error);
+    console.error(env.data);
     process.exit(1);
   } else if (env.success) {
     if (expired_at - now <= FIVE_MINUTES_IN_MS) {
