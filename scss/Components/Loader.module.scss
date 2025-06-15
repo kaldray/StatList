@@ -1,5 +1,5 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
 
 .loader__container {
   align-items: center;
@@ -7,9 +7,9 @@
   flex-direction: column;
   justify-content: center;
   position: relative;
-  margin: $m 0;
-  padding: $s;
-  border-radius: $mediumRadius;
+  margin: variables.$m 0;
+  padding: variables.$s;
+  border-radius: variables.$mediumRadius;
 }
 
 .loader {
@@ -19,7 +19,9 @@
   height: 16px;
   border-radius: 50%;
   background-color: black;
-  box-shadow: 32px 0 black, -32px 0 black;
+  box-shadow:
+    32px 0 black,
+    -32px 0 black;
   position: relative;
   animation: flash 1s ease-out infinite;
   animation-timing-function: steps(5, 10);

@@ -1,23 +1,23 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
 
 .card__container {
   align-items: center;
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: $s;
-  background-color: $timberwolf;
-  border-radius: $mediumRadius;
-  box-shadow: 2px 2px 5px 0px $black;
+  padding: variables.$s;
+  background-color: variables.$timberwolf;
+  border-radius: variables.$mediumRadius;
+  box-shadow: 2px 2px 5px 0px variables.$black;
 
   figure {
     display: flex;
     flex-direction: column;
-    gap: $s;
+    gap: variables.$s;
   }
   figcaption {
-    font-size: $mobileText;
+    font-size: variables.$mobileText;
     text-align: center;
   }
 }
@@ -31,12 +31,12 @@
   }
 }
 
-@include desktopSize {
+@include mixin.desktopSize {
   .card__container {
     display: flex;
     position: relative;
     figcaption {
-      font-size: $mobileText;
+      font-size: variables.$mobileText;
       text-align: center;
     }
   }

@@ -1,30 +1,31 @@
-@import "../Global/variables.scss";
-@import "../Global/mixin.scss";
+@use "../Global/variables.scss";
+@use "../Global/mixin.scss";
+@use "sass:color";
 
 .pagination__container {
   display: flex;
   flex-direction: row;
-  gap: $s;
+  gap: variables.$s;
   justify-content: center;
   align-items: center;
-  padding: $s;
+  padding: variables.$s;
   button {
-    background-color: $kombu-green;
-    color: $white;
-    padding: $xs;
-    font-size: $mobileText;
+    background-color: variables.$kombu-green;
+    color: variables.$white;
+    padding: variables.$xs;
+    font-size: variables.$mobileText;
     font-weight: 300;
     border: none;
-    border-radius: $smallRadius;
+    border-radius: variables.$smallRadius;
     min-width: 10rem;
     width: 10rem;
     max-height: 4rem;
     &:hover {
       cursor: pointer;
-      background-color: darken($kombu-green, 5%);
+      background-color: color.adjust(variables.$kombu-green, $lightness: 5%, $space: hsl);
     }
     &:active {
-      background-color: darken($kombu-green, 7%);
+      background-color: color.adjust(variables.$kombu-green, $lightness: 7%, $space: hsl);
     }
     &:disabled {
       cursor: not-allowed;

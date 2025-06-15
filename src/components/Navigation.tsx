@@ -9,12 +9,11 @@ type NavigationProps = {
 
 export function Navigation({ auth, provider }: NavigationProps) {
   const [isToggle, setIsToggle] = useState(false);
-  const [innerWidth, setInnerWidth] = useState(0);
+  const [, setInnerWidth] = useState(0);
 
   useEffect(() => {
     function handleResize() {
       setInnerWidth(window.innerWidth);
-      // Fermer le menu automatiquement si on passe en desktop
       if (window.innerWidth > 680) {
         setIsToggle(false);
       }
@@ -50,7 +49,6 @@ export function Navigation({ auth, provider }: NavigationProps) {
 
         {auth && provider && (
           <>
-            {/* Bouton hamburger (visible uniquement sur mobile) */}
             <button
               className={`hamburger ${isToggle ? "hamburger--active" : ""}`}
               onClick={toggleMenu}
@@ -61,7 +59,6 @@ export function Navigation({ auth, provider }: NavigationProps) {
               <span className="hamburger__line"></span>
             </button>
 
-            {/* Navigation */}
             <nav role="navigation" id="nav-items" className={`nav ${isToggle ? "nav--open" : ""}`}>
               <ul>
                 <li>

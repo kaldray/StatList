@@ -1,6 +1,6 @@
 import styles from "@styles/Components/TrackLoader.module.scss";
 
-export const TrackLoader = (): JSX.Element => {
+export const TrackLoader = () => {
   const { track__container } = styles;
   return (
     <>

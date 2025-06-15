@@ -1,8 +1,8 @@
-@import "../Global/variables.scss";
+@use "../Global/variables.scss";
 
 .info__container {
   place-self: center;
   p {
-    font-size: clamp($mobileHeading, 1.8vw, $desktopHeading);
+    font-size: clamp(variables.$mobileHeading, 1.8vw, variables.$desktopHeading);
   }
 }
