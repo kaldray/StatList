@@ -17,6 +17,9 @@ dependencies:
   '@tanstack/react-query':
     specifier: ^5.80.7
     version: 5.80.7(react@19.1.0)
+  '@tanstack/react-query-devtools':
+    specifier: ^5.80.7
+    version: 5.80.7(@tanstack/react-query@5.80.7)(react@19.1.0)
   '@types/spotify-web-api-node':
     specifier: ^5.0.7
     version: 5.0.11
@@ -82,9 +85,6 @@ devDependencies:
   '@playwright/test':
     specifier: ^1.31.2
     version: 1.53.0
-  '@tanstack/react-query-devtools':
-    specifier: ^5.80.7
-    version: 5.80.7(@tanstack/react-query@5.80.7)(react@19.1.0)
   '@types/koa':
     specifier: ^2.13.5
     version: 2.15.0
@@ -1252,10 +1252,11 @@ packages:
 
   /@tanstack/query-core@5.80.7:
     resolution: {integrity: sha512-s09l5zeUKC8q7DCCCIkVSns8zZrK4ZDT6ryEjxNBFi68G4z2EBobBS7rdOY3r6W1WbUDpc1fe5oY+YO/+2UVUg==}
+    dev: false
 
   /@tanstack/query-devtools@5.80.0:
     resolution: {integrity: sha512-D6gH4asyjaoXrCOt5vG5Og/YSj0D/TxwNQgtLJIgWbhbWCC/emu2E92EFoVHh4ppVWg1qT2gKHvKyQBEFZhCuA==}
-    dev: true
+    dev: false
 
   /@tanstack/react-query-devtools@5.80.7(@tanstack/react-query@5.80.7)(react@19.1.0):
     resolution: {integrity: sha512-7Dz/19fVo0i+jgLVBabV5vfGOlLyN5L1w8w1/ogFhe6ItNNsNA+ZgNTbtiKpbR3CcX2WDRRTInz1uMSmHzTsoQ==}
@@ -1266,7 +1267,7 @@ packages:
       '@tanstack/query-devtools': 5.80.0
       '@tanstack/react-query': 5.80.7(react@19.1.0)
       react: 19.1.0
-    dev: true
+    dev: false
 
   /@tanstack/react-query@5.80.7(react@19.1.0):
     resolution: {integrity: sha512-u2F0VK6+anItoEvB3+rfvTO9GEh2vb00Je05OwlUe/A0lkJBgW1HckiY3f9YZa+jx6IOe4dHPh10dyp9aY3iRQ==}
@@ -1275,6 +1276,7 @@ packages:
     dependencies:
       '@tanstack/query-core': 5.80.7
       react: 19.1.0
+    dev: false
 
   /@ts-morph/common@0.11.1:
     resolution: {integrity: sha512-7hWZS0NRpEsNV8vWJzg7FEz6V8MaLNeJOmwmghqUXTpzk16V1LLZhdo+4QvE/+zv4cVci0OviuJFnqhEfoV3+g==}
@@ -3598,6 +3600,7 @@ packages:
   /react@19.1.0:
     resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
     engines: {node: '>=0.10.0'}
+    dev: false
 
   /readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}

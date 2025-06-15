@@ -33,12 +33,12 @@
     "zod": "^3.25.64",
     "@react-router/dev": "^7.6.2",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "@tanstack/react-query-devtools": "^5.80.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@playwright/test": "^1.31.2",
-    "@tanstack/react-query-devtools": "^5.80.7",
     "@types/koa": "^2.13.5",
     "@types/node": "24.0.0",
     "@types/react": "19.1.7",
