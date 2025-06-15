@@ -23,3 +23,9 @@ export function assertIsString(value: unknown): asserts value is string {
     throw new Error(`${value} is not a string`);
   }
 }
+
+export function assertIsDefined<T>(value: T): asserts value is NonNullable<T> {
+  if (value === undefined || value === null) {
+    throw new Error(`${value} is not defined`);
+  }
+}

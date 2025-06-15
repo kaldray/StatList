@@ -44,4 +44,29 @@ export class SpotifyApi {
 
     return data as AccessTokenResponse;
   }
+
+  async refresh_access_token(refreshToken: string) {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${Buffer.from(this.#clientId + ":" + this.#clientSecret).toString("base64")}`,
+      },
+      body: new URLSearchParams({
+        refresh_token: refreshToken,
+        grant_type: "refresh_token",
+        clien_id: this.#clientId,
+      }),
+    });
+
+    if (response.status !== 200) {
+      const error = await response.json();
+      console.log(error);
+      throw new Error(error);
+    }
+
+    const data = await response.json();
+
+    return data as AccessTokenResponse;
+  }
 }

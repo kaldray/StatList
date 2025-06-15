@@ -1,9 +1,15 @@
 import { createCookieSessionStorage, Session } from "react-router";
 import { AccessTokenResponse, UserInfo } from "./types/spotify";
 
+type StatlistUser = Omit<AccessTokenResponse, "expires_in" | "scope" | "token_type">;
+
 type SessionData = {
   state: string;
-  statlist_user: Partial<AccessTokenResponse> & { provider: "spotify" | "deezer" } & Partial<UserInfo>;
+  statlist_user: StatlistUser &
+    Partial<UserInfo> & {
+      provider: "spotify" | "deezer";
+      expires_in: Date;
+    };
 };
 
 const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData>({
@@ -25,11 +31,9 @@ export async function is_statlist_user_connected(request: Request): Promise<bool
   return is_connected;
 }
 
-export async function get_session_user(
-  request: Request,
-): Promise<Partial<AccessTokenResponse & UserInfo & { provider: "spotify" | "deezer" }>> {
+export async function get_session_user(request: Request): Promise<Partial<SessionData["statlist_user"]>> {
   const session = await get_current_session(request);
-  const user = session.get("statlist_user") as Partial<AccessTokenResponse>;
+  const user = session.get("statlist_user") as Partial<SessionData["statlist_user"]>;
   return user;
 }
 
