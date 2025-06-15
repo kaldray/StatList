@@ -9,7 +9,7 @@ import type { Route } from "./+types/index";
 import styles from "@styles/Pages/home.module.scss";
 import { data, redirect } from "react-router";
 import { assertIsDefined, assertIsString } from "@src/utils";
-import { env } from "@src/lib/env_validator.server";
+import { validateEnv } from "@src/lib/env_validator.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
@@ -28,7 +28,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   if (expired_at - now <= FIVE_MINUTES_IN_MS) {
     const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
-
+    const env = validateEnv();
     const spotifyApi = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
     const response = await spotifyApi.refresh_access_token(user_session.refresh_token);
     session.set("statlist_user", {
