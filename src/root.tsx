@@ -41,7 +41,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {import.meta.env.MODE === "development" && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 }
