@@ -15,7 +15,7 @@ import { spotify_query_options, SpotifyQuerySchema } from "@src/providers/spotif
 import { dehydrate, HydrationBoundary, QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { assertIsDefined, assertIsString } from "@src/utils";
 import { PeriodChoiceLoader } from "@components/PeriodChoiceLoader";
-import { env } from "@src/lib/env_validator.server";
+import { validateEnv } from "@src/lib/env_validator.server";
 
 const PeriodChoice = lazy(async () => await import("@components/PeriodChoice"));
 
@@ -37,6 +37,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
 
   if (expired_at - now <= FIVE_MINUTES_IN_MS) {
+    const env = validateEnv();
     const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
     const spotifyApi = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_ID);
     const response = await spotifyApi.refresh_access_token(user_session.refresh_token);
