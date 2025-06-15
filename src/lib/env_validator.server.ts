@@ -11,10 +11,10 @@ const envSchema = z.object({
   NEXTAUTH_SECRET: z.string(),
 });
 
-export const env = envSchema.safeParse(process.env);
-console.log(env.data);
-if (!env.success) {
+const result = envSchema.safeParse(process.env);
+if (!result.success) {
   console.error("❌ Invalid environment variables. Check that you have all the variables");
-  console.error(env.data);
   process.exit(1);
 }
+console.log(result.data);
+export const env = result.data;

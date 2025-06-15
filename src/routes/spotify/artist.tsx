@@ -33,43 +33,35 @@ export async function loader({ request }: Route.LoaderArgs) {
   const expired_at = new Date(user_session.expires_in).getTime();
   const now = new Date().getTime();
   const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
-  if (!env.success) {
-    console.error("❌ Invalid environment variables. Check that you have all the variables");
-    console.log(env.error);
-    console.error(env.data);
-    process.exit(1);
-  } else if (env.success) {
-    if (expired_at - now <= FIVE_MINUTES_IN_MS) {
-      const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
-      const spotifyApi = new SpotifyApi(env.data.SPOTIFY_CLIENT_ID, env.data.SPOTIFY_CLIENT_SECRET);
-      const response = await spotifyApi.refresh_access_token(user_session.refresh_token);
-      session.set("statlist_user", {
-        display_name: user_session.display_name,
-        access_token: response.access_token,
-        expires_in: new Date(Date.now() + response.expires_in * 1000),
-        refresh_token: user_session.refresh_token ?? response.refresh_token,
-        provider: "spotify",
-      });
-      const queryClient = new QueryClient();
 
-      const searchParams = new URL(request.url).searchParams;
-      const validated_search_params = SpotifyQuerySchema.parse(Object.fromEntries(searchParams));
+  if (expired_at - now <= FIVE_MINUTES_IN_MS) {
+    const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
+    const spotifyApi = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
+    const response = await spotifyApi.refresh_access_token(user_session.refresh_token);
+    session.set("statlist_user", {
+      display_name: user_session.display_name,
+      access_token: response.access_token,
+      expires_in: new Date(Date.now() + response.expires_in * 1000),
+      refresh_token: user_session.refresh_token ?? response.refresh_token,
+      provider: "spotify",
+    });
+    const queryClient = new QueryClient();
 
-      await queryClient.ensureQueryData(
-        spotify_query_options.track(user_session.access_token, validated_search_params),
-      );
-      return data(
-        { token: user_session.access_token, dehydratedState: dehydrate(queryClient) },
-        {
-          headers: {
-            "Set-Cookie": await commitSession(session, {
-              expires: new Date(Date.now() + response.expires_in * 1000),
-              maxAge: response.expires_in,
-            }),
-          },
+    const searchParams = new URL(request.url).searchParams;
+    const validated_search_params = SpotifyQuerySchema.parse(Object.fromEntries(searchParams));
+
+    await queryClient.ensureQueryData(spotify_query_options.track(user_session.access_token, validated_search_params));
+    return data(
+      { token: user_session.access_token, dehydratedState: dehydrate(queryClient) },
+      {
+        headers: {
+          "Set-Cookie": await commitSession(session, {
+            expires: new Date(Date.now() + response.expires_in * 1000),
+            maxAge: response.expires_in,
+          }),
         },
-      );
-    }
+      },
+    );
   }
 
   const queryClient = new QueryClient();

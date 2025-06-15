@@ -26,29 +26,25 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!isStateValid) {
     redirect("/", { headers: { "Set-Cookie": await destroySession(session) } });
   }
-  if (!env.success) {
-    console.error("Spotify API is not configured");
-    console.error(env.data);
-  } else {
-    const SPOTIFY_API = new SpotifyApi(env.data.SPOTIFY_CLIENT_ID, env.data.SPOTIFY_CLIENT_SECRET);
-    const auth_data = await SPOTIFY_API.get_access_token(code);
-    session.unset("state");
-    const user_info = await getSpotifyMe(auth_data.access_token);
-    session.set("statlist_user", {
-      access_token: auth_data.access_token,
-      refresh_token: auth_data.refresh_token,
-      expires_in: new Date(Date.now() + auth_data.expires_in * 1000),
-      provider: "spotify",
-      display_name: user_info.display_name,
-    });
 
-    return redirect("/spotify", {
-      headers: {
-        "Set-Cookie": await commitSession(session, {
-          maxAge: auth_data.expires_in,
-          expires: new Date(Date.now() + auth_data.expires_in * 1000),
-        }),
-      },
-    });
-  }
+  const SPOTIFY_API = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
+  const auth_data = await SPOTIFY_API.get_access_token(code);
+  session.unset("state");
+  const user_info = await getSpotifyMe(auth_data.access_token);
+  session.set("statlist_user", {
+    access_token: auth_data.access_token,
+    refresh_token: auth_data.refresh_token,
+    expires_in: new Date(Date.now() + auth_data.expires_in * 1000),
+    provider: "spotify",
+    display_name: user_info.display_name,
+  });
+
+  return redirect("/spotify", {
+    headers: {
+      "Set-Cookie": await commitSession(session, {
+        maxAge: auth_data.expires_in,
+        expires: new Date(Date.now() + auth_data.expires_in * 1000),
+      }),
+    },
+  });
 }
