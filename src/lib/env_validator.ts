@@ -9,8 +9,6 @@ const envSchema = z.object({
   DEEZER_CLIENT_ID: z.string(),
   DEEZER_CLIENT_SECRET: z.string(),
   NEXTAUTH_SECRET: z.string(),
-  USERNAME: z.string(),
-  PASSWORD: z.string(),
 });
 
 export const env = envSchema.parse(process.env);
