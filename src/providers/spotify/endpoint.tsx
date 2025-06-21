@@ -1,4 +1,4 @@
-import { ArtistItems, TrackItems, UserInfo, UserTopItems } from "@src/types/spotify";
+import type { ArtistItems, TrackItems, UserInfo, UserTopItems } from "@src/types/spotify";
 import type { SpotifyQueryItems } from "./query";
 
 const ME_ENDPOINT = "https://api.spotify.com/v1/me/";

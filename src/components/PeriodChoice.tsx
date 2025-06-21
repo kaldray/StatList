@@ -1,8 +1,9 @@
-import { RefObject, useCallback, useEffect, useRef } from "react";
+import type { RefObject} from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import styles from "@styles/Components/PeriodChoice.module.scss";
 
-import { PeriodChoiceProps } from "@src/types/Components";
+import type { PeriodChoiceProps } from "@src/types/Components";
 import { useSearchParams } from "react-router";
 
 const PeriodChoice = ({ getShortTermArtist, getMediummTermArtist, getLongTermArtist }: PeriodChoiceProps) => {

@@ -162,3 +162,16 @@ export interface DeezerUserInfo {
   tracklist: string;
   type: string;
 }
+
+export interface AccessDeezerTokenResponse {
+  access_token: string;
+  expires?: number;
+}
+
+export interface DeezerError {
+  error: {
+    type: string;
+    message: string;
+    code: number;
+  };
+}

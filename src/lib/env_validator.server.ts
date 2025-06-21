@@ -15,6 +15,5 @@ export function validateEnv() {
     console.error("❌ Invalid environment variables. Check that you have all the variables");
     process.exit(1);
   }
-  console.log(result.data);
   return result.data;
 }
