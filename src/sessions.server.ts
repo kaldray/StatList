@@ -1,5 +1,6 @@
-import { createCookieSessionStorage, Session } from "react-router";
-import { AccessTokenResponse, UserInfo } from "./types/spotify";
+import type { Session } from "react-router";
+import { createCookieSessionStorage } from "react-router";
+import type { AccessTokenResponse, UserInfo } from "./types/spotify";
 
 type StatlistUser = Omit<AccessTokenResponse, "expires_in" | "scope" | "token_type">;
 

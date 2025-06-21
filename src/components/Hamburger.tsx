@@ -1,6 +1,7 @@
-import { useRef, FC } from "react";
+import type { FC } from "react";
+import { useRef } from "react";
 
-import { HamburgerProps } from "types/Components";
+import type { HamburgerProps } from "types/Components";
 
 import styles from "@styles/Components/Hamburger.module.scss";
 

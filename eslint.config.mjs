@@ -15,6 +15,8 @@ export default tseslint.config(
       "node_modules",
       ".react-router",
       ".*",
+      "./build/**/**.js",
+      "./build/server/**/**.js",
     ],
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     plugins: {
@@ -35,6 +37,9 @@ export default tseslint.config(
       react: {
         version: "19",
       },
+    },
+    rules: {
+      "@typescript-eslint/consistent-type-imports": 0,
     },
   },
   ...tseslint.configs.recommended,

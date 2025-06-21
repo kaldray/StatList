@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import { ArtistItems, QueryItems, TrackItems, UserTopItems } from "../spotify/index";
-import { ArtistData, TrackData } from "../deezer";
+import type { Dispatch, SetStateAction } from "react";
+import type { ArtistItems, QueryItems, TrackItems, UserTopItems } from "../spotify/index";
+import type { ArtistData, TrackData } from "../deezer";
 
 export interface SpotifyArtistCardProps {
   items: ArtistItems;

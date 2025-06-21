@@ -1,8 +1,8 @@
-import { FC } from "react";
+import type { FC } from "react";
 import Image from "next/image";
 import logo from "../../public/Mono_Full_Black@2x.png";
 
-import { DeezerArtistCardPros } from "types/Components";
+import type { DeezerArtistCardPros } from "types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 

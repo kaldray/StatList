@@ -3,8 +3,8 @@ import useSWR from "swr";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-import { ErrorProps } from "next/error";
-import { UserTopTracks } from "types/deezer";
+import type { ErrorProps } from "next/error";
+import type { UserTopTracks } from "types/deezer";
 
 import { TrackLoader } from "@components/index";
 

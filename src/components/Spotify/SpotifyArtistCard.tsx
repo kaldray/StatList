@@ -1,6 +1,6 @@
 import logo from "../../public/Spotify_Logo_RGB_Black.png";
 
-import { SpotifyArtistCardProps } from "@src/types/Components";
+import type { SpotifyArtistCardProps } from "@src/types/Components";
 
 import styles from "@styles/Components/Card.module.scss";
 
