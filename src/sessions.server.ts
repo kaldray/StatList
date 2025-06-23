@@ -1,6 +1,7 @@
 import type { Session } from "react-router";
 import { createCookieSessionStorage } from "react-router";
 import type { AccessTokenResponse, UserInfo } from "./types/spotify";
+import { validateEnv } from "@src/lib/env_validator.server";
 
 type StatlistUser = Omit<AccessTokenResponse, "expires_in" | "scope" | "token_type">;
 
@@ -12,7 +13,7 @@ type SessionData = {
       expires_in: Date;
     };
 };
-
+const env = validateEnv();
 const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData>({
   cookie: {
     name: "__session",
@@ -20,7 +21,7 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
-    secrets: ["s3cret"],
+    secrets: [env.NEXTAUTH_SECRET],
     sameSite: "lax",
     secure: import.meta.env.MODE === "production",
   },
