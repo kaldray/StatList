@@ -1,4 +1,3 @@
-import type { Session } from "react-router";
 import { createCookieSessionStorage } from "react-router";
 import type { AccessTokenResponse, UserInfo } from "./types/spotify";
 
@@ -37,7 +36,7 @@ export async function get_session_user(request: Request): Promise<Partial<Sessio
   return user;
 }
 
-export async function get_current_session(request: Request): Promise<Session<SessionData, SessionData>> {
+export async function get_current_session(request: Request) {
   const session = await getSession(request.headers.get("Cookie"));
   return session;
 }

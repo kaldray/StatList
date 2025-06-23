@@ -3,7 +3,7 @@ import type { Route } from "./+types/spotify_callback";
 import { assertIsString, verifyState } from "@src/utils";
 import { getSession, destroySession, commitSession } from "@src/sessions.server";
 import { getSpotifyMe } from "@src/providers/spotify/endpoint";
-import { validateEnv } from "@src/lib/env_validator.server";
+import { envSchema } from "@src/lib/env_validator.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get("Cookie"));
@@ -25,8 +25,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!isStateValid) {
     redirect("/", { headers: { "Set-Cookie": await destroySession(session) } });
   }
-  const env = validateEnv();
+
   const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
+  const env = envSchema.parse(process.env);
   const spotifyApi = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
   const auth_data = await spotifyApi.get_access_token(code);
   session.unset("state");

@@ -3,7 +3,10 @@ import { type AccessTokenResponse } from "@src/types/spotify";
 export class SpotifyApi {
   #clientId: string;
   #clientSecret: string;
-  #redirectUri: string = "http://localhost:3000/api/auth/callback/spotify";
+  #redirectUri: string =
+    process.env.MODE === "development"
+      ? "http://localhost:3000/api/auth/spotify/callback"
+      : "http://www.statlist.fr/api/auth/callback/spotify";
 
   constructor(clientId: string, clientSecret: string) {
     this.#clientId = clientId;
