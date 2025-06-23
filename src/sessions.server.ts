@@ -13,7 +13,6 @@ type SessionData = {
       expires_in: Date;
     };
 };
-const env = validateEnv();
 const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData>({
   cookie: {
     name: "__session",
@@ -21,7 +20,7 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
-    secrets: [env.NEXTAUTH_SECRET],
+    secrets: [process.env.NEXTAUTH_SECRET],
     sameSite: "lax",
     secure: import.meta.env.MODE === "production",
   },
