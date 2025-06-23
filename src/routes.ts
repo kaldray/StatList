@@ -11,14 +11,8 @@ export default [
       route("/artist", "routes/spotify/artist.tsx"),
       route("/track", "routes/spotify/track.tsx"),
     ]),
-    ...prefix("deezer", [
-      index("routes/deezer/index.tsx"),
-      // route("/artist", "routes/deezer/artist.tsx"),
-      // route("/track", "routes/deezer/track.tsx"),
-    ]),
   ]),
   route("/api/auth/callback/spotify", "routes/auth/spotify_callback.tsx"),
-  route("/api/auth/callback/deezer", "routes/auth/deezer_callback.tsx"),
   route("/api/auth/autorization/:provider", "routes/auth/autorization.tsx"),
   route("*", "catchall.tsx"),
 ] satisfies RouteConfig;

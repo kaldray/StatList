@@ -14,13 +14,13 @@ export interface SpotifyTrackCardPros {
 export interface DeezerTrackCardPros {
   items: TrackData;
   index: number;
-  isValidating: boolean;
+  isValidating?: boolean;
 }
 
 export interface DeezerArtistCardPros {
   items: ArtistData;
   index: number;
-  isValidating: boolean;
+  isValidating?: boolean;
 }
 
 export interface PaginationProps {
