@@ -2,7 +2,6 @@ import { redirect } from "react-router";
 import type { Route } from "./+types/spotify_callback";
 import { assertIsString, verifyState } from "@src/utils";
 import { getSession, destroySession, commitSession } from "@src/sessions.server";
-import { SpotifyApi } from "@src/lib/auth.server";
 import { getSpotifyMe } from "@src/providers/spotify/endpoint";
 import { validateEnv } from "@src/lib/env_validator.server";
 
@@ -27,8 +26,9 @@ export async function loader({ request }: Route.LoaderArgs) {
     redirect("/", { headers: { "Set-Cookie": await destroySession(session) } });
   }
   const env = validateEnv();
-  const SPOTIFY_API = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
-  const auth_data = await SPOTIFY_API.get_access_token(code);
+  const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
+  const spotifyApi = new SpotifyApi(env.SPOTIFY_CLIENT_ID, env.SPOTIFY_CLIENT_SECRET);
+  const auth_data = await spotifyApi.get_access_token(code);
   session.unset("state");
   const user_info = await getSpotifyMe(auth_data.access_token);
   session.set("statlist_user", {
