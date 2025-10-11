@@ -1,6 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { ButtonHTMLAttributes, Dispatch, PropsWithChildren, RefObject, SetStateAction } from "react";
 import type { ArtistItems, QueryItems, TrackItems, UserTopItems } from "../spotify/index";
-import type { ArtistData, TrackData } from "../deezer";
 
 export interface SpotifyArtistCardProps {
   items: ArtistItems;
@@ -11,29 +10,19 @@ export interface SpotifyTrackCardPros {
   items: TrackItems;
   i: number;
 }
-export interface DeezerTrackCardPros {
-  items: TrackData;
-  index: number;
-  isValidating?: boolean;
-}
-
-export interface DeezerArtistCardPros {
-  items: ArtistData;
-  index: number;
-  isValidating?: boolean;
-}
 
 export interface PaginationProps {
-  nextPage: () => void;
-  previousPage: () => void;
+  nextPageAction: () => Promise<void>;
+  previousPageAction: () => Promise<void>;
   previousIsActive: boolean;
   nextIsActive: boolean;
+  dataLenght: number;
 }
 
 export interface PeriodChoiceProps {
-  getShortTermArtist: () => void;
-  getMediummTermArtist: () => void;
-  getLongTermArtist: () => void;
+  getShortTermArtistAction: () => Promise<void>;
+  getMediummTermArtistAction: () => Promise<void>;
+  getLongTermArtistAction: () => Promise<void>;
 }
 
 export interface HamburgerProps {
@@ -55,3 +44,18 @@ export interface WrapperPropsArtist {
   queryParams?: QueryItems;
   tracks: UserTopItems<ArtistItems>;
 }
+
+export type PeriodBoutonActionProps = {
+  action: () => Promise<void>;
+  boutons: [
+    RefObject<HTMLButtonElement | null>,
+    RefObject<HTMLButtonElement | null>,
+    RefObject<HTMLButtonElement | null>,
+  ];
+  setActiveButton: (
+    activeButton: RefObject<HTMLButtonElement | null>,
+    button2: RefObject<HTMLButtonElement | null>,
+    button3: RefObject<HTMLButtonElement | null>,
+  ) => void;
+} & PropsWithChildren &
+  ButtonHTMLAttributes<"button">;

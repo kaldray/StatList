@@ -1,16 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-      refetchOnReconnect: false,
-      refetchOnMount: false,
-    },
-  },
-});
+import { useState } from "react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,7 +21,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <ScrollRestoration />
+        <ScrollRestoration getKey={(location) => location.pathname} />
         <Scripts />
       </body>
     </html>
@@ -38,6 +29,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            refetchOnReconnect: false,
+            refetchOnMount: false,
+          },
+        },
+      }),
+  );
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />

@@ -4,8 +4,8 @@ export class SpotifyApi {
   #clientId: string;
   #clientSecret: string;
   #redirectUri =
-    process.env.MODE === "development"
-      ? ("http://localhost:3000/api/auth/spotify/callback" as const)
+    process.env.NODE_ENV === "development"
+      ? ("http://localhost:3000/api/auth/callback/spotify" as const)
       : ("https://www.statlist.fr/api/auth/callback/spotify" as const);
 
   constructor(clientId: string, clientSecret: string) {
