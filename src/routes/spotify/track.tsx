@@ -1,8 +1,8 @@
 import type { Route } from "./+types/track";
 
-import { TrackWrapper } from "@components/Spotify/TrackWrapper";
-import { data, redirect, useSearchParams } from "react-router";
-import { lazy, Suspense, startTransition } from "react";
+import { TracksWrapper } from "@components/Spotify/TrackWrapper";
+import { data, redirect } from "react-router";
+import { lazy, Suspense, useState, useMemo } from "react";
 import {
   commitSession,
   destroySession,
@@ -16,6 +16,7 @@ import { dehydrate, HydrationBoundary, QueryClient, useSuspenseQuery } from "@ta
 import { assertIsDefined, assertIsString } from "@src/utils";
 import { PeriodChoiceLoader } from "@components/PeriodChoiceLoader";
 import { envSchema } from "@src/lib/env_validator.server";
+import Pagination from "@components/Pagination";
 
 const PeriodChoice = lazy(async () => await import("@components/PeriodChoice"));
 
@@ -35,6 +36,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const expired_at = new Date(user_session.expires_in).getTime();
   const now = new Date().getTime();
   const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
+  const queryClient = new QueryClient();
 
   if (expired_at - now <= FIVE_MINUTES_IN_MS) {
     const SpotifyApi = (await import("@src/lib/auth.server")).SpotifyApi;
@@ -48,7 +50,6 @@ export async function loader({ request }: Route.LoaderArgs) {
       refresh_token: user_session.refresh_token ?? response.refresh_token,
       provider: "spotify",
     });
-    const queryClient = new QueryClient();
 
     const searchParams = new URL(request.url).searchParams;
     const validated_search_params = SpotifyQuerySchema.parse(Object.fromEntries(searchParams));
@@ -67,8 +68,6 @@ export async function loader({ request }: Route.LoaderArgs) {
     );
   }
 
-  const queryClient = new QueryClient();
-
   const searchParams = new URL(request.url).searchParams;
   const validated_search_params = SpotifyQuerySchema.parse(Object.fromEntries(searchParams));
 
@@ -77,50 +76,71 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 function Track({ token }: { token: string }) {
-  const [queryParams, setQueryParams] = useSearchParams();
-  const validated_search_params = SpotifyQuerySchema.parse(Object.fromEntries(queryParams));
+  const [queryParams, setQueryParams] = useState({});
+  const validated_search_params = SpotifyQuerySchema.parse(queryParams);
   const { data } = useSuspenseQuery({
     ...spotify_query_options.track(token, validated_search_params),
   });
-
-  function getShortTermArtist(): void {
-    startTransition(() => setQueryParams({ time_range: "short_term" }));
-    startTransition(() =>
-      setQueryParams((oldParams) => ({
-        time_range: "short_term",
-        ...oldParams,
-      })),
-    );
+  async function getShortTermArtistAction(): Promise<void> {
+    setQueryParams((oldParams) => ({
+      ...oldParams,
+      time_range: "short_term",
+    }));
   }
 
-  function getLongTermArtist(): void {
-    startTransition(() => setQueryParams({ time_range: "long_term" }));
-    startTransition(() =>
-      setQueryParams((oldParams) => ({
-        time_range: "long_term",
-        ...oldParams,
-      })),
-    );
+  async function getLongTermArtistAction(): Promise<void> {
+    setQueryParams((oldParams) => ({
+      ...oldParams,
+      time_range: "long_term",
+    }));
   }
 
-  function getMediummTermArtist(): void {
-    startTransition(() => setQueryParams({ time_range: "medium_term" }));
-    startTransition(() =>
-      setQueryParams((oldParams) => ({
-        time_range: "medium_term",
-        ...oldParams,
-      })),
-    );
+  async function getMediummTermArtistAction(): Promise<void> {
+    setQueryParams((oldParams) => ({
+      ...oldParams,
+      time_range: "medium_term",
+    }));
   }
+
+  async function previousPageAction(): Promise<void> {
+    if (data.previous === null) return;
+    const url = new URL(data.previous);
+    const s = new URLSearchParams(url.search);
+    s.delete("locale");
+    const searchParamsObject = Object.fromEntries(s);
+    setQueryParams((oldParams) => ({ ...oldParams, ...searchParamsObject }));
+  }
+
+  async function nextPageAction(): Promise<void> {
+    if (data.next === null) return;
+    const url = new URL(data.next);
+    const s = new URLSearchParams(url.search);
+    s.delete("locale");
+    const searchParamsObject = Object.fromEntries(s);
+    setQueryParams((oldParams) => ({ ...oldParams, ...searchParamsObject }));
+  }
+
+  const nextIsActive = useMemo(() => data.next === null, [data.next]);
+  const previousIsActive = useMemo(() => data.previous === null, [data.previous]);
+  const dataLenght = useMemo(() => data.items.length, [data.items]);
 
   return (
     <>
-      <PeriodChoice
-        getShortTermArtist={getShortTermArtist}
-        getLongTermArtist={getLongTermArtist}
-        getMediummTermArtist={getMediummTermArtist}
+      <Suspense fallback={<PeriodChoiceLoader />}>
+        <PeriodChoice
+          getShortTermArtistAction={getShortTermArtistAction}
+          getLongTermArtistAction={getLongTermArtistAction}
+          getMediummTermArtistAction={getMediummTermArtistAction}
+        />
+      </Suspense>
+      <TracksWrapper tracks={data} />
+      <Pagination
+        dataLenght={dataLenght}
+        nextPageAction={nextPageAction}
+        previousPageAction={previousPageAction}
+        nextIsActive={nextIsActive}
+        previousIsActive={previousIsActive}
       />
-      <TrackWrapper tracks={data} />
     </>
   );
 }
@@ -129,9 +149,7 @@ export default function TrackRoute({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <HydrationBoundary state={loaderData.dehydratedState}>
-        <Suspense fallback={<PeriodChoiceLoader />}>
-          <Track token={loaderData.token} />
-        </Suspense>
+        <Track token={loaderData.token} />
       </HydrationBoundary>
     </>
   );

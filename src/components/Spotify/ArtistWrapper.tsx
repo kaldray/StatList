@@ -1,6 +1,6 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import type { WrapperPropsArtist } from "@src/types/Components";
-import { NoData } from "@components/index";
+import { CardLoader, NoData } from "@components/index";
 import styles from "@styles/Pages/global.module.scss";
 
 const SpotifyArtistCard = lazy(async () => await import("@src/components/Spotify/SpotifyArtistCard"));
@@ -14,7 +14,13 @@ export const ArtistWrapper = ({ tracks }: WrapperPropsArtist) => {
         {
           <>
             {tracks.items.map((item, i) => {
-              return <SpotifyArtistCard key={item.id} i={i + 1 + tracks.offset} items={item} />;
+              return (
+                <>
+                  <Suspense key={item.id} fallback={<CardLoader />}>
+                    <SpotifyArtistCard i={i + 1 + tracks.offset} items={item} />
+                  </Suspense>
+                </>
+              );
             })}
           </>
         }

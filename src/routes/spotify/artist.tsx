@@ -77,9 +77,7 @@ export default function ArtistRoute({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <HydrationBoundary state={loaderData.dehydratedState}>
-        <Suspense fallback={<PeriodChoiceLoader />}>
-          <Artist token={loaderData.token} />
-        </Suspense>
+        <Artist token={loaderData.token} />
       </HydrationBoundary>
     </>
   );
@@ -138,14 +136,14 @@ function Artist({ token }: { token: string }) {
 
   return (
     <>
-      <PeriodChoice
-        getShortTermArtistAction={getShortTermArtistAction}
-        getLongTermArtistAction={getLongTermArtistAction}
-        getMediummTermArtistAction={getMediummTermArtistAction}
-      />
-      <Suspense fallback={<p>Loading...</p>}>
-        <ArtistWrapper tracks={data} />
+      <Suspense fallback={<PeriodChoiceLoader />}>
+        <PeriodChoice
+          getShortTermArtistAction={getShortTermArtistAction}
+          getLongTermArtistAction={getLongTermArtistAction}
+          getMediummTermArtistAction={getMediummTermArtistAction}
+        />
       </Suspense>
+      <ArtistWrapper tracks={data} />
       <Pagination
         dataLenght={dataLenght}
         nextPageAction={nextPageAction}

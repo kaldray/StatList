@@ -14,7 +14,6 @@ export class SpotifyApi {
   }
   get_authorization(state: string): string {
     const url = new URL("https://accounts.spotify.com/authorize");
-    console.log(this.#clientId);
     url.searchParams.append("client_id", this.#clientId);
     url.searchParams.append("response_type", "code");
     url.searchParams.append("scope", "user-top-read,user-read-private");
